@@ -14,7 +14,7 @@
 <meta property="og:description" content="需要完成的任务 明确项目工作的整个流程（是怎样从零部署的）  掌握最基本的技能 （1）具备 Python 和 PyTorch 基础 （2）掌握机器学习和深度学习基本原理 （3）熟悉 Linux 系统使用和 Git 版本管理  进阶技能 （1）掌握机器人运动学、动力学、最优控制、强化学习等相关理论； （2）有机器人强化学习开发经验，熟悉 Issac Gym、Issac Sim、MuJoCo 等仿真器">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-06-21T09:38:30.000Z">
-<meta property="article:modified_time" content="2026-06-21T15:08:50.194Z">
+<meta property="article:modified_time" content="2026-06-21T15:39:07.540Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -79,6 +79,10 @@
   <time class="dt-published" datetime="2026-06-21T09:38:30.000Z" itemprop="datePublished">2026-06-21</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -144,12 +148,15 @@
 <p>训练网络需要用<strong>梯度下降</strong>更新参数，数学上要对损失函数求导（算梯度）。</p>
 <p>传统手写程序：需要自己手动推导、编写求导公式，复杂网络几乎不可能实现。</p>
 <p>autograd 自动记录张量所有运算流程，一行代码 <code>loss.backward()</code> 就能自动算出所有参数的导数。</p>
+</li>
+</ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 标记w、b需要求导</span></span><br><span class="line">w = torch.tensor([[<span class="number">0.0</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">b = torch.tensor([[<span class="number">0.0</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">loss = torch.mean((x_data @ w + b - y_data) **<span class="number">2</span>)</span><br><span class="line">loss.backward() <span class="comment"># 自动微分，算出dw、db</span></span><br><span class="line"><span class="built_in">print</span>(w.grad) <span class="comment"># 打印自动算出的梯度</span></span><br></pre></td></tr></table></figure>
 
-<p>只要张量设置参数requires_grad&#x3D;True，PyTorch 就会跟踪它的计算历史，保存计算图，用于反向求导。</p>
-</li>
+<p>   只要张量设置参数requires_grad&#x3D;True，PyTorch 就会跟踪它的计算历史，保存计算图，用于反向求导。</p>
+<ol start="3">
 <li><p><strong>神经网络层</strong>：卷积、全连接、激活函数等 <code>torch.nn</code></p>
-<h6 id="常用组件分类"><a href="#常用组件分类" class="headerlink" title="常用组件分类"></a>常用组件分类</h6><ol>
+<p>###### 常用组件分类</p>
+<ol>
 <li><p><strong>网络层（核心结构）</strong></p>
 <ul>
 <li>全连接层 <code>nn.Linear</code>：普通线性拟合、分类网络基础</li>
@@ -160,8 +167,9 @@
 <li><p><strong>激活函数</strong>（给网络增加非线性，否则只能拟合直线)</p>
 </li>
 <li><p><strong>容器</strong>：<code>nn.Sequential</code> 快速堆叠多层网络</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搭建一层输入4维、输出1维的全连接网络</span></span><br><span class="line">model = nn.Sequential(</span><br><span class="line">    nn.Linear(<span class="number">4</span>, <span class="number">8</span>),  <span class="comment"># 全连接层</span></span><br><span class="line">    nn.ReLU(),        <span class="comment"># 激活函数</span></span><br><span class="line">    nn.Linear(<span class="number">8</span>, <span class="number">1</span>)</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(model)</span><br></pre></td></tr></table></figure></li>
+</li>
 </ol>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 搭建一层输入4维、输出1维的全连接网络</span></span><br><span class="line">model = nn.Sequential(</span><br><span class="line">    nn.Linear(<span class="number">4</span>, <span class="number">8</span>),  <span class="comment"># 全连接层</span></span><br><span class="line">    nn.ReLU(),        <span class="comment"># 激活函数</span></span><br><span class="line">    nn.Linear(<span class="number">8</span>, <span class="number">1</span>)</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(model)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>优化器、损失函数、数据集加载工具</strong></p>
 </li>
@@ -169,13 +177,17 @@
 <p>(1)什么是CUDA</p>
 <p>NVIDIA 显卡的并行计算平台，GPU 拥有上千个小计算核心，擅长大规模张量矩阵运算（神经网络本质就是海量矩阵乘法）。</p>
 <p>CPU 核心少，处理大批量图像 &#x2F; 模型计算很慢；GPU 并行计算速度提升几十～上百倍。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="机器学习与深度学习的基本原理"><a href="#机器学习与深度学习的基本原理" class="headerlink" title="机器学习与深度学习的基本原理"></a>机器学习与深度学习的基本原理</h2><h2 id="项目实践1"><a href="#项目实践1" class="headerlink" title="项目实践1"></a>项目实践1</h2><h2 id="Linux-系统使用和-Git-版本管理"><a href="#Linux-系统使用和-Git-版本管理" class="headerlink" title="Linux 系统使用和 Git 版本管理"></a>Linux 系统使用和 Git 版本管理</h2><h2 id="项目实践2"><a href="#项目实践2" class="headerlink" title="项目实践2"></a>项目实践2</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/06/21/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="cuid9AOyum3mO0Zs_GrvyF8jT" data-title="学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2026/06/21/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="cuid2vu89hFPp9uNZ5mf4up47" data-title="学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
