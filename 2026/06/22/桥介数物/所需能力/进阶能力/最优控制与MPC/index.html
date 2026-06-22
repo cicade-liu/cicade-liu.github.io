@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>最优控制与MPC | cicade-liu 的技术博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="最优控制与模型预测控制（MPC） 桥介数物运动控制核心架构的理论基础——理解 OCS2 框架的必经之路   一、最优控制基础1.1 什么是最优控制？核心问题：给定一个动态系统，找到控制输入使得某个代价函数最小。 12345标准形式：  min  J &#x3D; ∫ L(x, u) dt + φ(x(T))        # 代价：运行代价 + 终端代价  s.t. ẋ &#x3D; f(x, u)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最优控制与MPC">
+<meta property="og:url" content="https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E6%9C%80%E4%BC%98%E6%8E%A7%E5%88%B6%E4%B8%8EMPC/index.html">
+<meta property="og:site_name" content="cicade-liu 的技术博客">
+<meta property="og:description" content="最优控制与模型预测控制（MPC） 桥介数物运动控制核心架构的理论基础——理解 OCS2 框架的必经之路   一、最优控制基础1.1 什么是最优控制？核心问题：给定一个动态系统，找到控制输入使得某个代价函数最小。 12345标准形式：  min  J &#x3D; ∫ L(x, u) dt + φ(x(T))        # 代价：运行代价 + 终端代价  s.t. ẋ &#x3D; f(x, u)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-22T07:05:29.264Z">
+<meta property="article:author" content="cicade-liu">
+<meta property="article:tag" content="技术笔记">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="cicade-liu 的技术博客" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 8.1.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/">进阶能力</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-桥介数物/所需能力/进阶能力/最优控制与MPC" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        最优控制与MPC
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E6%9C%80%E4%BC%98%E6%8E%A7%E5%88%B6%E4%B8%8EMPC/" class="article-date">
+       <time datetime="2026-06-21T16:00:00.000Z" itemprop="datePublished">2026-06-22</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E6%9C%80%E4%BC%98%E6%8E%A7%E5%88%B6%E4%B8%8EMPC/" class="article-date">
+     <time datetime="2026-06-22T07:05:29.264Z" itemprop="dateModified">2026-06-22</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="最优控制与模型预测控制（MPC）"><a href="#最优控制与模型预测控制（MPC）" class="headerlink" title="最优控制与模型预测控制（MPC）"></a>最优控制与模型预测控制（MPC）</h1><blockquote>
+<p>桥介数物运动控制核心架构的理论基础——理解 OCS2 框架的必经之路</p>
+</blockquote>
+<hr>
+<h2 id="一、最优控制基础"><a href="#一、最优控制基础" class="headerlink" title="一、最优控制基础"></a>一、最优控制基础</h2><h3 id="1-1-什么是最优控制？"><a href="#1-1-什么是最优控制？" class="headerlink" title="1.1 什么是最优控制？"></a>1.1 什么是最优控制？</h3><p><strong>核心问题</strong>：给定一个动态系统，找到控制输入使得某个代价函数最小。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">标准形式：</span><br><span class="line">  min  J = ∫ L(x, u) dt + φ(x(T))        # 代价：运行代价 + 终端代价</span><br><span class="line">  s.t. ẋ = f(x, u)                        # 动力学约束</span><br><span class="line">       g(x, u) ≤ 0                        # 不等式约束（力矩限制等）</span><br><span class="line">       x(0) = x₀                          # 初始状态</span><br></pre></td></tr></table></figure>
+
+<p><strong>在足式机器人中</strong>：</p>
+<ul>
+<li><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.294ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 572 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g></g></g></svg></mjx-container> = 机器人状态（质心位置、速度、姿态…）</li>
+<li><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.294ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 572 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g></g></svg></mjx-container> = 控制输入（足底力、关节力矩…）</li>
+<li><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="6.599ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 2916.7 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mo" transform="translate(550,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(939,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mo" transform="translate(1511,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(1955.7,0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(2527.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container> = 机器人动力学（SRB 模型）</li>
+<li><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="6.895ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 3047.7 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mo" transform="translate(681,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(1070,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mo" transform="translate(1642,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(2086.7,0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(2658.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container> = 跟踪误差 + 控制能耗</li>
+<li><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="6.434ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 2843.7 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path></g><g data-mml-node="mo" transform="translate(477,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(866,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mo" transform="translate(1438,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(1882.7,0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(2454.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container> ≤ 0 = 摩擦锥、关节限位…</li>
+</ul>
+<h3 id="1-2-LQR（线性二次调节器）——最优控制的起点"><a href="#1-2-LQR（线性二次调节器）——最优控制的起点" class="headerlink" title="1.2 LQR（线性二次调节器）——最优控制的起点"></a>1.2 LQR（线性二次调节器）——最优控制的起点</h3><p>LQR 是最简单的最优控制器，适用于<strong>线性系统 + 二次代价</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">系统：ẋ = A x + B u</span><br><span class="line">代价：J = ∫ (xᵀQx + uᵀRu) dt + x(T)ᵀQ_f x(T)</span><br><span class="line"></span><br><span class="line">最优解（解析形式）：</span><br><span class="line">u* = -K x</span><br><span class="line">其中 K = R⁻¹BᵀP</span><br><span class="line">P 是代数 Riccati 方程的解：AᵀP + PA - PBR⁻¹BᵀP + Q = 0</span><br></pre></td></tr></table></figure>
+
+<p><strong>里程碑</strong>：手写 LQR 让倒立摆稳定。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> scipy.linalg</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">lqr</span>(<span class="params">A, B, Q, R</span>):</span><br><span class="line">    <span class="string">"""求解 LQR 控制器"""</span></span><br><span class="line">    <span class="comment"># 解代数 Riccati 方程</span></span><br><span class="line">    P = scipy.linalg.solve_continuous_are(A, B, Q, R)</span><br><span class="line">    <span class="comment"># 最优反馈增益</span></span><br><span class="line">    K = np.linalg.inv(R) @ B.T @ P</span><br><span class="line">    <span class="keyword">return</span> K, P</span><br><span class="line"></span><br><span class="line"><span class="comment"># 倒立摆示例</span></span><br><span class="line">g, l, m = <span class="number">9.81</span>, <span class="number">1.0</span>, <span class="number">1.0</span></span><br><span class="line">A = np.array([[<span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">              [g/l, <span class="number">0</span>]])</span><br><span class="line">B = np.array([[<span class="number">0</span>],</span><br><span class="line">              [<span class="number">1</span>/(m*l*l)]])</span><br><span class="line">Q = np.diag([<span class="number">10</span>, <span class="number">1</span>])  <span class="comment"># 重视角度 &gt; 角速度</span></span><br><span class="line">R = np.array([[<span class="number">0.1</span>]])  <span class="comment"># 控制代价</span></span><br><span class="line"></span><br><span class="line">K, P = lqr(A, B, Q, R)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f"最优反馈增益 K = <span class="subst">{K}</span>"</span>)  </span><br><span class="line"><span class="comment"># K ≈ [[-17.3, -5.9]]</span></span><br><span class="line"><span class="comment"># 对角度偏差给予 -17.3 倍的负反馈，对角速度 -5.9 倍</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-为什么-LQR-不够用？"><a href="#1-3-为什么-LQR-不够用？" class="headerlink" title="1.3 为什么 LQR 不够用？"></a>1.3 为什么 LQR 不够用？</h3><table>
+<thead>
+<tr>
+<th align="left">LQR</th>
+<th align="left">足式机器人的需求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">线性系统</td>
+<td align="left">机器人是<strong>非线性</strong>的（SRB 动力学含三角函数）</td>
+</tr>
+<tr>
+<td align="left">无约束</td>
+<td align="left">需要<strong>摩擦锥、关节限位</strong>等约束</td>
+</tr>
+<tr>
+<td align="left">无限时域</td>
+<td align="left">需要<strong>有限时域</strong>的预测规划</td>
+</tr>
+<tr>
+<td align="left">固定反馈增益</td>
+<td align="left">需要根据步态<strong>实时调整</strong></td>
+</tr>
+</tbody></table>
+<p>→ LQR 升级为<strong>非线性 MPC</strong></p>
+<hr>
+<h2 id="二、模型预测控制（MPC）"><a href="#二、模型预测控制（MPC）" class="headerlink" title="二、模型预测控制（MPC）"></a>二、模型预测控制（MPC）</h2><h3 id="2-1-MPC-的核心思想"><a href="#2-1-MPC-的核心思想" class="headerlink" title="2.1 MPC 的核心思想"></a>2.1 MPC 的核心思想</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">在每个控制周期：</span><br><span class="line">1. 测量当前状态 x(t)</span><br><span class="line">2. 求解一个有限时域最优控制问题（预测未来 N 步）</span><br><span class="line">3. 只执行第一步的控制输入 u*(t)</span><br><span class="line">4. 下一个控制周期，用新测量值重新优化（滚动时域）</span><br><span class="line"></span><br><span class="line">为什么叫"滚动时域"？</span><br><span class="line">  t=0：  ───●───●───●───●───  （预测 4 步，执行第 1 步）</span><br><span class="line">  t=1：      ───●───●───●───●───  （重新优化，执行新的第 1 步）</span><br><span class="line">  t=2：          ───●───●───●───●───</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-非线性-MPC-的数学形式"><a href="#2-2-非线性-MPC-的数学形式" class="headerlink" title="2.2 非线性 MPC 的数学形式"></a>2.2 非线性 MPC 的数学形式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">在每个采样时刻 t_k：</span><br><span class="line"></span><br><span class="line">min    Σ_{i=0}^{N-1} L(x_i, u_i) + φ(x_N)   # 累积代价 + 终端代价</span><br><span class="line">x,u</span><br><span class="line">s.t.   x_{i+1} = f_d(x_i, u_i)              # 离散动力学</span><br><span class="line">       x_0 = x(t_k)                           # 初始状态 = 当前测量</span><br><span class="line">       g(x_i, u_i) ≤ 0                        # 约束</span><br></pre></td></tr></table></figure>
+
+<p><strong>在桥介代码中（hunter_bipedal_control）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">代价函数 L(x, u)：</span><br><span class="line">  ├── 状态跟踪误差：||x - x_ref||²_Q      （惩罚偏离参考轨迹）</span><br><span class="line">  ├── 控制量：||u||²_R                     （惩罚过大的足底力）</span><br><span class="line">  └── 控制变化率：||Δu||²_Rd               （惩罚力突变）</span><br><span class="line"></span><br><span class="line">约束 g(x, u)：</span><br><span class="line">  ├── 动力学：x_{i+1} = f(x_i, u_i)       （满足 SRB 模型）</span><br><span class="line">  ├── 摩擦锥：|f_x| ≤ μ f_z, |f_y| ≤ μ f_z（不打滑）</span><br><span class="line">  ├── 单边约束：f_z ≥ 0                    （只能推不能拉）</span><br><span class="line">  └── 力上限：||f|| ≤ f_max                （电机力矩限制）</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-求解方法：将-MPC-转化为-QP"><a href="#2-3-求解方法：将-MPC-转化为-QP" class="headerlink" title="2.3 求解方法：将 MPC 转化为 QP"></a>2.3 求解方法：将 MPC 转化为 QP</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">非线性 MPC 本质是一个非线性规划（NLP）问题。</span><br><span class="line">桥介使用的方法：直接配点法 + SQP（序列二次规划）</span><br><span class="line"></span><br><span class="line">步骤：</span><br><span class="line">1. 对系统动力学做线性化 → 在每个迭代点泰勒展开</span><br><span class="line">   f(x,u) ≈ f(x₀,u₀) + A·(x-x₀) + B·(u-u₀)</span><br><span class="line"></span><br><span class="line">2. 对代价函数做二次近似</span><br><span class="line">   J(x,u) ≈ J₀ + ∇J·[Δx;Δu] + ½[Δx;Δu]ᵀH[Δx;Δu]</span><br><span class="line"></span><br><span class="line">3. 约束（摩擦锥等）本身是线性的 → 保持不变</span><br><span class="line"></span><br><span class="line">结果：每一步迭代求解一个 QP（二次规划）问题：</span><br><span class="line">   min  ½ zᵀ H z + cᵀ z</span><br><span class="line">   s.t. A_eq·z = b_eq</span><br><span class="line">        A_ineq·z ≤ b_ineq</span><br><span class="line"></span><br><span class="line">桥介使用 qpOASES 作为 QP 求解器（在线，高效）</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-桥介-MPC-的关键参数"><a href="#2-4-桥介-MPC-的关键参数" class="headerlink" title="2.4 桥介 MPC 的关键参数"></a>2.4 桥介 MPC 的关键参数</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">典型值</th>
+<th align="left">含义</th>
+<th align="left">调大效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">预测步长 N</td>
+<td align="left">10-20</td>
+<td align="left">向前看多少步</td>
+<td align="left">更远视，但计算更慢</td>
+</tr>
+<tr>
+<td align="left">控制周期 dt</td>
+<td align="left">5ms</td>
+<td align="left">多久求解一次</td>
+<td align="left">更频繁，但对算力要求高</td>
+</tr>
+<tr>
+<td align="left">Q（位置权重）</td>
+<td align="left">diag([100,100,500])</td>
+<td align="left">z 方向通常加更大权重</td>
+<td align="left">更紧的跟踪</td>
+</tr>
+<tr>
+<td align="left">Q（姿态权重）</td>
+<td align="left">diag([50,50,100])</td>
+<td align="left">yaw 方向通常小一些</td>
+<td align="left">防止偏航</td>
+</tr>
+<tr>
+<td align="left">R（力权重）</td>
+<td align="left">1e-4 × I</td>
+<td align="left">惩罚大的足底力</td>
+<td align="left">动作更”省力”但可能跟踪差</td>
+</tr>
+<tr>
+<td align="left">摩擦系数 μ</td>
+<td align="left">0.6-0.8</td>
+<td align="left">足底-地面摩擦</td>
+<td align="left">更大允许更大的切向力</td>
+</tr>
+</tbody></table>
+<p><strong>面试时可以说</strong>：”我改了步频从 1.5Hz 到 2.5Hz，发现 MPC 输出的力变大，走路变快但也开始打滑——因为步频太高时摩擦锥约束被激活，控制器在跟踪和稳定之间做了折中。”</p>
+<hr>
+<h2 id="三、OCS2-框架深入理解"><a href="#三、OCS2-框架深入理解" class="headerlink" title="三、OCS2 框架深入理解"></a>三、OCS2 框架深入理解</h2><h3 id="3-1-OCS2-是什么？"><a href="#3-1-OCS2-是什么？" class="headerlink" title="3.1 OCS2 是什么？"></a>3.1 OCS2 是什么？</h3><p>OCS2（Optimal Control for Switched Systems）是 ETH Zurich 开发的开源最优控制工具箱，专门针对<strong>切换系统</strong>（如足式机器人在不同接触模式间切换）。</p>
+<p><strong>核心特点</strong>：</p>
+<ul>
+<li>支持<strong>混合系统</strong>（连续动力学 + 离散模式切换）</li>
+<li>内置<strong>非线性 MPC</strong>求解器（SLQ/iLQR + SQP）</li>
+<li>高效的<strong>自动微分</strong>和<strong>C++代码生成</strong></li>
+<li>是 ETH ANYmal 机器人的控制框架</li>
+</ul>
+<h3 id="3-2-OCS2-在桥介中的角色"><a href="#3-2-OCS2-在桥介中的角色" class="headerlink" title="3.2 OCS2 在桥介中的角色"></a>3.2 OCS2 在桥介中的角色</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">桥介项目中的 OCS2 调用链：</span><br><span class="line"></span><br><span class="line">1. 系统模型定义（System Model）</span><br><span class="line">   ├── 状态：质心位置、速度、姿态、角速度（13 维）</span><br><span class="line">   ├── 输入：各足底力（12 维）</span><br><span class="line">   └── 动力学：SRB + 运动学</span><br><span class="line">   </span><br><span class="line">2. 代价函数定义（Cost Function）</span><br><span class="line">   ├── task.info：任务级代价</span><br><span class="line">   │   └── 步态周期、步频、站立相/摆动相比例</span><br><span class="line">   └── reference.info：参考轨迹</span><br><span class="line">       └── 期望速度、期望位置、机身高度</span><br><span class="line"></span><br><span class="line">3. 约束定义（Constraints）</span><br><span class="line">   ├── 摩擦锥约束</span><br><span class="line">   ├── 关节力矩限制</span><br><span class="line">   └── 运动学约束（足端工作空间）</span><br><span class="line"></span><br><span class="line">4. 求解器配置（Solver Settings）</span><br><span class="line">   ├── mpc.info：MPC 参数</span><br><span class="line">   │   ├── 预测步长 N</span><br><span class="line">   │   ├── 时间步长 dt</span><br><span class="line">   │   └── QP 求解器类型（qpOASES）</span><br><span class="line">   └── SLQ（Sequential Linear Quadratic）设置</span><br><span class="line">       ├── 最大迭代次数</span><br><span class="line">       └── 收敛阈值</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-代码级理解"><a href="#3-3-代码级理解" class="headerlink" title="3.3 代码级理解"></a>3.3 代码级理解</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 桥介代码中的 OCS2 核心调用（简化示例）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 获取当前状态</span></span><br><span class="line">ocs2::<span class="type">vector_t</span> x = estimator_-&gt;<span class="built_in">getState</span>();  <span class="comment">// [x,y,z,qw,qx,qy,qz,vx,vy,vz,wx,wy,wz]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 获取当前模式序列（哪些腿在支撑相）</span></span><br><span class="line">ocs2::ModeSchedule modeSchedule = gaitScheduler_-&gt;<span class="built_in">getModeSchedule</span>(t, horizon);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 设置 MPC 的参考轨迹</span></span><br><span class="line">mpc_-&gt;<span class="built_in">setReference</span>(t, x, referenceManager);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 求解 MPC</span></span><br><span class="line">mpc_-&gt;<span class="built_in">advanceMpc</span>();           <span class="comment">// 滚动时域优化</span></span><br><span class="line">ocs2::<span class="type">vector_t</span> u = mpc_-&gt;<span class="built_in">getOptimalControl</span>(t);  <span class="comment">// 足底力 [f1x,f1y,f1z,...,f4z]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 将足底力传给 WBC</span></span><br><span class="line">wbc_-&gt;<span class="built_in">setDesiredForces</span>(u);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、WBC（全身控制）入门"><a href="#四、WBC（全身控制）入门" class="headerlink" title="四、WBC（全身控制）入门"></a>四、WBC（全身控制）入门</h2><h3 id="4-1-MPC-到-WBC：为什么需要两层？"><a href="#4-1-MPC-到-WBC：为什么需要两层？" class="headerlink" title="4.1 MPC 到 WBC：为什么需要两层？"></a>4.1 MPC 到 WBC：为什么需要两层？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MPC 输出：足底力 f = [f1, f2, f3, f4]（12维）</span><br><span class="line">机器人实际需要：关节力矩 τ = [τ1, ..., τ12]（12维）</span><br><span class="line"></span><br><span class="line">问题：12个足底力 → 12个关节力矩，映射是什么？</span><br><span class="line">答案：τ = Jᵀ · f （雅可比转置映射）</span><br><span class="line"></span><br><span class="line">但还有额外自由度：</span><br><span class="line">- 摆动足的轨迹跟踪（MPC 没管摆动足的具体轨迹）</span><br><span class="line">- 关节位置优化（远离限位）</span><br><span class="line">- 姿态微调</span><br><span class="line"></span><br><span class="line">→ WBC 在满足接触约束的前提下，分配剩余自由度</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-分层-QP-架构"><a href="#4-2-分层-QP-架构" class="headerlink" title="4.2 分层 QP 架构"></a>4.2 分层 QP 架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">WBC 任务层级（从高到低优先级）：</span><br><span class="line"></span><br><span class="line">第 1 级（硬约束，不可违反）：</span><br><span class="line">  ├── 接触约束：支撑足不打滑 → J_c · q̈ + J̇_c · q̇ = 0</span><br><span class="line">  └── 力矩限制：τ_min ≤ τ ≤ τ_max</span><br><span class="line"></span><br><span class="line">第 2 级（高优先级，尽量满足）：</span><br><span class="line">  └── 质心动力学跟踪：M_com · a_com = Σ f_i + m·g</span><br><span class="line">      执行 MPC 输出的足底力</span><br><span class="line"></span><br><span class="line">第 3 级（中优先级）：</span><br><span class="line">  └── 摆动足轨迹跟踪：J_swing · q̈ + J̇_swing · q̇ = a_swing_desired</span><br><span class="line">      让摆动足到达期望落脚点</span><br><span class="line"></span><br><span class="line">第 4 级（低优先级，软约束）：</span><br><span class="line">  ├── 关节位置居中：min Σ (q_i - q_mid)^2</span><br><span class="line">  └── 最小化能耗：min Σ τ_i^2</span><br><span class="line"></span><br><span class="line">求解方法：分层 QP（Hierarchical QP）</span><br><span class="line">  - 第1级约束必须满足 → 在零空间中求解第2级</span><br><span class="line">  - 第1+2级满足后 → 在更小的零空间中求解第3级</span><br><span class="line">  - 以此类推...</span><br><span class="line"></span><br><span class="line">零空间投影：N_1 = I - J_1⁺ J_1</span><br><span class="line">  将第 k 级的解投影到前 k-1 级约束的零空间中，</span><br><span class="line">  保证低优先级任务不会破坏高优先级任务。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、状态估计"><a href="#五、状态估计" class="headerlink" title="五、状态估计"></a>五、状态估计</h2><h3 id="5-1-传感器融合"><a href="#5-1-传感器融合" class="headerlink" title="5.1 传感器融合"></a>5.1 传感器融合</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">足式机器人的传感器：</span><br><span class="line">  ├── IMU（惯性测量单元）：</span><br><span class="line">  │   ├── 三轴加速度计（测量 a，含重力分量）</span><br><span class="line">  │   └── 三轴陀螺仪（测量 ω）</span><br><span class="line">  ├── 关节编码器：各关节角度 q（精确，高频）</span><br><span class="line">  └── 接触传感器：足底是否着地（离散，有噪声）</span><br><span class="line"></span><br><span class="line">目标：实时估计以下状态（MPC 的输入）：</span><br><span class="line">  质心位置 p, 姿态 q, 线速度 v, 角速度 ω, 足端位置</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-卡尔曼滤波（EKF）"><a href="#5-2-卡尔曼滤波（EKF）" class="headerlink" title="5.2 卡尔曼滤波（EKF）"></a>5.2 卡尔曼滤波（EKF）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">扩展卡尔曼滤波（EKF）在腿式机器人中的应用：</span><br><span class="line"></span><br><span class="line">状态：x = [p, q, v, ω, bias_a, bias_ω]ᵀ</span><br><span class="line"></span><br><span class="line">预测步骤：</span><br><span class="line">  利用 IMU 数据预测下一时刻状态：</span><br><span class="line">  x̂⁻ = f(x̂⁺, imu_acc, imu_gyro)  +  过程噪声</span><br><span class="line"></span><br><span class="line">更新步骤：</span><br><span class="line">  当有新测量到达时（如视觉里程计、关节编码器推算）：</span><br><span class="line">  K = P⁻ Hᵀ (H P⁻ Hᵀ + R)⁻¹       # 卡尔曼增益</span><br><span class="line">  x̂⁺ = x̂⁻ + K (z - H x̂⁻)           # 状态更新</span><br><span class="line">  P⁺ = (I - K H) P⁻                 # 协方差更新</span><br><span class="line"></span><br><span class="line">在桥介代码中：legged_estimation 模块实现了线性卡尔曼滤波</span><br><span class="line">  - 状态：质心位置、速度</span><br><span class="line">  - 预测：IMU 积分</span><br><span class="line">  - 更新：基于运动学的质心位置估计（已知支撑足 + 关节角度）</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-互补滤波"><a href="#5-3-互补滤波" class="headerlink" title="5.3 互补滤波"></a>5.3 互补滤波</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">简单但高效的传感器融合方法（计算量小，常用在嵌入式设备）：</span><br><span class="line"></span><br><span class="line">角速度估计：</span><br><span class="line">  ω_hat = α * ω_gyro + (1-α) * ω_encoder_derived</span><br><span class="line">  （陀螺仪高频好但会漂移，编码器低频好但不漂移）</span><br><span class="line"></span><br><span class="line">姿态估计：</span><br><span class="line">  q_hat = α * (q_prev + ∫ ω_gyro dt) + (1-α) * q_accel_based</span><br><span class="line">  （IMU 积分 + 加速度计重力方向校正）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、学习路径建议"><a href="#六、学习路径建议" class="headerlink" title="六、学习路径建议"></a>六、学习路径建议</h2><h3 id="优先级排序"><a href="#优先级排序" class="headerlink" title="优先级排序"></a>优先级排序</h3><table>
+<thead>
+<tr>
+<th align="left">阶段</th>
+<th align="left">内容</th>
+<th align="left">耗时</th>
+<th align="left">目标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">P0</td>
+<td align="left">理解 LQR，手写倒立摆稳定</td>
+<td align="left">1 天</td>
+<td align="left">建立最优控制直觉</td>
+</tr>
+<tr>
+<td align="left">P0</td>
+<td align="left">理解 MPC 原理（滚动时域 + 约束）</td>
+<td align="left">2 天</td>
+<td align="left">能画出流程图讲解</td>
+</tr>
+<tr>
+<td align="left">P1</td>
+<td align="left">用 CasADi 实现一个简单 MPC</td>
+<td align="left">2 天</td>
+<td align="left">写代码验证理解</td>
+</tr>
+<tr>
+<td align="left">P1</td>
+<td align="left">读 OCS2 文档，理解 SLQ/SQP</td>
+<td align="left">3 天</td>
+<td align="left">能讲清调用链</td>
+</tr>
+<tr>
+<td align="left">P2</td>
+<td align="left">画出 hunter_bipedal_control 的完整 MPC→WBC 链路</td>
+<td align="left">2 天</td>
+<td align="left">面试核心材料</td>
+</tr>
+<tr>
+<td align="left">P2</td>
+<td align="left">修改 task.info 参数并分析效果</td>
+<td align="left">1 天</td>
+<td align="left">有实验数据</td>
+</tr>
+</tbody></table>
+<h3 id="核心资源"><a href="#核心资源" class="headerlink" title="核心资源"></a>核心资源</h3><table>
+<thead>
+<tr>
+<th align="left">资源</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">B站 DR_CAN MPC 系列</td>
+<td align="left">最优控制 + MPC 中文入门</td>
+</tr>
+<tr>
+<td align="left">Brunton《Data-Driven Control》</td>
+<td align="left">MPC 理论深入</td>
+</tr>
+<tr>
+<td align="left">ETH OCS2 官方文档</td>
+<td align="left">框架使用</td>
+</tr>
+<tr>
+<td align="left">CasADi 官方教程</td>
+<td align="left">快速搭建 MPC 原型</td>
+</tr>
+<tr>
+<td align="left">hunter_bipedal_control/src/legged_control/</td>
+<td align="left">看桥介怎么写的</td>
+</tr>
+</tbody></table>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E6%9C%80%E4%BC%98%E6%8E%A7%E5%88%B6%E4%B8%8EMPC/" data-id="cuidFxuddWGcEvFIDMQb-fIbb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "cicade-liu"
+        },
+        "headline": "最优控制与MPC",
+        "image": "https://cicade-liu.github.io",
+        "keywords": "",
+        "genre": "桥介数物 所需能力 进阶能力",
+        "datePublished": "2026-06-22",
+        "dateCreated": "2026-06-22",
+        "dateModified": "2026-06-22",
+        "url": "https://cicade-liu.github.io/2026/06/22/桥介数物/所需能力/进阶能力/最优控制与MPC/",
+        "description": "最优控制与模型预测控制（MPC）
+桥介数物运动控制核心架构的理论基础——理解 OCS2 框架的必经之路
+
+
+一、最优控制基础1.1 什么是最优控制？核心问题：给定一个动态系统，找到控制输入使得某个代价函数最小。
+12345标准形式：  min  J = ∫ L(x, u) dt + φ(x(T))        # 代价：运行代价 + 终端代价  s.t. ẋ = f(x, u)         ",
+        "wordCount": 3576
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/cicade-liu/cicade-liu.github.io/tree/main/2026/06/21" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E5%85%A8%E6%B5%81%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            桥介数物项目开发全流程
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E4%B8%8E%E5%8A%A8%E5%8A%9B%E5%AD%A6/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">机器人运动学与动力学</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/">基础能力</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/">进阶能力</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">11</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2026 cicade-liu</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E6%9C%80%E4%BC%98%E6%8E%A7%E5%88%B6%E4%B8%8EMPC/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

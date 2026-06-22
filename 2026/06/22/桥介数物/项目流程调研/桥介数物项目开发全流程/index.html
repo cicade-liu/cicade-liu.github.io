@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>桥介数物项目开发全流程 | cicade-liu 的技术博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="桥介数物项目开发全流程——从零部署到交付 桥介数物（BridgeDP）的核心产品是桥介引擎（BridgeDP Engine）——一个通用机器人动作开发平台。本章从项目流程的角度，梳理桥介的项目是如何从零开始、一步步部署到客户机器人上的。   一、总体架构概览桥介数物的完整技术栈可以分为 5 层： 1234567891011121314151617181920┌───────────────────">
+<meta property="og:type" content="article">
+<meta property="og:title" content="桥介数物项目开发全流程">
+<meta property="og:url" content="https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E5%85%A8%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:site_name" content="cicade-liu 的技术博客">
+<meta property="og:description" content="桥介数物项目开发全流程——从零部署到交付 桥介数物（BridgeDP）的核心产品是桥介引擎（BridgeDP Engine）——一个通用机器人动作开发平台。本章从项目流程的角度，梳理桥介的项目是如何从零开始、一步步部署到客户机器人上的。   一、总体架构概览桥介数物的完整技术栈可以分为 5 层： 1234567891011121314151617181920┌───────────────────">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-22T07:14:42.575Z">
+<meta property="article:author" content="cicade-liu">
+<meta property="article:tag" content="技术笔记">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="cicade-liu 的技术博客" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 8.1.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-桥介数物/项目流程调研/桥介数物项目开发全流程" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        桥介数物项目开发全流程
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E5%85%A8%E6%B5%81%E7%A8%8B/" class="article-date">
+       <time datetime="2026-06-21T16:00:00.000Z" itemprop="datePublished">2026-06-22</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E5%85%A8%E6%B5%81%E7%A8%8B/" class="article-date">
+     <time datetime="2026-06-22T07:14:42.575Z" itemprop="dateModified">2026-06-22</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="桥介数物项目开发全流程——从零部署到交付"><a href="#桥介数物项目开发全流程——从零部署到交付" class="headerlink" title="桥介数物项目开发全流程——从零部署到交付"></a>桥介数物项目开发全流程——从零部署到交付</h1><blockquote>
+<p>桥介数物（BridgeDP）的核心产品是<strong>桥介引擎</strong>（BridgeDP Engine）——一个通用机器人动作开发平台。本章从项目流程的角度，梳理桥介的项目是如何从零开始、一步步部署到客户机器人上的。</p>
+</blockquote>
+<hr>
+<h2 id="一、总体架构概览"><a href="#一、总体架构概览" class="headerlink" title="一、总体架构概览"></a>一、总体架构概览</h2><p>桥介数物的完整技术栈可以分为 <strong>5 层</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────┐</span><br><span class="line">│              第 5 层：交付与运维                  │</span><br><span class="line">│   客户对接 / 实机部署 / 现场调试 / 持续迭代       │</span><br><span class="line">├─────────────────────────────────────────────────┤</span><br><span class="line">│              第 4 层：桥介引擎（核心壁垒）         │</span><br><span class="line">│   视频提取 → 动作编辑 → 智能重定向 → 商城部署     │</span><br><span class="line">│   "让机器人 3 分钟学会任何动作"                   │</span><br><span class="line">├─────────────────────────────────────────────────┤</span><br><span class="line">│              第 3 层：策略训练                    │</span><br><span class="line">│   Isaac Gym 并行训练 / 模仿学习 / Domain Rand    │</span><br><span class="line">│   分阶段多层次奖励机制                            │</span><br><span class="line">├─────────────────────────────────────────────────┤</span><br><span class="line">│              第 2 层：运动控制核心                 │</span><br><span class="line">│   非线性 MPC（OCS2）/ WBC / 状态估计             │</span><br><span class="line">│   C++/ROS  开源项目 hunter_bipedal_control       │</span><br><span class="line">├─────────────────────────────────────────────────┤</span><br><span class="line">│              第 1 层：基础工具链                   │</span><br><span class="line">│   Linux / CMake / Python / PyTorch / Git         │</span><br><span class="line">│   Gazebo / Isaac Sim / MuJoCo                    │</span><br><span class="line">└─────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、项目流程详解"><a href="#二、项目流程详解" class="headerlink" title="二、项目流程详解"></a>二、项目流程详解</h2><h3 id="阶段-0：客户需求对接与硬件适配"><a href="#阶段-0：客户需求对接与硬件适配" class="headerlink" title="阶段 0：客户需求对接与硬件适配"></a>阶段 0：客户需求对接与硬件适配</h3><p><strong>目标</strong>：理解客户机器人型号、驱动方式、传感器配置，确定技术方案。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">客户机器人信息收集</span><br><span class="line">├── 构型：四足 / 双足 / 轮足 / 人形</span><br><span class="line">├── 硬件参数：关节数 / 电机类型 / 减速比 / 传感器（IMU/力传感器/编码器）</span><br><span class="line">├── 通信接口：CAN / EtherCAT / 串口</span><br><span class="line">├── 上位机：Ubuntu + ROS / 嵌入式板卡</span><br><span class="line">└── 目标场景：行走 / 奔跑 / 跳跃 / 舞蹈 / 上下台阶</span><br></pre></td></tr></table></figure>
+
+<p><strong>交付物</strong>：技术方案文档（包含适配计划、开发周期、里程碑）。</p>
+<p><strong>桥介的独特优势</strong>：由于核心算法采用 modular 设计（MPC + WBC 分离），适配新机器人只需要：</p>
+<ol>
+<li>提供 URDF 模型文件</li>
+<li>配置关节限制和力矩边界</li>
+<li>适配通信接口（ROS topic 封装）</li>
+</ol>
+<hr>
+<h3 id="阶段-1：控制算法部署（MPC-WBC）"><a href="#阶段-1：控制算法部署（MPC-WBC）" class="headerlink" title="阶段 1：控制算法部署（MPC + WBC）"></a>阶段 1：控制算法部署（MPC + WBC）</h3><p>这是传统足式机器人控制的<strong>核心链路</strong>，也是桥介开源项目 <code>hunter_bipedal_control</code> 的主要内容。</p>
+<h4 id="1-1-模型建立"><a href="#1-1-模型建立" class="headerlink" title="1.1 模型建立"></a>1.1 模型建立</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 伪代码：桥介的系统模型定义流程</span></span><br><span class="line"><span class="number">1.</span> 解析 URDF → 提取连杆质量、惯量、关节信息</span><br><span class="line"><span class="number">2.</span> 建立单刚体模型（SRB）：</span><br><span class="line">   - 状态 x = [位置, 姿态, 线速度, 角速度]^T  (<span class="number">12</span>维)</span><br><span class="line">   - 输入 u = [各足底力]^T  (<span class="number">12</span>维，<span class="number">4</span>足×<span class="number">3</span>维)</span><br><span class="line">   - 动力学：ẋ = f(x, u, contact)</span><br><span class="line"><span class="number">3.</span> 使用 Pinocchio 库做高效动力学计算</span><br></pre></td></tr></table></figure>
+
+<p><strong>为什么用单刚体模型（SRB）？</strong></p>
+<ul>
+<li>计算量小（12 维状态 vs 完整多体动力学的 30+ 维）</li>
+<li>MPC 求解快（~1ms），满足 200Hz+ 实时控制</li>
+<li>精度足够（腿的质量通常远小于躯干）</li>
+</ul>
+<h4 id="1-2-MPC-控制器配置"><a href="#1-2-MPC-控制器配置" class="headerlink" title="1.2 MPC 控制器配置"></a>1.2 MPC 控制器配置</h4><p>桥介基于 OCS2 框架的 MPC 配置包含三个核心文件：</p>
+<table>
+<thead>
+<tr>
+<th align="left">配置文件</th>
+<th align="left">作用</th>
+<th align="left">关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>task.info</code></td>
+<td align="left">定义控制任务</td>
+<td align="left">步态周期、步频、抬腿高度、站立相占空比</td>
+</tr>
+<tr>
+<td align="left"><code>reference.info</code></td>
+<td align="left">参考轨迹</td>
+<td align="left">期望速度、期望角速度、机身高度</td>
+</tr>
+<tr>
+<td align="left"><code>mpc.info</code></td>
+<td align="left">求解器配置</td>
+<td align="left">预测步长 N=10~20、QP 求解器 qpOASES</td>
+</tr>
+</tbody></table>
+<p><strong>MPC 求解流程</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">每个控制周期（5ms）：</span><br><span class="line">1. 状态估计 → 获取当前质心状态</span><br><span class="line">2. 步态规划 → 确定当前时刻各足是支撑相还是摆动相</span><br><span class="line">3. 构建 QP 问题 → 最小化代价函数（跟踪误差 + 控制量 + 约束违反）</span><br><span class="line">4. qpOASES 求解 → 得到最优足底力/加速度</span><br><span class="line">5. 发布给 WBC 模块</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-WBC-分解"><a href="#1-3-WBC-分解" class="headerlink" title="1.3 WBC 分解"></a>1.3 WBC 分解</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">MPC 输出：各足底力向量 [f1, f2, f3, f4]</span><br><span class="line"></span><br><span class="line">WBC 任务层级：</span><br><span class="line">  第 1 优先级（硬约束）：接触一致性（支撑足不打滑、不穿透地面）</span><br><span class="line">  第 2 优先级：质心动力学跟踪（执行 MPC 输出的力）</span><br><span class="line">  第 3 优先级：摆动足轨迹跟踪（到达期望落脚点）</span><br><span class="line">  第 4 优先级（软约束）：关节位置居中、最小化能耗</span><br><span class="line"></span><br><span class="line">通过分层 QP + 零空间投影，逐层分配自由度：</span><br><span class="line">  - 优先保证接触约束</span><br><span class="line">  - 在剩余零空间中跟踪 MPC 力</span><br><span class="line">  - 在更小的零空间中处理摆动足</span><br><span class="line">  - 最后在关节空间中优化姿态</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-状态估计"><a href="#1-4-状态估计" class="headerlink" title="1.4 状态估计"></a>1.4 状态估计</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">传感器数据：</span><br><span class="line">  ├── IMU：角速度 + 线加速度（高频，噪声大）</span><br><span class="line">  ├── 关节编码器：各关节角度（高频，较准）</span><br><span class="line">  └── 接触传感器：判断足底是否着地（低频，离散）</span><br><span class="line"></span><br><span class="line">融合方法：</span><br><span class="line">  1. 接触检测 → 确定支撑足</span><br><span class="line">  2. 基于运动学计算质心位置（已知支撑足位置 + 关节角度）</span><br><span class="line">  3. IMU 通过互补滤波/卡尔曼滤波融合</span><br><span class="line">  4. 输出：质心位置、速度、姿态估计</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="阶段-2：RL-策略训练（桥介引擎的核心）"><a href="#阶段-2：RL-策略训练（桥介引擎的核心）" class="headerlink" title="阶段 2：RL 策略训练（桥介引擎的核心）"></a>阶段 2：RL 策略训练（桥介引擎的核心）</h3><p>当基础行走能力验证通过后，复杂动作（舞蹈、功夫、跑酷等）通过 RL 训练实现。</p>
+<h4 id="2-1-数据准备——CWM-数据工厂"><a href="#2-1-数据准备——CWM-数据工厂" class="headerlink" title="2.1 数据准备——CWM 数据工厂"></a>2.1 数据准备——CWM 数据工厂</h4><p>桥介的 CWM（Cross-body Whole-body Motion）数据工厂是<strong>全行业首个</strong>跨本体全身运动数据生产线：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">CWM 数据工厂生产管线：</span><br><span class="line">┌──────────────────────────────────────────────────┐</span><br><span class="line">│  第 1 步：动作设计层                              │</span><br><span class="line">│  · 定义动作类型（行走/跑/跳/舞蹈/功夫...）         │</span><br><span class="line">│  · 按运动覆盖图谱规划动作矩阵                     │</span><br><span class="line">│  · 输出：动作规格书（关节角度范围、时序要求）      │</span><br><span class="line">├──────────────────────────────────────────────────┤</span><br><span class="line">│  第 2 步：多源采集层                              │</span><br><span class="line">│  · 动捕棚（Vicon/OptiTrack）采集高精度全身姿态      │</span><br><span class="line">│  · 视频采集（普通相机/手机）                       │</span><br><span class="line">│  · 动作表演者录制目标动作                          │</span><br><span class="line">│  · 输出：人体骨骼运动序列（SMPL/AMASS 格式）       │</span><br><span class="line">├──────────────────────────────────────────────────┤</span><br><span class="line">│  第 3 步：重定向层                                │</span><br><span class="line">│  · 人体骨骼 → 目标机器人关节映射                   │</span><br><span class="line">│  · 运动学约束检查（关节限位、自碰撞）              │</span><br><span class="line">│  · 物理可行性检查（摩擦力锥、ZMP 约束）            │</span><br><span class="line">│  · 输出：机器人可执行的运动轨迹                    │</span><br><span class="line">├──────────────────────────────────────────────────┤</span><br><span class="line">│  第 4 步：增强层                                  │</span><br><span class="line">│  · 动力学后处理（保证物理一致性）                  │</span><br><span class="line">│  · 仿真增强（添加噪声、扰动、地形变化）            │</span><br><span class="line">│  · 领域随机化配置                                  │</span><br><span class="line">│  · 输出：高质量训练数据                            │</span><br><span class="line">├──────────────────────────────────────────────────┤</span><br><span class="line">│  第 5 步：质检 &amp; 训练反馈                          │</span><br><span class="line">│  · 自动质检（物理约束、关节限位、平滑度）          │</span><br><span class="line">│  · 训练反馈（识别失败模式、回填数据缺口）          │</span><br><span class="line">│  · 失败画像 → 反哺上游各层                         │</span><br><span class="line">└──────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p><strong>闭环机制</strong>：越跑越准、越跑越快。每轮训练后，失败案例会回馈到数据生产层，定向补足数据缺口。</p>
+<h4 id="2-2-仿真训练"><a href="#2-2-仿真训练" class="headerlink" title="2.2 仿真训练"></a>2.2 仿真训练</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">训练环境：Isaac Gym (GPU 并行，数千个环境同时训练)</span><br><span class="line"></span><br><span class="line">算法组合：</span><br><span class="line">  ├── PPO（Proximal Policy Optimization）：主力训练算法</span><br><span class="line">  ├── SAC（Soft Actor-Critic）：高自由度动作</span><br><span class="line">  ├── GAIL / AMP：从动捕数据学习风格</span><br><span class="line">  └── 模仿学习 + RL 融合：桥介"结合模仿学习的深度强化学习算法"</span><br><span class="line"></span><br><span class="line">奖励设计——"分阶段、多层次奖励机制"：</span><br><span class="line">  阶段 1（基础）：站立不摔倒 → 简单奖励（质心高度 &gt; 阈值）</span><br><span class="line">  阶段 2（行走）：速度跟踪 → 中等奖惩（跟踪目标速度）</span><br><span class="line">  阶段 3（复杂）：舞蹈/功夫 → 细粒度奖励（关节角度/末端轨迹匹配）</span><br><span class="line">  </span><br><span class="line">  核心技巧：</span><br><span class="line">  - 每个阶段成功后自动解锁下一阶段</span><br><span class="line">  - Domain Randomization 逐阶段增加（从低噪声到高噪声）</span><br><span class="line">  - 策略网络在不同阶段间做迁移学习</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-Sim2Real-部署"><a href="#2-3-Sim2Real-部署" class="headerlink" title="2.3 Sim2Real 部署"></a>2.3 Sim2Real 部署</h4><p><strong>这是桥介的核心商业壁垒</strong>——“Bridge” 的含义即连接仿真与现实的桥梁。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Sim2Real 关键挑战：</span><br><span class="line">┌──────────────────────┬────────────────────────────┐</span><br><span class="line">│ 仿真中的问题          │ 现实中的表现               │</span><br><span class="line">├──────────────────────┼────────────────────────────┤</span><br><span class="line">│ 完美关节力矩跟踪      │ 力矩饱和、电机延迟          │</span><br><span class="line">│ 精确的状态反馈        │ IMU 漂移、编码器噪声        │</span><br><span class="line">│ 固定地形              │ 不平整地面、随机障碍         │</span><br><span class="line">│ 刚体接触              │ 软地面、滑移                │</span><br><span class="line">│ 零延迟                │ 通信延迟 5-20ms             │</span><br><span class="line">│ 理想模型              │ 加工误差、装配间隙           │</span><br><span class="line">└──────────────────────┴────────────────────────────┘</span><br><span class="line"></span><br><span class="line">桥介的 Sim2Real 方案：</span><br><span class="line">├── 动力学随机化：训练时随机扰动质量/惯量/摩擦力/电机特性</span><br><span class="line">├── 延迟建模：在仿真中显式加入 10-30ms 随机延迟</span><br><span class="line">├── 教师-学生蒸馏：用无噪声教师策略指导有噪声学生策略</span><br><span class="line">├── 渐进式实机部署：</span><br><span class="line">│    1. 先在仿真中跑 10 万+ episodes</span><br><span class="line">│    2. 在简易平地上做实机验证</span><br><span class="line">│    3. 逐步增加地形复杂度</span><br><span class="line">│    4. 收集实机数据微调策略</span><br><span class="line">└── 在线自适应：实机上做少量在线 fine-tune</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="阶段-3：桥介引擎——产品化交付"><a href="#阶段-3：桥介引擎——产品化交付" class="headerlink" title="阶段 3：桥介引擎——产品化交付"></a>阶段 3：桥介引擎——产品化交付</h3><p>桥介引擎是面向客户的<strong>低代码动作开发平台</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">桥介引擎使用流程（客户视角）：</span><br><span class="line"></span><br><span class="line">第 1 步：上传视频</span><br><span class="line">  └── 拍一段跳舞 / 走路的视频，上传到平台</span><br><span class="line"></span><br><span class="line">第 2 步：AI 自动提取</span><br><span class="line">  └── 平台自动提取骨骼姿态数据（基于 ViTPose / OpenPose）</span><br><span class="line">      → 重建 3D 人体运动序列</span><br><span class="line"></span><br><span class="line">第 3 步：动作编辑器</span><br><span class="line">  └── 在网页编辑器中逐帧调整动作</span><br><span class="line">      → 修改关节角度、调整节奏、添加过渡</span><br><span class="line"></span><br><span class="line">第 4 步：智能重定向</span><br><span class="line">  └── 自动将人体动作映射到目标机器人</span><br><span class="line">      → 考虑关节数差异、运动学约束、物理可行性</span><br><span class="line"></span><br><span class="line">第 5 步：一键部署</span><br><span class="line">  └── 从商城选择对应机器人 → 自动下载训练好的策略</span><br><span class="line">      → 在机器人实机上运行</span><br><span class="line"></span><br><span class="line">第 6 步：微调迭代</span><br><span class="line">  └── 不满意？在线调整参数 → 重新训练 → 再次部署</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、时间线与里程碑"><a href="#三、时间线与里程碑" class="headerlink" title="三、时间线与里程碑"></a>三、时间线与里程碑</h2><h3 id="典型项目周期（全新适配一个双足机器人）"><a href="#典型项目周期（全新适配一个双足机器人）" class="headerlink" title="典型项目周期（全新适配一个双足机器人）"></a>典型项目周期（全新适配一个双足机器人）</h3><table>
+<thead>
+<tr>
+<th align="left">周次</th>
+<th align="left">阶段</th>
+<th align="left">交付物</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">第 1 周</td>
+<td align="left">硬件适配 + URDF 建模</td>
+<td align="left">可仿真的机器人模型</td>
+</tr>
+<tr>
+<td align="left">第 2 周</td>
+<td align="left">MPC 基础控制部署</td>
+<td align="left">Gazebo 中稳定行走</td>
+</tr>
+<tr>
+<td align="left">第 3 周</td>
+<td align="left">步态参数调优 + WBC 调试</td>
+<td align="left">多种步态的行走</td>
+</tr>
+<tr>
+<td align="left">第 4-5 周</td>
+<td align="left">RL 策略训练（基础行走）</td>
+<td align="left">Isaac Gym 训练策略</td>
+</tr>
+<tr>
+<td align="left">第 6 周</td>
+<td align="left">Sim2Real 实机迁移</td>
+<td align="left">实机行走验证</td>
+</tr>
+<tr>
+<td align="left">第 7-8 周</td>
+<td align="left">复杂动作训练 + 交付</td>
+<td align="left">客户现场验收</td>
+</tr>
+</tbody></table>
+<p><strong>桥介的压缩能力</strong>：传统方案需要 3-4 个月，桥介引擎可压缩到<strong>数周</strong>，效率提升 <strong>3-4 倍</strong>。</p>
+<hr>
+<h2 id="四、关键工程实践"><a href="#四、关键工程实践" class="headerlink" title="四、关键工程实践"></a>四、关键工程实践</h2><h3 id="4-1-代码管理与协作"><a href="#4-1-代码管理与协作" class="headerlink" title="4.1 代码管理与协作"></a>4.1 代码管理与协作</h3><ul>
+<li><strong>Git 分支策略</strong>：<code>main</code>（稳定版）/ <code>dev</code>（开发版）/ <code>feat/xxx</code>（特性分支）</li>
+<li><strong>CI/CD</strong>：仿真回归测试（每 commit 自动跑 100 个仿真 episode）</li>
+<li><strong>代码审查</strong>：至少一人 Review 后合并</li>
+</ul>
+<h3 id="4-2-实验管理"><a href="#4-2-实验管理" class="headerlink" title="4.2 实验管理"></a>4.2 实验管理</h3><ul>
+<li><strong>Weights &amp; Biases（WandB）</strong>：记录每次训练的奖励曲线、步态质量指标</li>
+<li><strong>ROS bag</strong>：录制实机运行数据，用于离线分析</li>
+<li><strong>数据集版本管理</strong>：DVC（Data Version Control）</li>
+</ul>
+<h3 id="4-3-部署与监控"><a href="#4-3-部署与监控" class="headerlink" title="4.3 部署与监控"></a>4.3 部署与监控</h3><ul>
+<li><strong>Docker 容器化部署</strong>：统一 Ubuntu + ROS 环境</li>
+<li><strong>实机监控面板</strong>：实时显示机器人状态、力矩、IMU 数据</li>
+<li><strong>异常自动停止</strong>：力矩超限 / IMU 异常 → 自动急停</li>
+</ul>
+<hr>
+<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p>桥介数物的项目流程可以概括为一条主线 + 两条辅助线：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">主线：视频 → 数据工厂 → RL 训练 → Sim2Real → 实机部署 → 产品交付</span><br><span class="line">辅助线 1（MPC）：提供基础行走能力 + 混合控制</span><br><span class="line">辅助线 2（数据闭环）：实机反馈 → 改进数据 → 重新训练 → 迭代升级</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E5%85%A8%E6%B5%81%E7%A8%8B/" data-id="cuid9uU2-uqvaVa11epQy-HCg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "cicade-liu"
+        },
+        "headline": "桥介数物项目开发全流程",
+        "image": "https://cicade-liu.github.io",
+        "keywords": "",
+        "genre": "桥介数物 项目流程调研",
+        "datePublished": "2026-06-22",
+        "dateCreated": "2026-06-22",
+        "dateModified": "2026-06-22",
+        "url": "https://cicade-liu.github.io/2026/06/22/桥介数物/项目流程调研/桥介数物项目开发全流程/",
+        "description": "桥介数物项目开发全流程——从零部署到交付
+桥介数物（BridgeDP）的核心产品是桥介引擎（BridgeDP Engine）——一个通用机器人动作开发平台。本章从项目流程的角度，梳理桥介的项目是如何从零开始、一步步部署到客户机器人上的。
+
+
+一、总体架构概览桥介数物的完整技术栈可以分为 5 层：
+1234567891011121314151617181920┌───────────────────",
+        "wordCount": 2022
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/cicade-liu/cicade-liu.github.io/tree/main/2026/06/21" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/%E8%BF%90%E5%8A%A8%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%B2%97%E4%BD%8D%E5%88%86%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            运动控制算法工程师岗位分析
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E6%9C%80%E4%BC%98%E6%8E%A7%E5%88%B6%E4%B8%8EMPC/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">最优控制与MPC</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/">基础能力</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/">进阶能力</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">11</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2026 cicade-liu</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E5%85%A8%E6%B5%81%E7%A8%8B/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

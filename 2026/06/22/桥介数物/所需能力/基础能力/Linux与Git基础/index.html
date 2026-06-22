@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Linux与Git基础 | cicade-liu 的技术博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="Linux 系统使用与 Git 版本管理 桥介数物开发环境的基础设施技能，日常开发必备   第一部分：Linux 系统使用1.1 为什么必须学 Linux？桥介数物的开发环境完全基于 Linux：    依赖工具 运行环境 说明    ROS1 Ubuntu 20.04 机器人操作系统，仅支持 Linux   Isaac Gym Ubuntu 20.04&#x2F;22.04 NVIDIA 官方仅">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux与Git基础">
+<meta property="og:url" content="https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Linux%E4%B8%8EGit%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="cicade-liu 的技术博客">
+<meta property="og:description" content="Linux 系统使用与 Git 版本管理 桥介数物开发环境的基础设施技能，日常开发必备   第一部分：Linux 系统使用1.1 为什么必须学 Linux？桥介数物的开发环境完全基于 Linux：    依赖工具 运行环境 说明    ROS1 Ubuntu 20.04 机器人操作系统，仅支持 Linux   Isaac Gym Ubuntu 20.04&#x2F;22.04 NVIDIA 官方仅">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-22T07:53:11.959Z">
+<meta property="article:author" content="cicade-liu">
+<meta property="article:tag" content="技术笔记">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="cicade-liu 的技术博客" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/">基础能力</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-桥介数物/所需能力/基础能力/Linux与Git基础" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Linux与Git基础
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Linux%E4%B8%8EGit%E5%9F%BA%E7%A1%80/" class="article-date">
+       <time datetime="2026-06-21T16:00:00.000Z" itemprop="datePublished">2026-06-22</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Linux%E4%B8%8EGit%E5%9F%BA%E7%A1%80/" class="article-date">
+     <time datetime="2026-06-22T07:53:11.959Z" itemprop="dateModified">2026-06-22</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="Linux-系统使用与-Git-版本管理"><a href="#Linux-系统使用与-Git-版本管理" class="headerlink" title="Linux 系统使用与 Git 版本管理"></a>Linux 系统使用与 Git 版本管理</h1><blockquote>
+<p>桥介数物开发环境的基础设施技能，日常开发必备</p>
+</blockquote>
+<hr>
+<h2 id="第一部分：Linux-系统使用"><a href="#第一部分：Linux-系统使用" class="headerlink" title="第一部分：Linux 系统使用"></a>第一部分：Linux 系统使用</h2><h3 id="1-1-为什么必须学-Linux？"><a href="#1-1-为什么必须学-Linux？" class="headerlink" title="1.1 为什么必须学 Linux？"></a>1.1 为什么必须学 Linux？</h3><p>桥介数物的开发环境完全基于 Linux：</p>
+<table>
+<thead>
+<tr>
+<th align="left">依赖工具</th>
+<th align="left">运行环境</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ROS1</td>
+<td align="left">Ubuntu 20.04</td>
+<td align="left">机器人操作系统，仅支持 Linux</td>
+</tr>
+<tr>
+<td align="left">Isaac Gym</td>
+<td align="left">Ubuntu 20.04&#x2F;22.04</td>
+<td align="left">NVIDIA 官方仅支持 Linux</td>
+</tr>
+<tr>
+<td align="left">OCS2</td>
+<td align="left">Ubuntu 20.04</td>
+<td align="left">ETH 框架，Linux 编译</td>
+</tr>
+<tr>
+<td align="left">Docker 部署</td>
+<td align="left">Linux Server</td>
+<td align="left">实机控制板跑 Ubuntu</td>
+</tr>
+<tr>
+<td align="left">CUDA</td>
+<td align="left">Linux</td>
+<td align="left">GPU 训练，NVIDIA 驱动</td>
+</tr>
+</tbody></table>
+<p><strong>结论</strong>：不会 Linux &#x3D; 无法在桥介的开发环境中工作。</p>
+<h4 id="补充：Linux-相比-Windows-的核心优势（在机器人开发中）"><a href="#补充：Linux-相比-Windows-的核心优势（在机器人开发中）" class="headerlink" title="补充：Linux 相比 Windows 的核心优势（在机器人开发中）"></a>补充：Linux 相比 Windows 的核心优势（在机器人开发中）</h4><ul>
+<li><strong>包管理器</strong>：<code>apt install</code> 一键安装依赖，不需要去官网下载安装包、配置环境变量。ROS、CUDA、编译工具链全部通过包管理器统一管理。</li>
+<li><strong>命令行优先</strong>：所有工具都可以通过命令行驱动，意味着所有操作都可以脚本化、自动化。训练脚本启动 → 自动编译 → 自动运行 → 自动收集日志，不需要手动点击鼠标。</li>
+<li><strong>文件权限模型</strong>：Linux 的 <code>rwx</code> 权限模型清晰且可编程，SSH 远程登录、多用户协作天然安全。</li>
+</ul>
+<h3 id="1-2-Shell-基础命令"><a href="#1-2-Shell-基础命令" class="headerlink" title="1.2 Shell 基础命令"></a>1.2 Shell 基础命令</h3><h4 id="原理①：Shell-是什么？命令是怎么被执行的？"><a href="#原理①：Shell-是什么？命令是怎么被执行的？" class="headerlink" title="原理①：Shell 是什么？命令是怎么被执行的？"></a>原理①：Shell 是什么？命令是怎么被执行的？</h4><p><strong>Shell</strong> 是用户和 Linux 内核之间的<strong>命令解释器</strong>。你在终端输入 <code>ls -la</code>，Shell 做的事：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">用户输入 &quot;ls -la&quot;</span><br><span class="line">    → Shell 解析命令和参数</span><br><span class="line">    → fork()：复制自身，创建一个子进程</span><br><span class="line">    → 子进程中 exec(&quot;ls&quot;)：用 ls 程序替换子进程的内存</span><br><span class="line">    → 父进程 wait()：等待子进程运行结束</span><br><span class="line">    → 子进程退出，终端重新显示提示符 $</span><br></pre></td></tr></table></figure>
+
+<p>核心系统调用：</p>
+<ul>
+<li><strong><code>fork()</code></strong>：完整复制当前进程。父进程返回子进程 PID，子进程返回 0——这是 Linux 中创建新进程的唯一方式。</li>
+<li><strong><code>exec()</code></strong>：用新程序替换当前进程的整个内存空间。旧程序被「覆盖」，不再存在。</li>
+<li><strong><code>wait()</code></strong>：父进程等待子进程结束，回收资源。</li>
+</ul>
+<blockquote>
+<p><strong>类比</strong>：Shell 就像一个项目经理。你告诉它「跑 <code>ls</code>」，它不自己跑，而是 fork 出一个新员工（子进程），让这个员工去 exec <code>ls</code>。经理 wait 员工干完活，回收工位，然后等你下一个指令。</p>
+</blockquote>
+<h4 id="原理②：管道-的底层实现"><a href="#原理②：管道-的底层实现" class="headerlink" title="原理②：管道 | 的底层实现"></a>原理②：管道 <code>|</code> 的底层实现</h4><p>Unix 哲学：<strong>一个命令只做一件事，但把它做到极致</strong>。<code>ls</code> 只列文件，<code>grep</code> 只搜文本，<code>cat</code> 只输出内容。真正的力量来自把它们用管道组合。</p>
+<p><strong>管道不是简单的「把左边输出传给右边输入」——它有精确的系统级实现：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">cmd1 | cmd2</span><br><span class="line"></span><br><span class="line">底层发生了什么：</span><br><span class="line">1. Shell 调用 pipe() 系统调用</span><br><span class="line">   → 内核创建一个环形缓冲区 + 一对文件描述符</span><br><span class="line">   → fd[0]（读端）  fd[1]（写端）</span><br><span class="line"></span><br><span class="line">2. Shell fork 出两个子进程 cmd1 和 cmd2</span><br><span class="line"></span><br><span class="line">3. 在 cmd1 的子进程中：</span><br><span class="line">   → 关闭 fd[0]（不需要读）</span><br><span class="line">   → dup2(fd[1], 1)：把 fd[1] 复制到 fd 1（stdout）</span><br><span class="line">   → 现在 cmd1 的 printf/cout 会写入管道而不是屏幕</span><br><span class="line"></span><br><span class="line">4. 在 cmd2 的子进程中：</span><br><span class="line">   → 关闭 fd[1]（不需要写）</span><br><span class="line">   → dup2(fd[0], 0)：把 fd[0] 复制到 fd 0（stdin）</span><br><span class="line">   → 现在 cmd2 的 scanf/cin 会从管道读取而不是键盘</span><br><span class="line"></span><br><span class="line">5. 内核自动调度：cmd1 写满缓冲区时自动阻塞，cmd2 读空缓冲区时自动阻塞</span><br><span class="line">   ——生产者-消费者模型，不需要你写任何同步代码。</span><br></pre></td></tr></table></figure>
+
+<h4 id="原理③：标准流与重定向"><a href="#原理③：标准流与重定向" class="headerlink" title="原理③：标准流与重定向"></a>原理③：标准流与重定向</h4><p>每个进程启动时，内核自动打开三个文件描述符：</p>
+<table>
+<thead>
+<tr>
+<th align="left">文件描述符</th>
+<th align="left">名称</th>
+<th align="left">默认指向</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>0</strong></td>
+<td align="left">stdin</td>
+<td align="left">键盘</td>
+<td align="left">程序读取输入</td>
+</tr>
+<tr>
+<td align="left"><strong>1</strong></td>
+<td align="left">stdout</td>
+<td align="left">屏幕</td>
+<td align="left">程序正常输出</td>
+</tr>
+<tr>
+<td align="left"><strong>2</strong></td>
+<td align="left">stderr</td>
+<td align="left">屏幕</td>
+<td align="left">程序错误输出</td>
+</tr>
+</tbody></table>
+<p>重定向的本质：用 <code>dup2()</code> 系统调用改变这些文件描述符的指向。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cmd &gt; file.txt      <span class="comment"># dup2(fd_file, 1)：stdout 不再指向屏幕，指向 file.txt</span></span><br><span class="line">cmd &lt; input.txt     <span class="comment"># dup2(fd_file, 0)：stdin 不再指向键盘，指向 input.txt</span></span><br><span class="line">cmd 2&gt;&amp;1            <span class="comment"># dup2(1, 2)：stderr 指向 stdout 当前所指的地方</span></span><br><span class="line">cmd &gt;&gt; file.txt     <span class="comment"># 同上，但文件以追加模式打开（O_APPEND）</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>为什么区分 stdout 和 stderr？</strong> 正常结果和错误信息分开，你就可以 <code>cmd &gt; output.txt 2&gt; error.log</code>，正常结果存入文件，错误单独记录。管道 <code>|</code> <strong>只传递 stdout</strong>，不传 stderr——这是设计，方便你一边看错误信息一边处理正常输出。</p>
+</blockquote>
+<h4 id="原理④：一切皆文件（VFS）"><a href="#原理④：一切皆文件（VFS）" class="headerlink" title="原理④：一切皆文件（VFS）"></a>原理④：一切皆文件（VFS）</h4><p>Linux 的**虚拟文件系统（VFS）**层让所有资源看起来都像文件。不仅硬盘上的文件和目录是文件：</p>
+<ul>
+<li>键盘输入 → <code>/dev/stdin</code>（读这个文件就是读键盘）</li>
+<li>屏幕输出 → <code>/dev/stdout</code>（写这个文件就是写屏幕）</li>
+<li>进程信息 → <code>/proc/12345/status</code>（读这个文件就能看到进程状态）</li>
+<li>网络连接 → socket 也是文件描述符（<code>send()</code>&#x2F;<code>recv()</code> 就是写&#x2F;读文件）</li>
+</ul>
+<p>这个统一抽象意味着：你可以用同一套 <code>open</code>&#x2F;<code>read</code>&#x2F;<code>write</code>&#x2F;<code>close</code> 操作一切资源。</p>
+<h4 id="文件系统与路径"><a href="#文件系统与路径" class="headerlink" title="文件系统与路径"></a>文件系统与路径</h4><p>Linux 文件系统是一棵以 <code>/</code> 为根的树。没有 Windows 的 C 盘 &#x2F; D 盘概念，所有存储设备都挂载到这棵树的某个分支上。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 文件与目录操作 ----</span></span><br><span class="line"><span class="built_in">ls</span> -la                  <span class="comment"># 列出所有文件（含隐藏）</span></span><br><span class="line">                        <span class="comment"># -l: 显示权限、大小、修改时间（long format）</span></span><br><span class="line">                        <span class="comment"># -a: 显示 . 开头的隐藏文件（配置文件通常是隐藏的）</span></span><br><span class="line"><span class="built_in">cd</span> ~/catkin_ws          <span class="comment"># 进入工作空间（~ = 用户主目录）</span></span><br><span class="line"><span class="built_in">pwd</span>                     <span class="comment"># 显示当前路径（Print Working Directory）</span></span><br><span class="line"><span class="built_in">mkdir</span> -p src/legged_control  <span class="comment"># 递归创建目录（-p: 父目录不存在时自动创建）</span></span><br><span class="line"><span class="built_in">cp</span> -r <span class="built_in">source</span>/ dest/     <span class="comment"># 复制目录（-r: 递归，否则只复制文件不复制目录）</span></span><br><span class="line"><span class="built_in">mv</span> old_name new_name    <span class="comment"># 重命名 / 移动（Linux 中重命名和移动是同一个操作）</span></span><br><span class="line"><span class="built_in">rm</span> -rf build/ devel/    <span class="comment"># 删除（危险！-r 递归 -f 强制，不可逆）</span></span><br><span class="line">find . -name <span class="string">&quot;*.cpp&quot;</span>    <span class="comment"># 查找文件（从当前目录递归搜索所有 .cpp）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 文件查看 ----</span></span><br><span class="line"><span class="built_in">cat</span> CMakeLists.txt      <span class="comment"># 查看文件全部内容（concatenate，原名用于拼接文件）</span></span><br><span class="line">less launch/sim.launch  <span class="comment"># 分页查看（大文件用，上下箭头滚动，q 退出）</span></span><br><span class="line"><span class="built_in">head</span> -n 20 robot.cpp    <span class="comment"># 查看前 20 行（快速预览文件头）</span></span><br><span class="line"><span class="built_in">tail</span> -f log.txt         <span class="comment"># 实时跟踪日志末尾（-f: follow，新内容追加时自动显示）</span></span><br><span class="line">grep -r <span class="string">&quot;mpc&quot;</span> src/      <span class="comment"># 递归搜索文本（-r: recursive，在所有文件中搜索关键词）</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="原理⑤：文件系统-——-inode、硬链接与软链接"><a href="#原理⑤：文件系统-——-inode、硬链接与软链接" class="headerlink" title="原理⑤：文件系统 —— inode、硬链接与软链接"></a>原理⑤：文件系统 —— inode、硬链接与软链接</h4><p>理解文件系统，首先要区分两个概念：</p>
+<table>
+<thead>
+<tr>
+<th align="left">概念</th>
+<th align="left">存储位置</th>
+<th align="left">存什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>文件名</strong></td>
+<td align="left">目录中</td>
+<td align="left">一个「文件名 → inode号」的映射</td>
+</tr>
+<tr>
+<td align="left"><strong>inode</strong></td>
+<td align="left">磁盘上 inode 表中</td>
+<td align="left">权限、大小、时间戳、数据块指针</td>
+</tr>
+</tbody></table>
+<p><strong>目录的本质</strong>：目录是一个特殊的文件，内容是一张「文件名 → inode号」的映射表。<code>ls -i</code> 可以查看每个文件的 inode 号。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 链接（理解 inode 的最好方式）----</span></span><br><span class="line"><span class="built_in">ls</span> -li                     <span class="comment"># -i：显示 inode 号</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 硬链接：多个文件名指向同一个 inode</span></span><br><span class="line"><span class="built_in">ln</span> original.txt hardlink.txt</span><br><span class="line"><span class="comment"># → original.txt 和 hardlink.txt 共享同一个 inode</span></span><br><span class="line"><span class="comment"># → 删除 original.txt，hardlink.txt 仍然有效</span></span><br><span class="line"><span class="comment"># → 不能跨文件系统，不能给目录创建硬链接</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 软链接（符号链接）：一个特殊文件，内容是目标路径</span></span><br><span class="line"><span class="built_in">ln</span> -s /home/user/project shortcut</span><br><span class="line"><span class="comment"># → shortcut 文件本身有自己的 inode，内容是 &quot;/home/user/project&quot;</span></span><br><span class="line"><span class="comment"># → 可以跨文件系统，可以链接目录</span></span><br><span class="line"><span class="comment"># → 删除目标文件，软链接失效（变成「断链」）</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>类比</strong>：inode 是「房产」，硬链接是「多个门牌号指向同一套房」，软链接是「纸条上写了地址」。</p>
+</blockquote>
+<p><strong>文件删除的真正含义</strong>：<code>rm</code> 不是擦除磁盘数据，而是：</p>
+<ol>
+<li>删除目录中的文件名→inode记录</li>
+<li>inode中的「链接计数」减1</li>
+<li>当链接计数归零且没有进程打开该文件时，inode和数据块被标记为「空闲」</li>
+<li>这就是为什么 <code>rm</code> 很快（不实际擦数据），以及被删文件有时能恢复</li>
+</ol>
+<h4 id="原理⑥：Linux-目录结构（FHS-标准）"><a href="#原理⑥：Linux-目录结构（FHS-标准）" class="headerlink" title="原理⑥：Linux 目录结构（FHS 标准）"></a>原理⑥：Linux 目录结构（FHS 标准）</h4><p>Linux 遵循 <strong>FHS</strong>（Filesystem Hierarchy Standard），每个目录有固定用途：</p>
+<table>
+<thead>
+<tr>
+<th align="left">目录</th>
+<th align="left">全称</th>
+<th align="left">用途</th>
+<th align="left">桥介开发中会遇到什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>/bin</code></td>
+<td align="left">Binaries</td>
+<td align="left">基本命令（ls, cp, cat）</td>
+<td align="left">日常使用</td>
+</tr>
+<tr>
+<td align="left"><code>/sbin</code></td>
+<td align="left">System Binaries</td>
+<td align="left">系统管理命令（需要 root）</td>
+<td align="left"><code>ifconfig</code> 等</td>
+</tr>
+<tr>
+<td align="left"><code>/usr</code></td>
+<td align="left">Unix System Resources</td>
+<td align="left">用户程序和数据</td>
+<td align="left"><code>/usr/local/cuda</code>（CUDA安装位置）</td>
+</tr>
+<tr>
+<td align="left"><code>/etc</code></td>
+<td align="left">Editable Text Config</td>
+<td align="left">配置文件</td>
+<td align="left"><code>/etc/apt/sources.list</code>（软件源）</td>
+</tr>
+<tr>
+<td align="left"><code>/var</code></td>
+<td align="left">Variable</td>
+<td align="left">可变数据（日志、缓存）</td>
+<td align="left"><code>/var/log/syslog</code></td>
+</tr>
+<tr>
+<td align="left"><code>/tmp</code></td>
+<td align="left">Temporary</td>
+<td align="left">临时文件（重启清空）</td>
+<td align="left">编译中间文件</td>
+</tr>
+<tr>
+<td align="left"><code>/home</code></td>
+<td align="left">Home</td>
+<td align="left">用户主目录</td>
+<td align="left"><code>~/catkin_ws</code>（你的工作空间）</td>
+</tr>
+<tr>
+<td align="left"><code>/opt</code></td>
+<td align="left">Optional</td>
+<td align="left">第三方软件</td>
+<td align="left"><code>/opt/ros/noetic</code>（ROS安装目录）</td>
+</tr>
+<tr>
+<td align="left"><code>/proc</code></td>
+<td align="left">Process</td>
+<td align="left">内核信息（伪文件系统）</td>
+<td align="left"><code>/proc/cpuinfo</code>、<code>/proc/meminfo</code></td>
+</tr>
+<tr>
+<td align="left"><code>/dev</code></td>
+<td align="left">Devices</td>
+<td align="left">设备文件</td>
+<td align="left"><code>/dev/ttyUSB0</code>（串口）、<code>/dev/nvidia0</code>（GPU）</td>
+</tr>
+<tr>
+<td align="left"><code>/mnt</code></td>
+<td align="left">Mount</td>
+<td align="left">临时挂载点</td>
+<td align="left">挂载外接硬盘</td>
+</tr>
+</tbody></table>
+<h4 id="权限管理原理"><a href="#权限管理原理" class="headerlink" title="权限管理原理"></a>权限管理原理</h4><p>每个文件有三组权限：<strong>拥有者（u）</strong>、<strong>所属组（g）</strong>、<strong>其他人（o）</strong>。每组有三种操作：<strong>读（r&#x3D;4）</strong>、<strong>写（w&#x3D;2）</strong>、<strong>执行（x&#x3D;1）</strong>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 权限管理 ----</span></span><br><span class="line"><span class="built_in">chmod</span> +x run_sim.sh     <span class="comment"># 给所有用户添加可执行权限（+x = 加上 execute）</span></span><br><span class="line"><span class="built_in">chmod</span> 755 script.py     <span class="comment"># 数字模式：拥有者 rwx(7)，组 r-x(5)，其他人 r-x(5)</span></span><br><span class="line">                        <span class="comment"># 7 = 4(r) + 2(w) + 1(x)，5 = 4(r) + 1(x)</span></span><br><span class="line"><span class="built_in">sudo</span> apt install ros-noetic-xxx  <span class="comment"># sudo: 临时获得管理员权限执行一条命令</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>为什么要学权限？</strong> 编译出的可执行文件没有 <code>x</code> 权限就无法运行，SSH 私钥权限太宽（如 644）会被 SSH 拒绝连接。机器人上误改关键文件权限可能导致系统崩溃。</p>
+</blockquote>
+<h4 id="进程管理原理"><a href="#进程管理原理" class="headerlink" title="进程管理原理"></a>进程管理原理</h4><p><strong>进程是什么？</strong> Linux 中每个运行的程序是一个<strong>进程</strong>，有一个唯一的 PID（Process ID）。内核分配独立的虚拟内存空间给每个进程，进程之间互不干扰——一个进程崩溃不会影响其他进程（和 Windows 98 的蓝屏死机说再见）。</p>
+<p><strong>进程的创建</strong>：Linux 中创建新进程的唯一方式是 <code>fork()</code>。<code>fork()</code> 完整复制当前进程的内存空间（写时复制优化），只有返回值不同：</p>
+<ul>
+<li>父进程中 <code>fork()</code> 返回子进程的 PID</li>
+<li>子进程中 <code>fork()</code> 返回 0</li>
+</ul>
+<p>Shell 执行命令就是 <code>fork()</code> + <code>exec()</code> 的组合：先 fork 自己，子进程再 exec 目标程序。</p>
+<p><strong>进程状态</strong>：</p>
+<table>
+<thead>
+<tr>
+<th align="left">状态</th>
+<th align="left">符号</th>
+<th align="left">含义</th>
+<th align="left">典型场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Running</td>
+<td align="left">R</td>
+<td align="left">正在运行或在运行队列中等待 CPU</td>
+<td align="left">正常程序</td>
+</tr>
+<tr>
+<td align="left">Sleeping</td>
+<td align="left">S</td>
+<td align="left">等待事件（如网络数据、用户输入）</td>
+<td align="left"><code>sleep 10</code></td>
+</tr>
+<tr>
+<td align="left">Uninterruptible Sleep</td>
+<td align="left">D</td>
+<td align="left">等待 I&#x2F;O，不可被信号打断</td>
+<td align="left">等待磁盘读写</td>
+</tr>
+<tr>
+<td align="left">Stopped</td>
+<td align="left">T</td>
+<td align="left">被 SIGSTOP 暂停，等待 SIGCONT 恢复</td>
+<td align="left">调试器断点</td>
+</tr>
+<tr>
+<td align="left">Zombie</td>
+<td align="left">Z</td>
+<td align="left">子进程已退出但父进程未 wait</td>
+<td align="left">父进程有 bug，没回收子进程</td>
+</tr>
+</tbody></table>
+<p><strong>信号机制</strong>：信号是 Linux 的<strong>异步通知机制</strong>。不是轮询，而是内核直接打断进程。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 常用信号</span></span><br><span class="line"><span class="comment"># Ctrl+C → SIGINT (2)：中断进程（可被捕获，程序可以做清理后退出）</span></span><br><span class="line"><span class="comment"># Ctrl+Z → SIGTSTP (20)：暂停进程，放入后台（可用 fg 恢复）</span></span><br><span class="line"><span class="comment"># kill -9 → SIGKILL (9)：强制杀死，内核直接终止，进程无法捕获或忽略</span></span><br><span class="line"><span class="comment"># kill 默认 → SIGTERM (15)：请求退出（可被捕获，程序可以优雅清理后退出）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用场景</span></span><br><span class="line"><span class="built_in">kill</span> -9 12345           <span class="comment"># 暴力杀死 PID=12345（训练卡死时用）</span></span><br><span class="line"><span class="built_in">kill</span> 12345              <span class="comment"># 优雅请求退出（给程序机会保存 checkpoint）</span></span><br><span class="line"><span class="built_in">kill</span> -STOP 12345        <span class="comment"># 暂停进程</span></span><br><span class="line"><span class="built_in">kill</span> -CONT 12345        <span class="comment"># 恢复进程</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>为什么优先用 <code>kill</code>（不带 -9）而不要上来就 <code>kill -9</code>？</strong> <code>kill -9</code> 不给进程任何清理机会——RL 训练中直接 kill -9 可能丢失未保存的 checkpoint、损坏日志文件。好的实践是：先 <code>kill</code>（SIGTERM），等几秒，如果进程还在，再 <code>kill -9</code>。</p>
+</blockquote>
+<p><strong>孤儿进程与僵尸进程</strong>：</p>
+<ul>
+<li>父进程死了，子进程被 init（PID&#x3D;1）收养，成为<strong>孤儿进程</strong>——正常，无害</li>
+<li>子进程死了但父进程没 <code>wait()</code>，子进程残留在进程表中，成为<strong>僵尸进程</strong>——占用 PID，积累多了无法创建新进程。<code>top</code> 中看到 <code>Z</code> 状态就是僵尸</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 进程管理 ----</span></span><br><span class="line">ps aux | grep ros       <span class="comment"># 查看所有进程，筛选含 &quot;ros&quot; 的</span></span><br><span class="line">                        <span class="comment"># ps: process status, aux: 显示所有用户的所有进程</span></span><br><span class="line">                        <span class="comment"># | (管道): 把左边命令的输出传给右边命令的输入</span></span><br><span class="line"><span class="built_in">kill</span> -9 12345           <span class="comment"># 强制杀死 PID=12345 的进程（-9: SIGKILL，不可被进程忽略）</span></span><br><span class="line">top                     <span class="comment"># 实时查看 CPU/内存使用（按 q 退出）</span></span><br><span class="line">htop                    <span class="comment"># top 的彩色增强版（需要 apt install htop）</span></span><br><span class="line">nvidia-smi              <span class="comment"># 查看 GPU 使用率、显存、温度</span></span><br><span class="line">watch -n 1 nvidia-smi   <span class="comment"># 每秒自动刷新 nvidia-smi（-n 1: 每 1 秒执行一次）</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>为什么要学进程管理？</strong> 训练脚本卡死时需要 <code>kill</code>；GPU 被占时需要看 <code>nvidia-smi</code> 确认是谁在用；机器人控制进程 CPU 跑满时需要 <code>top</code>&#x2F;<code>htop</code> 定位问题。</p>
+</blockquote>
+<h4 id="压缩与解压"><a href="#压缩与解压" class="headerlink" title="压缩与解压"></a>压缩与解压</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 压缩与解压 ----</span></span><br><span class="line">tar -czf backup.tar.gz folder/   <span class="comment"># tar: 打包, c: 创建, z: gzip压缩, f: 指定文件名</span></span><br><span class="line">tar -xzf backup.tar.gz           <span class="comment"># x: 解包, z: gzip解压, f: 指定文件</span></span><br><span class="line">unzip data.zip -d output/        <span class="comment"># 解压 zip（-d: 指定输出目录）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-ROS-开发环境"><a href="#1-3-ROS-开发环境" class="headerlink" title="1.3 ROS 开发环境"></a>1.3 ROS 开发环境</h3><h4 id="原理：ROS-是什么？为什么需要它？"><a href="#原理：ROS-是什么？为什么需要它？" class="headerlink" title="原理：ROS 是什么？为什么需要它？"></a>原理：ROS 是什么？为什么需要它？</h4><p>ROS（Robot Operating System）不是真正的操作系统，而是一个<strong>分布式通信框架</strong>。它解决的核心问题：机器人上的不同程序（节点）如何相互通信？</p>
+<ul>
+<li><strong>节点（Node）</strong>：一个独立的程序，如「摄像头驱动」「SLAM 建图」「路径规划」</li>
+<li><strong>话题（Topic）</strong>：节点间的通信管道，发布者（Publisher）往话题上发数据，订阅者（Subscriber）从话题上收数据</li>
+<li><strong>主节点（roscore）</strong>：相当于电话总机，负责帮节点互相找到对方</li>
+</ul>
+<p><strong>类比</strong>：ROS 就像公司内部的 Slack 频道。每个节点是一个人，话题是频道。有人往 #joint_states 频道发关节角度，有人订阅这个频道来收数据、做控制。</p>
+<h4 id="Catkin-工作空间"><a href="#Catkin-工作空间" class="headerlink" title="Catkin 工作空间"></a>Catkin 工作空间</h4><p>Catkin 是 ROS1 的编译系统，基于 CMake。工作空间的结构是固定的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">catkin_ws/</span><br><span class="line">├── src/           # 源代码（你只在这里写代码）</span><br><span class="line">├── build/         # 编译中间文件（自动生成，不要手动改）</span><br><span class="line">└── devel/         # 编译结果 + 环境变量脚本</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- ROS 工作空间 ----</span></span><br><span class="line"><span class="comment"># 创建 catkin 工作空间（ROS1）</span></span><br><span class="line"><span class="built_in">mkdir</span> -p ~/catkin_ws/src</span><br><span class="line"><span class="built_in">cd</span> ~/catkin_ws</span><br><span class="line">catkin_make                     <span class="comment"># 编译（等价于 cmake + make）</span></span><br><span class="line"><span class="built_in">source</span> devel/setup.bash         <span class="comment"># 激活工作空间（每次新终端都要执行）</span></span><br><span class="line">                                <span class="comment"># 原理：把当前工作空间的路径加入 ROS_PACKAGE_PATH</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>为什么要 <code>source devel/setup.bash</code>？</strong> 这行命令设置了环境变量，告诉 ROS「我编译的包在这里」。不 source，ROS 就找不到你的包，<code>rosrun</code> 会报 package not found。可以写入 <code>~/.bashrc</code> 让它每次自动执行。</p>
+</blockquote>
+<h4 id="ROS-常用命令"><a href="#ROS-常用命令" class="headerlink" title="ROS 常用命令"></a>ROS 常用命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- ROS 常用命令 ----</span></span><br><span class="line">roscore                         <span class="comment"># 启动 ROS 主节点（必须先跑这个！）</span></span><br><span class="line">rosrun package_name node_name   <span class="comment"># 运行单个节点</span></span><br><span class="line">roslaunch package launch_file   <span class="comment"># 启动 launch 文件（一键启动多个节点）</span></span><br><span class="line">rostopic list                   <span class="comment"># 列出所有活跃的话题</span></span><br><span class="line">rostopic <span class="built_in">echo</span> /joint_states     <span class="comment"># 查看话题上实时的数据流</span></span><br><span class="line">rostopic hz /imu/data           <span class="comment"># 查看话题的发布频率（Hz）</span></span><br><span class="line">rosbag record -a                <span class="comment"># 录制所有话题的数据（-a: all）</span></span><br><span class="line">rosbag play 2024-01-01.bag      <span class="comment"># 回放 bag 文件（离线复现实验）</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>rostopic 的调试价值</strong>：调试时最先用的命令。先 <code>rostopic list</code> 看有哪些话题在跑，再 <code>rostopic echo /xxx</code> 看数据内容是否正常。如果话题没有数据，要么发布者没跑，要么话题名拼错了。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 编译调试 ----</span></span><br><span class="line">catkin build --force-cmake      <span class="comment"># 强制重新 cmake（改了 CMakeLists.txt 后用）</span></span><br><span class="line">catkin build --this             <span class="comment"># 只编译当前包（改了一个包不想全量编译时用）</span></span><br><span class="line">catkin build --verbose          <span class="comment"># 显示详细编译命令和输出（排查编译错误）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 环境变量 ----</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$ROS_PACKAGE_PATH</span>          <span class="comment"># 查看 ROS 会去哪些路径找包</span></span><br><span class="line"><span class="built_in">export</span> ROS_MASTER_URI=http://192.168.1.100:11311  <span class="comment"># 设置 ROS master 地址</span></span><br><span class="line">                                <span class="comment"># 用途：本机运行节点，但 master 在机器人上</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-开发必备工具"><a href="#1-4-开发必备工具" class="headerlink" title="1.4 开发必备工具"></a>1.4 开发必备工具</h3><h4 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 编辑器 ----</span></span><br><span class="line"><span class="comment"># VS Code（推荐）</span></span><br><span class="line">code .                          <span class="comment"># 在 VS Code 中打开当前目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Vim 基础（SSH 远程时必备 —— 远程终端里没有图形界面）</span></span><br><span class="line">vim file.txt</span><br><span class="line"><span class="comment"># i    进入编辑模式（Insert）</span></span><br><span class="line"><span class="comment"># Esc  退出编辑模式</span></span><br><span class="line"><span class="comment"># :wq  保存并退出（write + quit）</span></span><br><span class="line"><span class="comment"># :q!  不保存退出（quit + force）</span></span><br><span class="line"><span class="comment"># /mpc 搜索 &quot;mpc&quot;（按 n 跳下一个匹配，N 上一个）</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>为什么要学 Vim？</strong> SSH 远程登录机器人时，没有 VS Code 的图形界面。改配置文件、看日志，只能用 Vim。不需要精通，但至少要会「打开 → 编辑 → 保存 → 退出」这四个动作。</p>
+</blockquote>
+<h4 id="网络工具"><a href="#网络工具" class="headerlink" title="网络工具"></a>网络工具</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 网络工具 ----</span></span><br><span class="line">ping 192.168.1.100              <span class="comment"># 测试网络连通性（ICMP 协议）</span></span><br><span class="line">                                <span class="comment"># 用途：连机器人前先 ping 一下，确认网络通</span></span><br><span class="line">ssh user@192.168.1.100          <span class="comment"># SSH 远程登录（Secure Shell，加密通信）</span></span><br><span class="line">scp file user@192.168.1.100:~/  <span class="comment"># 通过 SSH 拷贝文件到远程机器</span></span><br><span class="line">ifconfig                        <span class="comment"># 查看本机 IP 地址</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>SSH 原理</strong>：SSH 在你的电脑和远程机器之间建立一条加密的 TCP 通道。登录后，你在终端输入的每一条命令，都是通过这条加密通道发送到远程机器上执行的。<code>scp</code> 也是走 SSH 协议传输文件。</p>
+</blockquote>
+<h4 id="磁盘与内存"><a href="#磁盘与内存" class="headerlink" title="磁盘与内存"></a>磁盘与内存</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 磁盘与内存 ----</span></span><br><span class="line"><span class="built_in">df</span> -h                           <span class="comment"># 磁盘使用（-h: human-readable，以 G/M 显示）</span></span><br><span class="line"><span class="built_in">du</span> -sh folder/                  <span class="comment"># 查看目录大小（-s: 汇总, -h: 人类可读）</span></span><br><span class="line">free -h                         <span class="comment"># 查看内存使用（-h: 人类可读）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-环境配置"><a href="#1-5-环境配置" class="headerlink" title="1.5 环境配置"></a>1.5 环境配置</h3><h4 id="原理：PATH-和环境变量"><a href="#原理：PATH-和环境变量" class="headerlink" title="原理：PATH 和环境变量"></a>原理：PATH 和环境变量</h4><p>当你在终端输入 <code>python3</code>，Shell 怎么知道这个程序在哪里？答案是 <code>PATH</code> 环境变量。它是一个目录列表，Shell 按顺序在这些目录里找可执行文件。</p>
+<p>同理，ROS 用 <code>ROS_PACKAGE_PATH</code> 找包，CUDA 用 <code>CUDA_HOME</code> 找 CUDA 安装位置。环境变量本质是一个「全局字典」，任何程序都能读取。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 安装依赖（Ubuntu 20.04 为例）----</span></span><br><span class="line"><span class="built_in">sudo</span> apt update                 <span class="comment"># 更新软件包列表（不更新就不知道最新的包版本）</span></span><br><span class="line"><span class="built_in">sudo</span> apt install build-essential cmake git   <span class="comment"># build-essential: gcc/g++/make 等</span></span><br><span class="line"><span class="built_in">sudo</span> apt install python3-pip python3-numpy</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- ROS1 Noetic 安装 ----</span></span><br><span class="line"><span class="built_in">sudo</span> sh -c <span class="string">&#x27;echo &quot;deb http://packages.ros.org/ros/ubuntu focal main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#x27;</span></span><br><span class="line">                                <span class="comment"># 添加 ROS 官方软件源</span></span><br><span class="line"><span class="built_in">sudo</span> apt install ros-noetic-desktop-full</span><br><span class="line"><span class="built_in">sudo</span> apt install ros-noetic-gazebo-ros-pkgs ros-noetic-gazebo-ros-control</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- Python 虚拟环境 ----</span></span><br><span class="line">python3 -m venv ~/venv/rl_env               <span class="comment"># 创建虚拟环境（隔离的 Python 环境）</span></span><br><span class="line"><span class="built_in">source</span> ~/venv/rl_env/bin/activate            <span class="comment"># 激活（此终端后续 pip install 都在虚拟环境中）</span></span><br><span class="line">pip install torch numpy matplotlib           <span class="comment"># 安装包（仅影响当前虚拟环境）</span></span><br><span class="line">deactivate                                    <span class="comment"># 退出虚拟环境</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>为什么需要虚拟环境？</strong> 不同项目可能依赖同一个库的不同版本。项目 A 需要 PyTorch 1.13，项目 B 需要 PyTorch 2.0。全局安装会冲突。虚拟环境给每个项目独立的包空间，互不干扰。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- .bashrc 常用配置 ----</span></span><br><span class="line"><span class="comment"># .bashrc 是每次打开新终端时自动执行的脚本，放&quot;每次都要手动 source&quot;的东西</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;source /opt/ros/noetic/setup.bash&quot;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;source ~/catkin_ws/devel/setup.bash&quot;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export CUDA_HOME=/usr/local/cuda&quot;</span> &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第二部分：Git-版本管理"><a href="#第二部分：Git-版本管理" class="headerlink" title="第二部分：Git 版本管理"></a>第二部分：Git 版本管理</h2><h3 id="2-1-Git-的核心原理"><a href="#2-1-Git-的核心原理" class="headerlink" title="2.1 Git 的核心原理"></a>2.1 Git 的核心原理</h3><p>在学命令之前，先理解 Git 的底层模型，否则你会永远停留在「死记硬背命令」的阶段。</p>
+<h4 id="Git-的四种对象：它是怎么存储你的代码的？"><a href="#Git-的四种对象：它是怎么存储你的代码的？" class="headerlink" title="Git 的四种对象：它是怎么存储你的代码的？"></a>Git 的四种对象：它是怎么存储你的代码的？</h4><p>Git 不是存「文件之间的差异（diff）」，而是存<strong>完整快照</strong>（snapshot）。它的数据库只有四种对象类型：</p>
+<table>
+<thead>
+<tr>
+<th align="left">对象</th>
+<th align="left">存什么</th>
+<th align="left">类比</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>blob</strong></td>
+<td align="left">文件内容（不含文件名）</td>
+<td align="left">一张写了内容的纸</td>
+</tr>
+<tr>
+<td align="left"><strong>tree</strong></td>
+<td align="left">目录结构 &#x3D;「文件名 + blob&#x2F;tree 的哈希」列表</td>
+<td align="left">一个文件夹，装着纸和子文件夹</td>
+</tr>
+<tr>
+<td align="left"><strong>commit</strong></td>
+<td align="left">指向一个 tree，包含作者、时间、提交信息、parent commit(s)</td>
+<td align="left">一个带签名的信封，封装了文件夹</td>
+</tr>
+<tr>
+<td align="left"><strong>tag</strong></td>
+<td align="left">指向某个 commit 的固定引用（用于标记版本号如 v1.0）</td>
+<td align="left">贴在信封上的标签</td>
+</tr>
+</tbody></table>
+<p>所有对象都以 <strong>SHA-1 哈希值</strong>作为唯一标识（如 <code>a3f1b2c...</code>）。这是<strong>内容寻址</strong>：相同内容 → 相同哈希 → Git 只存一份。这就是为什么 Git 能高效存储——你复制一份大文件到三个目录，Git 只存一个 blob，三个 tree 各自指向它。</p>
+<h4 id="git-目录里面到底有什么？"><a href="#git-目录里面到底有什么？" class="headerlink" title=".git 目录里面到底有什么？"></a><code>.git</code> 目录里面到底有什么？</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.git/</span><br><span class="line">├── objects/          # 所有对象（blob, tree, commit），按哈希前两位分子目录</span><br><span class="line">│   ├── a3/</span><br><span class="line">│   │   └── f1b2c4d5e6...   # a3f1b2c4d5e6...</span><br><span class="line">│   └── ...</span><br><span class="line">├── refs/</span><br><span class="line">│   ├── heads/        # 分支：refs/heads/main 存的是一个 commit 哈希</span><br><span class="line">│   │   └── main      #   内容: a3f1b2c4d5e6...</span><br><span class="line">│   └── tags/         # 标签</span><br><span class="line">│       └── v1.0</span><br><span class="line">├── HEAD              # 指向当前分支（内容: ref: refs/heads/main）</span><br><span class="line">├── index             # 暂存区（二进制文件，记录「下次 commit 应该包含什么」）</span><br><span class="line">└── config            # 仓库配置（remote url、用户名等）</span><br></pre></td></tr></table></figure>
+
+<p>有了这个结构，就能理解 Git 的核心操作：</p>
+<ul>
+<li><code>git add</code> → 计算文件 SHA-1，在 <code>objects/</code> 存 blob，更新 <code>index</code></li>
+<li><code>git commit</code> → 根据 index 创建 tree 对象，再创建 commit 对象</li>
+<li><code>git checkout feat/xxx</code> → 修改 HEAD，把目标 commit 的 tree 展开到工作区</li>
+</ul>
+<h4 id="Git-是有向无环图（DAG）"><a href="#Git-是有向无环图（DAG）" class="headerlink" title="Git 是有向无环图（DAG）"></a>Git 是有向无环图（DAG）</h4><p>Git 的每一次 commit 不是保存整个项目的压缩包，而是保存一个指向「当前项目状态」的快照对象。这些 commit 对象通过父子关系连起来，形成一张<strong>有向无环图</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A --- B --- C (main)</span><br><span class="line">       \</span><br><span class="line">        D --- E (feat/new_controller)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>每个字母是一个 commit</li>
+<li><code>main</code> 和 <code>feat/new_controller</code> 是<strong>分支</strong>（指向某个 commit 的指针）</li>
+<li>合并（merge）就是在这个图上新建一个有两个父节点的 commit</li>
+</ul>
+<h4 id="三个区域：工作区-→-暂存区-→-仓库"><a href="#三个区域：工作区-→-暂存区-→-仓库" class="headerlink" title="三个区域：工作区 → 暂存区 → 仓库"></a>三个区域：工作区 → 暂存区 → 仓库</h4><table>
+<thead>
+<tr>
+<th align="left">区域</th>
+<th align="left">通俗理解</th>
+<th align="left">Git 命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>工作区</strong>（Working Directory）</td>
+<td align="left">你正在编辑的文件</td>
+<td align="left">你直接用编辑器改</td>
+</tr>
+<tr>
+<td align="left"><strong>暂存区</strong>（Staging Area &#x2F; Index）</td>
+<td align="left">「这次要提交的」文件列表</td>
+<td align="left"><code>git add</code></td>
+</tr>
+<tr>
+<td align="left"><strong>仓库</strong>（Repository &#x2F; HEAD）</td>
+<td align="left">已提交的历史记录</td>
+<td align="left"><code>git commit</code></td>
+</tr>
+</tbody></table>
+<p><strong>为什么要有暂存区？</strong> 它让你可以选择性地提交。你改了 5 个文件，但这次只想提交其中 2 个。<code>git add</code> 这两个，<code>git commit</code> 时就只会提交它们。没有暂存区的版本控制系统（如 SVN）做不到这点。</p>
+<h3 id="2-2-Git-在桥介项目中的使用场景"><a href="#2-2-Git-在桥介项目中的使用场景" class="headerlink" title="2.2 Git 在桥介项目中的使用场景"></a>2.2 Git 在桥介项目中的使用场景</h3><table>
+<thead>
+<tr>
+<th align="left">场景</th>
+<th align="left">Git 操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">克隆开源代码</td>
+<td align="left"><code>git clone https://github.com/bridgedp/hunter_bipedal_control</code></td>
+</tr>
+<tr>
+<td align="left">实验分支</td>
+<td align="left"><code>git checkout -b feat/new_gait</code> 然后改参数</td>
+</tr>
+<tr>
+<td align="left">保存进度</td>
+<td align="left"><code>git add . &amp;&amp; git commit -m &quot;调整步频参数&quot;</code></td>
+</tr>
+<tr>
+<td align="left">代码审查</td>
+<td align="left">提交 Pull Request，等待 review</td>
+</tr>
+<tr>
+<td align="left">版本回退</td>
+<td align="left"><code>git log</code> 查看历史 → <code>git checkout &lt;commit&gt;</code> 回到指定版本</td>
+</tr>
+<tr>
+<td align="left">多人协作</td>
+<td align="left"><code>git pull</code> 拉取最新代码 → 解决冲突 → <code>git push</code></td>
+</tr>
+</tbody></table>
+<h3 id="2-3-基础工作流"><a href="#2-3-基础工作流" class="headerlink" title="2.3 基础工作流"></a>2.3 基础工作流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 初始化与克隆 ----</span></span><br><span class="line">git init                        <span class="comment"># 在当前目录初始化新仓库（创建 .git 文件夹）</span></span><br><span class="line">git <span class="built_in">clone</span> &lt;url&gt;                 <span class="comment"># 克隆远程仓库到本地</span></span><br><span class="line">git <span class="built_in">clone</span> --recursive &lt;url&gt;     <span class="comment"># 克隆含子模块（OCS2 等依赖会以子模块形式引用）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 日常修改 ----</span></span><br><span class="line">git status                      <span class="comment"># 查看修改状态（最常用的命令！）</span></span><br><span class="line">                                <span class="comment"># 告诉你：哪些文件改了、哪些在暂存区、哪些没追踪</span></span><br><span class="line">git diff                        <span class="comment"># 查看工作区和暂存区的差异（还没 add 的修改）</span></span><br><span class="line">git add file.cpp                <span class="comment"># 把文件加入暂存区</span></span><br><span class="line">git add -p file.cpp             <span class="comment"># 交互式暂存（hunk 级别，选择哪些修改要提交）</span></span><br><span class="line">git commit -m <span class="string">&quot;描述修改内容&quot;</span>     <span class="comment"># 把暂存区的内容提交到仓库</span></span><br><span class="line">git commit --amend              <span class="comment"># 修改上一次 commit（追加修改或改 message，未 push 时用）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 分支操作 ----</span></span><br><span class="line">git branch                      <span class="comment"># 查看本地分支（当前分支前有 * 号）</span></span><br><span class="line">git branch feat/new_controller  <span class="comment"># 创建新分支（只是新建指针，不会自动切换）</span></span><br><span class="line">git checkout feat/new_controller# 切换分支（HEAD 指针移到目标分支）</span><br><span class="line">git checkout -b feat/xxx        <span class="comment"># 创建并切换（最常用的组合）</span></span><br><span class="line">git merge feat/xxx              <span class="comment"># 把 feat/xxx 合并到当前分支</span></span><br><span class="line">git branch -d feat/xxx          <span class="comment"># 删除分支（-d: 安全，未合并的分支不给删；-D: 强制）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 远程操作 ----</span></span><br><span class="line">git push origin main            <span class="comment"># 推送本地 main 分支到远程 origin</span></span><br><span class="line">git pull origin main            <span class="comment"># 拉取远程 main 并自动合并（= fetch + merge）</span></span><br><span class="line">git fetch origin                <span class="comment"># 只拉取，不合并（安全地看看远程改了什么）</span></span><br><span class="line">git remote -v                   <span class="comment"># 查看远程仓库地址</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 历史查看 ----</span></span><br><span class="line">git <span class="built_in">log</span> --oneline --graph       <span class="comment"># 简洁的分支拓扑图（每个 commit 一行）</span></span><br><span class="line">git <span class="built_in">log</span> -p file.cpp             <span class="comment"># 查看某文件的完整修改历史（每次 commit 的 diff）</span></span><br><span class="line">git blame file.cpp              <span class="comment"># 查看每行代码是谁写的、哪次 commit 改的</span></span><br><span class="line">                                <span class="comment"># 用途：追踪 bug，找到引入问题的那次 commit</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-常见场景处理"><a href="#2-4-常见场景处理" class="headerlink" title="2.4 常见场景处理"></a>2.4 常见场景处理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 场景 1：修改了代码但想撤销 ----</span></span><br><span class="line">git checkout -- file.cpp        <span class="comment"># 撤销未暂存的修改（恢复到上次 commit 的状态）</span></span><br><span class="line">                                <span class="comment"># 原理：用仓库中的版本覆盖工作区</span></span><br><span class="line">git reset HEAD file.cpp         <span class="comment"># 取消暂存（从暂存区移除，但保留文件修改）</span></span><br><span class="line">git reset --hard HEAD           <span class="comment"># 完全回到上一次提交（危险！丢弃所有修改）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 场景 2：提交错分支了 ----</span></span><br><span class="line">git <span class="built_in">log</span> --oneline               <span class="comment"># 找到目标分支的最新 commit hash</span></span><br><span class="line">git reset --soft &lt;target_commit&gt; <span class="comment"># 撤销 commit 但保留修改在暂存区</span></span><br><span class="line">                                <span class="comment"># --soft: 只移动 HEAD，不动暂存区和工作区</span></span><br><span class="line">git stash                       <span class="comment"># 暂存修改（把工作区改动存入临时栈）</span></span><br><span class="line">git checkout correct_branch     <span class="comment"># 切换正确分支</span></span><br><span class="line">git stash pop                   <span class="comment"># 恢复修改（从栈顶取出）</span></span><br><span class="line">git add . &amp;&amp; git commit -m <span class="string">&quot;...&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>reset 三种模式的区别</strong>：</p>
+<ul>
+<li><code>--soft</code>：只撤销 commit，修改保留在<strong>暂存区</strong>（方便重新 commit）</li>
+<li><code>--mixed</code>（默认）：撤销 commit 和暂存，修改保留在<strong>工作区</strong></li>
+<li><code>--hard</code>：全部丢弃，修改也不保留（<strong>不可逆，慎用</strong>）</li>
+</ul>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 场景 3：合并冲突 ----</span></span><br><span class="line"><span class="comment"># 冲突原因：两个人改了同一个文件的同一行，Git 不知道该保留谁的</span></span><br><span class="line"><span class="comment"># 当 git merge 或 git pull 出现冲突时：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 查看冲突文件：</span></span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 编辑文件，处理冲突标记：</span></span><br><span class="line"><span class="comment">#    &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD         （你的修改）</span></span><br><span class="line"><span class="comment">#    你的代码</span></span><br><span class="line"><span class="comment">#    =======              （分隔线）</span></span><br><span class="line"><span class="comment">#    别人的代码</span></span><br><span class="line"><span class="comment">#    &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch_name  （别人的修改）</span></span><br><span class="line"><span class="comment"># 手动选择保留哪个版本（或结合两者），删除 Git 的冲突标记</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 标记已解决：</span></span><br><span class="line">git add resolved_file.cpp       <span class="comment"># add 就是在告诉 Git「这个文件的冲突我处理好了」</span></span><br><span class="line">git commit -m <span class="string">&quot;解决合并冲突&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 场景 4：临时切分支处理紧急问题 ----</span></span><br><span class="line">git stash                       <span class="comment"># 保存当前工作进度到 stash 栈</span></span><br><span class="line">git checkout main               <span class="comment"># 切去处理问题</span></span><br><span class="line"><span class="comment"># ... 处理完毕 ...</span></span><br><span class="line">git checkout feat/xxx           <span class="comment"># 切回工作分支</span></span><br><span class="line">git stash pop                   <span class="comment"># 恢复之前的工作进度</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 场景 5：rebase（保持提交历史整洁）----</span></span><br><span class="line"><span class="comment"># 问题：在 feat 分支上做了 5 个小 commit，push 后历史混乱</span></span><br><span class="line"><span class="comment"># 解决：把 5 个 squash 成 1 个</span></span><br><span class="line">git rebase -i HEAD~3            <span class="comment"># 交互式 rebase 最近 3 个 commit</span></span><br><span class="line"><span class="comment"># 把后两个的 pick 改成 squash（或 s），合并为一个 commit</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>rebase vs merge</strong>：</p>
+<ul>
+<li><code>merge</code>：保留真实的分支历史，产生一个合并 commit。历史图有分叉。</li>
+<li><code>rebase</code>：把当前分支的 commit「搬到」目标分支的最新 commit 之后，历史变成一条直线。更整洁，但会改写历史 —— <strong>永远不要对已 push 的分支做 rebase</strong>。</li>
+</ul>
+</blockquote>
+<h3 id="2-5-Git-最佳实践（桥介风格）"><a href="#2-5-Git-最佳实践（桥介风格）" class="headerlink" title="2.5 Git 最佳实践（桥介风格）"></a>2.5 Git 最佳实践（桥介风格）</h3><ol>
+<li><p><strong>Commit Message 规范</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">feat: 添加跳跃步态支持</span><br><span class="line">fix: 修复四足模式切换时 IMU 漂移问题</span><br><span class="line">refactor: 重构 WBC 任务优先级分配逻辑</span><br><span class="line">docs: 更新 README 中的编译说明</span><br><span class="line">test: 添加步态切换的回归测试</span><br></pre></td></tr></table></figure>
+<p>遵循 Conventional Commits 规范：<code>type: 简短描述</code>。type 明确告诉 reviewer 这个 commit 做了什么类型的改动。</p>
+</li>
+<li><p><strong>分支命名</strong>：</p>
+<ul>
+<li><code>feat/xxx</code>：新功能（feature）</li>
+<li><code>fix/xxx</code>：修 bug</li>
+<li><code>exp/xxx</code>：实验性代码（experiment，别合入 main）</li>
+</ul>
+</li>
+<li><p><strong>每次 commit 只做一件事</strong>：不要一个 commit 改了控制器又改了 URDF 又删了文档。出问题时 <code>git bisect</code> 才能精确定位。</p>
+</li>
+<li><p><strong>push 前先 pull</strong>：<code>git pull --rebase</code> 保持线性历史，避免无意义的 merge commit。</p>
+</li>
+<li><p><strong><code>.gitignore</code> 配置</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 必须忽略的文件（编译产物、日志、大文件）</span></span><br><span class="line">build/</span><br><span class="line">devel/</span><br><span class="line">*.pyc</span><br><span class="line">__pycache__/</span><br><span class="line">logs/</span><br><span class="line">*.bag          <span class="comment"># rosbag 文件很大，不能入 git</span></span><br><span class="line">*.pt           <span class="comment"># 训练好的大模型权重（几百 MB）</span></span><br><span class="line">wandb/         <span class="comment"># 实验记录</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="第三部分：Docker-基础（进阶）"><a href="#第三部分：Docker-基础（进阶）" class="headerlink" title="第三部分：Docker 基础（进阶）"></a>第三部分：Docker 基础（进阶）</h2><h3 id="3-1-原理：Docker-解决什么问题？"><a href="#3-1-原理：Docker-解决什么问题？" class="headerlink" title="3.1 原理：Docker 解决什么问题？"></a>3.1 原理：Docker 解决什么问题？</h3><p>团队中每个人的电脑环境不一样（Ubuntu 版本、CUDA 版本、ROS 版本），A 能编译的代码 B 编译报错。这就是经典的「<strong>在我电脑上能跑</strong>」问题。</p>
+<p>Docker 的解决方案：把代码和它依赖的整个操作系统环境打包成一个<strong>镜像（Image）</strong>。任何人拿到这个镜像，就能在一个隔离的**容器（Container）**中运行，环境完全一致。</p>
+<p><strong>镜像 vs 容器</strong>：镜像是「菜谱」（静态的模板），容器是「做出来的菜」（运行中的实例）。一个镜像可以启动多个容器。</p>
+<p><strong>为什么桥介需要 Docker？</strong> 跨机器人部署时，每台机器人的 Ubuntu 版本、驱动版本、依赖库版本都可能不同。Docker 保证训练好的策略在任何机器人的控制板上都能一模一样地运行。</p>
+<h3 id="3-2-基础命令"><a href="#3-2-基础命令" class="headerlink" title="3.2 基础命令"></a>3.2 基础命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 基础命令 ----</span></span><br><span class="line">docker pull ubuntu:20.04                         <span class="comment"># 拉取基础镜像</span></span><br><span class="line">docker run -it --gpus all ubuntu:20.04 bash      <span class="comment"># 启动容器（-it: 交互终端, --gpus all: 挂载所有 GPU）</span></span><br><span class="line">docker ps                                        <span class="comment"># 查看正在运行的容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it container_name bash              <span class="comment"># 进入运行中的容器（开一个新的终端）</span></span><br><span class="line">docker build -t legged_control:v1 .              <span class="comment"># 从当前目录的 Dockerfile 构建镜像</span></span><br><span class="line">docker-compose up                                <span class="comment"># 启动多容器服务（编排工具）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 典型的桥介开发容器 ----</span></span><br><span class="line"><span class="comment"># Dockerfile 示例：</span></span><br><span class="line"><span class="comment"># FROM nvidia/cuda:11.3-runtime-ubuntu20.04</span></span><br><span class="line"><span class="comment"># RUN apt update &amp;&amp; apt install -y ros-noetic-desktop-full</span></span><br><span class="line"><span class="comment"># RUN pip install torch isaacgym</span></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Linux%E4%B8%8EGit%E5%9F%BA%E7%A1%80/" data-id="cuidA-okIpNeVFyEknLjtra9X" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "cicade-liu"
+        },
+        "headline": "Linux与Git基础",
+        "image": "https://cicade-liu.github.io",
+        "keywords": "",
+        "genre": "桥介数物 所需能力 基础能力",
+        "datePublished": "2026-06-22",
+        "dateCreated": "2026-06-22",
+        "dateModified": "2026-06-22",
+        "url": "https://cicade-liu.github.io/2026/06/22/桥介数物/所需能力/基础能力/Linux与Git基础/",
+        "description": "Linux 系统使用与 Git 版本管理
+桥介数物开发环境的基础设施技能，日常开发必备
+
+
+第一部分：Linux 系统使用1.1 为什么必须学 Linux？桥介数物的开发环境完全基于 Linux：
+
+
+
+依赖工具
+运行环境
+说明
+
+
+
+ROS1
+Ubuntu 20.04
+机器人操作系统，仅支持 Linux
+
+
+Isaac Gym
+Ubuntu 20.04&#x2F;22.04
+NVIDIA 官方仅",
+        "wordCount": 4655
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/cicade-liu/cicade-liu.github.io/tree/main/2026/06/21" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Python%E4%B8%8EPyTorch%E5%9F%BA%E7%A1%80/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Python与PyTorch基础
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">机器学习和深度学习基本原理</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/">基础能力</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/">进阶能力</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">11</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2026 cicade-liu</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Linux%E4%B8%8EGit%E5%9F%BA%E7%A1%80/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

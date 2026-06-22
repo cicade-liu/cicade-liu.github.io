@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Python与PyTorch基础 | cicade-liu 的技术博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="Python 与 PyTorch 基础第一部分：Python 与 PyTorch 的关系与分工1.1 各自定位Python 和 PyTorch 是两个不同层面的东西，用一句话概括：  Python 是你的语言能力，PyTorch 是你用这门语言写出的数学工具。你会说话 ≠ 你会推导数学公式，但你必须会说话才能写公式。     工具 定位 桥介项目中的角色    Python 通用编程语言 写训练脚">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python与PyTorch基础">
+<meta property="og:url" content="https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Python%E4%B8%8EPyTorch%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="cicade-liu 的技术博客">
+<meta property="og:description" content="Python 与 PyTorch 基础第一部分：Python 与 PyTorch 的关系与分工1.1 各自定位Python 和 PyTorch 是两个不同层面的东西，用一句话概括：  Python 是你的语言能力，PyTorch 是你用这门语言写出的数学工具。你会说话 ≠ 你会推导数学公式，但你必须会说话才能写公式。     工具 定位 桥介项目中的角色    Python 通用编程语言 写训练脚">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-22T07:53:42.407Z">
+<meta property="article:author" content="cicade-liu">
+<meta property="article:tag" content="技术笔记">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="cicade-liu 的技术博客" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 8.1.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/">基础能力</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-桥介数物/所需能力/基础能力/Python与PyTorch基础" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Python与PyTorch基础
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Python%E4%B8%8EPyTorch%E5%9F%BA%E7%A1%80/" class="article-date">
+       <time datetime="2026-06-21T16:00:00.000Z" itemprop="datePublished">2026-06-22</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Python%E4%B8%8EPyTorch%E5%9F%BA%E7%A1%80/" class="article-date">
+     <time datetime="2026-06-22T07:53:42.407Z" itemprop="dateModified">2026-06-22</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="Python-与-PyTorch-基础"><a href="#Python-与-PyTorch-基础" class="headerlink" title="Python 与 PyTorch 基础"></a>Python 与 PyTorch 基础</h1><h2 id="第一部分：Python-与-PyTorch-的关系与分工"><a href="#第一部分：Python-与-PyTorch-的关系与分工" class="headerlink" title="第一部分：Python 与 PyTorch 的关系与分工"></a>第一部分：Python 与 PyTorch 的关系与分工</h2><h3 id="1-1-各自定位"><a href="#1-1-各自定位" class="headerlink" title="1.1 各自定位"></a>1.1 各自定位</h3><p>Python 和 PyTorch 是两个不同层面的东西，用一句话概括：</p>
+<blockquote>
+<p><strong>Python 是你的语言能力，PyTorch 是你用这门语言写出的数学工具。你会说话 ≠ 你会推导数学公式，但你必须会说话才能写公式。</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">工具</th>
+<th align="left">定位</th>
+<th align="left">桥介项目中的角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Python</strong></td>
+<td align="left">通用编程语言</td>
+<td align="left">写训练脚本、数据处理、实验管理、自动化测试</td>
+</tr>
+<tr>
+<td align="left"><strong>PyTorch</strong></td>
+<td align="left">深度学习框架</td>
+<td align="left">搭建策略网络、训练 RL 模型、加载 / 保存权重</td>
+</tr>
+</tbody></table>
+<p><strong>进一步解释</strong>：</p>
+<ul>
+<li>Python 是通用编程语言，提供语法、基础数据类型、文件 I/O、循环、函数、类等基础能力。能写爬虫、后端、数据分析、脚本、AI —— 所有程序都能用 Python 写。</li>
+<li>PyTorch 是基于 Python 开发的深度学习框架，底层用 C++/CUDA 实现高性能运算，上层封装 Python API 方便调用。它不是一个独立的语言，而是 Python 的一个库（<code>import torch</code>），类似于 <code>numpy</code>（数值计算）、<code>pandas</code>（数据分析）、<code>requests</code>（HTTP 请求）。</li>
+</ul>
+<h3 id="1-2-依赖关系"><a href="#1-2-依赖关系" class="headerlink" title="1.2 依赖关系"></a>1.2 依赖关系</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Python 解释器 → import torch（PyTorch 库）→ 写神经网络代码</span><br></pre></td></tr></table></figure>
+
+<p>标准使用流程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch  <span class="comment"># 加载 PyTorch</span></span><br><span class="line">x = torch.tensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])  <span class="comment"># 使用框架提供的张量</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-各自的职责"><a href="#1-3-各自的职责" class="headerlink" title="1.3 各自的职责"></a>1.3 各自的职责</h3><p><strong>Python 负责</strong>：</p>
+<ul>
+<li>程序逻辑：循环、判断、函数、类定义</li>
+<li>数据读取、预处理、打印日志、保存文件</li>
+<li>调用 PyTorch 提供的接口</li>
+</ul>
+<p><strong>PyTorch 负责 AI 核心能力</strong>（五大模块）：</p>
+<ol>
+<li><strong>张量 Tensor</strong>：GPU 加速的多维数组，替代 NumPy，是深度学习计算的基础载体</li>
+<li><strong>自动微分 autograd</strong>：自动求导，训练网络的核心 —— 不用手动推导反向传播公式</li>
+<li><strong>神经网络层 torch.nn</strong>：全连接层、卷积层、激活函数、容器（Sequential）等</li>
+<li><strong>优化器与损失函数</strong>：Adam、SGD、MSE、交叉熵等训练工具</li>
+<li><strong>CUDA GPU 加速</strong>：将计算搬到显卡上，并行加速几十到上百倍</li>
+</ol>
+<h3 id="1-4-在桥介技术栈中的位置"><a href="#1-4-在桥介技术栈中的位置" class="headerlink" title="1.4 在桥介技术栈中的位置"></a>1.4 在桥介技术栈中的位置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">桥介项目依赖关系：</span><br><span class="line">  Python → PyTorch → 策略网络（RL Policy）</span><br><span class="line">  Python → NumPy → 数据处理 / 数学运算</span><br><span class="line">  Python → ROS（rospy）→ 控制节点 / 消息通信</span><br><span class="line">  Python → Isaac Gym API → 并行仿真训练</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第二部分：Python-基础速查"><a href="#第二部分：Python-基础速查" class="headerlink" title="第二部分：Python 基础速查"></a>第二部分：Python 基础速查</h2><h3 id="2-1-核心语法（必须掌握）"><a href="#2-1-核心语法（必须掌握）" class="headerlink" title="2.1 核心语法（必须掌握）"></a>2.1 核心语法（必须掌握）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 数据结构 ----</span></span><br><span class="line"><span class="comment"># 列表：有序、可变</span></span><br><span class="line">joints = [<span class="number">0.0</span>, <span class="number">0.5</span>, -<span class="number">0.3</span>]          <span class="comment"># 关节角度（rad）</span></span><br><span class="line">joints.append(<span class="number">1.2</span>)                   <span class="comment"># 添加</span></span><br><span class="line">angles = joints[<span class="number">1</span>:<span class="number">3</span>]                <span class="comment"># 切片</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字典：键值对（配置文件常用）</span></span><br><span class="line">robot_config = {</span><br><span class="line">    <span class="string">"num_legs"</span>: <span class="number">4</span>,</span><br><span class="line">    <span class="string">"dof_per_leg"</span>: <span class="number">3</span>,</span><br><span class="line">    <span class="string">"joint_limits"</span>: [-<span class="number">1.57</span>, <span class="number">1.57</span>]</span><br><span class="line">}</span><br><span class="line"><span class="built_in">print</span>(robot_config[<span class="string">"num_legs"</span>])     <span class="comment"># 取值</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 元组：不可变（返回多个值时用）</span></span><br><span class="line">position = (<span class="number">0.5</span>, <span class="number">0.0</span>, -<span class="number">0.3</span>)        <span class="comment"># (x, y, z)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 控制流 ----</span></span><br><span class="line"><span class="keyword">for</span> joint_idx <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">12</span>):         <span class="comment"># 遍历所有关节</span></span><br><span class="line">    torque[joint_idx] = kp * (desired_pos[joint_idx] - current_pos[joint_idx])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> contact_detected:                <span class="comment"># 判断着地状态</span></span><br><span class="line">    stance_leg = <span class="literal">True</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    stance_leg = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 函数 ----</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compute_foot_position</span>(<span class="params">q, leg_idx</span>):</span><br><span class="line">    <span class="string">"""计算某条腿的足端位置（正运动学）"""</span></span><br><span class="line">    <span class="comment"># q: 12维关节角度向量</span></span><br><span class="line">    <span class="comment"># leg_idx: 0~3 对应四条腿</span></span><br><span class="line">    <span class="comment"># 返回: (x, y, z) 足端在机身坐标系下的位置</span></span><br><span class="line">    hip_idx = leg_idx * <span class="number">3</span></span><br><span class="line">    hip_angle = q[hip_idx]</span><br><span class="line">    thigh_angle = q[hip_idx + <span class="number">1</span>]</span><br><span class="line">    calf_angle = q[hip_idx + <span class="number">2</span>]</span><br><span class="line">    <span class="comment"># ... FK 计算 ...</span></span><br><span class="line">    <span class="keyword">return</span> (x, y, z)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 类 ----</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LeggedRobot</span>:</span><br><span class="line">    <span class="string">"""四足机器人类"""</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, urdf_path</span>):</span><br><span class="line">        <span class="variable language_">self</span>.urdf_path = urdf_path</span><br><span class="line">        <span class="variable language_">self</span>.num_joints = <span class="number">12</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reset</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">"""重置机器人状态"""</span></span><br><span class="line">        <span class="variable language_">self</span>.q = np.zeros(<span class="variable language_">self</span>.num_joints)</span><br><span class="line">        <span class="variable language_">self</span>.qd = np.zeros(<span class="variable language_">self</span>.num_joints)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">step</span>(<span class="params">self, torque</span>):</span><br><span class="line">        <span class="string">"""执行一步动力学仿真"""</span></span><br><span class="line">        <span class="comment"># 求解刚体动力学</span></span><br><span class="line">        <span class="comment"># qdd = M^{-1} * (tau - C - G)</span></span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-NumPy-基础（数值计算核心）"><a href="#2-2-NumPy-基础（数值计算核心）" class="headerlink" title="2.2 NumPy 基础（数值计算核心）"></a>2.2 NumPy 基础（数值计算核心）</h3><p>NumPy 是 Python 科学计算的基石。在 PyTorch 出现之前，它几乎是所有数值计算的标准工具。即使在 PyTorch 项目中，数据预处理、统计分析、可视化仍然大量使用 NumPy。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建数组</span></span><br><span class="line">q = np.zeros(<span class="number">12</span>)                    <span class="comment"># 12 个关节角度</span></span><br><span class="line">J = np.eye(<span class="number">3</span>)                       <span class="comment"># 3×3 单位矩阵</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 矩阵运算（运动学/动力学大量使用）</span></span><br><span class="line">M = np.array([[<span class="number">1.0</span>, <span class="number">0.2</span>],           <span class="comment"># 质量矩阵</span></span><br><span class="line">              [<span class="number">0.2</span>, <span class="number">0.8</span>]])</span><br><span class="line">M_inv = np.linalg.inv(M)            <span class="comment"># 求逆</span></span><br><span class="line">eigenvalues = np.linalg.eigvals(M)  <span class="comment"># 特征值（判断正定性）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 向量运算</span></span><br><span class="line">foot_positions = np.array([[<span class="number">0.3</span>, <span class="number">0.1</span>, -<span class="number">0.2</span>],   <span class="comment"># 4 条腿的足端位置</span></span><br><span class="line">                           [<span class="number">0.3</span>, -<span class="number">0.1</span>, -<span class="number">0.2</span>],</span><br><span class="line">                           [-<span class="number">0.3</span>, <span class="number">0.1</span>, -<span class="number">0.2</span>],</span><br><span class="line">                           [-<span class="number">0.3</span>, -<span class="number">0.1</span>, -<span class="number">0.2</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 广播（自动扩展维度）</span></span><br><span class="line">force_magnitudes = np.array([<span class="number">10.0</span>, <span class="number">10.0</span>, <span class="number">8.0</span>, <span class="number">8.0</span>])  <span class="comment"># 4 个力大小</span></span><br><span class="line">force_vectors = force_magnitudes[:, <span class="literal">None</span>] * np.array([<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>])  <span class="comment"># 广播为 4×3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用统计</span></span><br><span class="line">mean_error = np.mean(tracking_error)</span><br><span class="line">max_torque = np.<span class="built_in">max</span>(np.<span class="built_in">abs</span>(joint_torques))</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-文件-I-O（数据处理必备）"><a href="#2-3-文件-I-O（数据处理必备）" class="headerlink" title="2.3 文件 I/O（数据处理必备）"></a>2.3 文件 I/O（数据处理必备）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 读取 CSV（训练日志）</span></span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">'training_log.csv'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    reader = csv.reader(f)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> reader:</span><br><span class="line">        episode, reward = <span class="built_in">int</span>(row[<span class="number">0</span>]), <span class="built_in">float</span>(row[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># JSON（配置文件）</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">'config.json'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    config = json.load(f)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 保存/加载 numpy 数组</span></span><br><span class="line">np.save(<span class="string">'joint_trajectory.npy'</span>, trajectory_data)</span><br><span class="line">data = np.load(<span class="string">'joint_trajectory.npy'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 pandas（数据分析）</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">'experiment_results.csv'</span>)</span><br><span class="line">df.groupby(<span class="string">'terrain_type'</span>)[<span class="string">'success_rate'</span>].mean()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第三部分：PyTorch-核心"><a href="#第三部分：PyTorch-核心" class="headerlink" title="第三部分：PyTorch 核心"></a>第三部分：PyTorch 核心</h2><h3 id="3-1-张量（Tensor）——-深度学习的基础数据类型"><a href="#3-1-张量（Tensor）——-深度学习的基础数据类型" class="headerlink" title="3.1 张量（Tensor）—— 深度学习的基础数据类型"></a>3.1 张量（Tensor）—— 深度学习的基础数据类型</h3><h4 id="什么是张量？"><a href="#什么是张量？" class="headerlink" title="什么是张量？"></a>什么是张量？</h4><p>张量是 PyTorch 中统一的数据存储格式，可以理解为「<strong>支持 GPU 加速的多维数组</strong>」：</p>
+<table>
+<thead>
+<tr>
+<th align="left">维度</th>
+<th align="left">名称</th>
+<th align="left">例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">0 维</td>
+<td align="left">标量</td>
+<td align="left">单个数字 <code>5</code></td>
+</tr>
+<tr>
+<td align="left">1 维</td>
+<td align="left">向量</td>
+<td align="left"><code>[1, 2, 3]</code> —— 如 12 维关节力矩</td>
+</tr>
+<tr>
+<td align="left">2 维</td>
+<td align="left">矩阵</td>
+<td align="left">图片灰度图、表格数据、批量观测 <code>[batch, obs_dim]</code></td>
+</tr>
+<tr>
+<td align="left">3 维</td>
+<td align="left">三维张量</td>
+<td align="left">单张彩色图片 <code>[通道, 高, 宽]</code></td>
+</tr>
+<tr>
+<td align="left">4 维</td>
+<td align="left">四维张量</td>
+<td align="left">批量彩色图片 <code>[batch, 通道, 高, 宽]</code></td>
+</tr>
+</tbody></table>
+<p>神经网络中<strong>所有输入、权重、中间特征、输出</strong>全部都是张量。张量是整个深度学习计算的基础载体。</p>
+<h4 id="NumPy-vs-Tensor-的关键区别"><a href="#NumPy-vs-Tensor-的关键区别" class="headerlink" title="NumPy vs Tensor 的关键区别"></a>NumPy vs Tensor 的关键区别</h4><p>NumPy 数组只能跑 CPU，速度受限于 CPU 的少数核心。PyTorch 张量可以一键转移到 GPU 上，利用上千个 CUDA 核心做并行矩阵运算，速度提升几十到上百倍。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 创建张量 ----</span></span><br><span class="line">x = torch.tensor([<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>])           <span class="comment"># 1D 向量</span></span><br><span class="line">obs = torch.zeros(<span class="number">48</span>)                         <span class="comment"># 观测向量（48 维）</span></span><br><span class="line">action = torch.randn(<span class="number">12</span>)                      <span class="comment"># 动作向量（12 个关节力矩），正态分布</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多维张量</span></span><br><span class="line">obs_batch = torch.zeros(<span class="number">4096</span>, <span class="number">48</span>)            <span class="comment"># [批量大小, 观测维度]</span></span><br><span class="line">                                <span class="comment"># Isaac Gym 常用 4096 个并行环境</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据类型</span></span><br><span class="line">obs_int = torch.zeros(<span class="number">3</span>, dtype=torch.<span class="built_in">int</span>)    <span class="comment"># 整数</span></span><br><span class="line">obs_float = torch.zeros(<span class="number">3</span>, dtype=torch.float32)  <span class="comment"># 浮点数（默认）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设备转移（关键！）</span></span><br><span class="line">device = torch.device(<span class="string">"cuda"</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">"cpu"</span>)</span><br><span class="line">obs = obs.to(device)                          <span class="comment"># 移到 GPU 上训练</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 张量运算（全部在 GPU 上并行）</span></span><br><span class="line">rewards = torch.<span class="built_in">sum</span>(action * action, dim=<span class="number">1</span>)   <span class="comment"># 按行求和</span></span><br><span class="line">max_action = torch.<span class="built_in">max</span>(torch.<span class="built_in">abs</span>(action))</span><br></pre></td></tr></table></figure>
+
+<h4 id="什么是-CUDA？为什么-GPU-比-CPU-快？"><a href="#什么是-CUDA？为什么-GPU-比-CPU-快？" class="headerlink" title="什么是 CUDA？为什么 GPU 比 CPU 快？"></a>什么是 CUDA？为什么 GPU 比 CPU 快？</h4><p><strong>CUDA</strong>（Compute Unified Device Architecture）是 NVIDIA 推出的并行计算平台。它的核心思想：</p>
+<ul>
+<li><strong>CPU</strong>：几个到几十个大核心，擅长复杂逻辑、分支跳转、串行任务。处理大规模矩阵乘法时，只能逐个元素计算，速度很慢。</li>
+<li><strong>GPU</strong>：拥有上千个小计算核心，虽然每个核心很简单，但可以<strong>同时</strong>处理数千个数据。神经网络的本质是海量矩阵乘法 —— 这正是 GPU 的最强项。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CPU:  [核心1] → [核心2] → ... → 串行处理，核少但强</span><br><span class="line">GPU:  [核1] [核2] [核3] ... [核1000+] → 并行处理，核多但每个简单</span><br></pre></td></tr></table></figure>
+
+<p>在强化学习训练中，4096 个并行环境同时仿真，每个环境都要跑一遍策略网络。如果用 CPU，只能逐个算；用 GPU，4096 个环境的推理同时完成。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查并使用 GPU</span></span><br><span class="line">device = torch.device(<span class="string">"cuda"</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">"cpu"</span>)</span><br><span class="line">model = model.to(device)  <span class="comment"># 模型迁移到 GPU</span></span><br><span class="line">data = data.to(device)    <span class="comment"># 数据迁移到 GPU</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-自动微分（autograd）——-训练网络的核心"><a href="#3-2-自动微分（autograd）——-训练网络的核心" class="headerlink" title="3.2 自动微分（autograd）—— 训练网络的核心"></a>3.2 自动微分（autograd）—— 训练网络的核心</h3><h4 id="为什么需要自动微分？"><a href="#为什么需要自动微分？" class="headerlink" title="为什么需要自动微分？"></a>为什么需要自动微分？</h4><p>训练神经网络 = 用梯度下降更新参数 = 需要对损失函数求导。</p>
+<ul>
+<li><strong>传统方法</strong>：手写求导公式，对每个参数手动推导偏导数。简单网络（如线性回归）勉强能做，复杂网络（数百层、百万参数）完全不可能。</li>
+<li><strong>PyTorch 的做法</strong>：设置 <code>requires_grad=True</code>，PyTorch 自动跟踪该张量的所有运算，构建<strong>计算图</strong>。一行 <code>loss.backward()</code> 就自动算出所有参数的梯度。</li>
+</ul>
+<p><strong>原理</strong>：PyTorch 在每次张量运算时，悄悄记录下「谁参与了这次运算、运算是什么」。这构成了一张有向无环图（计算图）。调用 <code>backward()</code> 时，沿着计算图从后往前，用链式法则自动求出每个参数的偏导数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 示例：线性回归 ----</span></span><br><span class="line">w = torch.tensor([[<span class="number">0.0</span>]], requires_grad=<span class="literal">True</span>)  <span class="comment"># requires_grad=True 标记需要求导</span></span><br><span class="line">b = torch.tensor([[<span class="number">0.0</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 前向传播</span></span><br><span class="line">x_data = torch.tensor([[<span class="number">1.0</span>], [<span class="number">2.0</span>], [<span class="number">3.0</span>]])</span><br><span class="line">y_data = torch.tensor([[<span class="number">2.0</span>], [<span class="number">4.0</span>], [<span class="number">6.0</span>]])</span><br><span class="line">pred = x_data @ w + b                          <span class="comment"># 预测</span></span><br><span class="line">loss = torch.mean((pred - y_data) ** <span class="number">2</span>)        <span class="comment"># 均方误差</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 反向传播（自动求导）</span></span><br><span class="line">loss.backward()                                <span class="comment"># 计算梯度 ∂loss/∂w, ∂loss/∂b</span></span><br><span class="line"><span class="built_in">print</span>(w.grad)                                  <span class="comment"># 查看梯度</span></span><br><span class="line"><span class="built_in">print</span>(b.grad)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 梯度下降更新</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():                          <span class="comment"># 不跟踪梯度</span></span><br><span class="line">    w -= <span class="number">0.01</span> * w.grad</span><br><span class="line">    b -= <span class="number">0.01</span> * b.grad</span><br><span class="line">    w.grad.zero_()                             <span class="comment"># 清空梯度</span></span><br><span class="line">    b.grad.zero_()</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 在 RL 中的应用 ----</span></span><br><span class="line"><span class="comment"># RL 训练时，每个 episode 结束后：</span></span><br><span class="line"><span class="comment"># loss = -sum(log_prob * advantage)   # 策略梯度损失</span></span><br><span class="line"><span class="comment"># loss.backward()                      # 自动求所有网络参数的梯度</span></span><br><span class="line"><span class="comment"># optimizer.step()                     # 更新参数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-神经网络模块（torch-nn）"><a href="#3-3-神经网络模块（torch-nn）" class="headerlink" title="3.3 神经网络模块（torch.nn）"></a>3.3 神经网络模块（torch.nn）</h3><p><code>torch.nn</code> 提供了搭建神经网络所需的所有预制组件，像一个「乐高工具箱」：</p>
+<table>
+<thead>
+<tr>
+<th align="left">类别</th>
+<th align="left">常用模块</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">网络层</td>
+<td align="left"><code>nn.Linear</code>、<code>nn.Conv2d</code>、<code>nn.LSTM</code></td>
+<td align="left">全连接、卷积、循环层</td>
+</tr>
+<tr>
+<td align="left">激活函数</td>
+<td align="left"><code>nn.ReLU</code>、<code>nn.Tanh</code>、<code>nn.ELU</code></td>
+<td align="left">引入非线性（否则多层等于一层）</td>
+</tr>
+<tr>
+<td align="left">容器</td>
+<td align="left"><code>nn.Sequential</code>、<code>nn.ModuleList</code></td>
+<td align="left">快速堆叠多层</td>
+</tr>
+<tr>
+<td align="left">正则化</td>
+<td align="left"><code>nn.Dropout</code>、<code>nn.BatchNorm</code></td>
+<td align="left">防过拟合、加速训练</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 基础组件 ----</span></span><br><span class="line"><span class="comment"># 全连接层：最常用的层</span></span><br><span class="line">fc = nn.Linear(in_features=<span class="number">48</span>, out_features=<span class="number">256</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 激活函数：引入非线性</span></span><br><span class="line">relu = nn.ReLU()</span><br><span class="line">tanh = nn.Tanh()          <span class="comment"># 输出在 [-1, 1]，常用于动作输出</span></span><br><span class="line">elu = nn.ELU()           <span class="comment"># 负值平滑，有时比 ReLU 好</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 搭建策略网络（Actor）----</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActorNetwork</span>(nn.Module):</span><br><span class="line">    <span class="string">"""RL 策略网络：观测 → 动作"""</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, obs_dim=<span class="number">48</span>, action_dim=<span class="number">12</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.net = nn.Sequential(</span><br><span class="line">            nn.Linear(obs_dim, <span class="number">256</span>),</span><br><span class="line">            nn.ELU(),</span><br><span class="line">            nn.Linear(<span class="number">256</span>, <span class="number">128</span>),</span><br><span class="line">            nn.ELU(),</span><br><span class="line">            nn.Linear(<span class="number">128</span>, action_dim),</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># 初始化最后一层权重（小值，避免初始动作过大）</span></span><br><span class="line">        nn.init.uniform_(<span class="variable language_">self</span>.net[-<span class="number">1</span>].weight, -<span class="number">0.01</span>, <span class="number">0.01</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, obs</span>):</span><br><span class="line">        <span class="string">"""前向传播：观测 → 动作均值"""</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.net(obs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 搭建价值网络（Critic）----</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CriticNetwork</span>(nn.Module):</span><br><span class="line">    <span class="string">"""价值网络：观测 → 状态价值"""</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, obs_dim=<span class="number">48</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.net = nn.Sequential(</span><br><span class="line">            nn.Linear(obs_dim, <span class="number">256</span>),</span><br><span class="line">            nn.ELU(),</span><br><span class="line">            nn.Linear(<span class="number">256</span>, <span class="number">128</span>),</span><br><span class="line">            nn.ELU(),</span><br><span class="line">            nn.Linear(<span class="number">128</span>, <span class="number">1</span>),</span><br><span class="line">        )</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, obs</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.net(obs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 使用网络 ----</span></span><br><span class="line">actor = ActorNetwork()</span><br><span class="line">critic = CriticNetwork()</span><br><span class="line">actor = actor.to(device)</span><br><span class="line">critic = critic.to(device)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推理（给定观测，输出动作）</span></span><br><span class="line">obs = torch.randn(<span class="number">4096</span>, <span class="number">48</span>).to(device)      <span class="comment"># 4096 个并行环境的观测</span></span><br><span class="line">action_mean = actor(obs)                      <span class="comment"># [4096, 12]</span></span><br><span class="line">value = critic(obs)                           <span class="comment"># [4096, 1]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-优化器与损失函数"><a href="#3-4-优化器与损失函数" class="headerlink" title="3.4 优化器与损失函数"></a>3.4 优化器与损失函数</h3><p><strong>优化器</strong>决定「如何根据梯度更新参数」，<strong>损失函数</strong>决定「当前预测和目标的差距有多大」。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 优化器 ----</span></span><br><span class="line">actor_optimizer = optim.Adam(actor.parameters(), lr=<span class="number">3e-4</span>)</span><br><span class="line">critic_optimizer = optim.Adam(critic.parameters(), lr=<span class="number">1e-3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- PPO 训练循环（简化版）----</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(num_epochs):</span><br><span class="line">    <span class="comment"># 收集数据（在 Isaac Gym 中并行收集）</span></span><br><span class="line">    obs, actions, rewards, dones = collect_rollout(actor)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算优势函数（GAE）</span></span><br><span class="line">    advantages = compute_gae(rewards, values, dones)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># PPO 更新（多次 epoch）</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(ppo_epochs):</span><br><span class="line">        <span class="comment"># 前向传播</span></span><br><span class="line">        new_action_mean = actor(obs)</span><br><span class="line">        new_value = critic(obs)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 计算损失</span></span><br><span class="line">        actor_loss = compute_ppo_loss(new_action_mean, actions, advantages)</span><br><span class="line">        critic_loss = nn.MSELoss()(new_value, returns)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 反向传播 + 更新</span></span><br><span class="line">        actor_optimizer.zero_grad()</span><br><span class="line">        actor_loss.backward()</span><br><span class="line">        torch.nn.utils.clip_grad_norm_(actor.parameters(), <span class="number">1.0</span>)  <span class="comment"># 梯度裁剪</span></span><br><span class="line">        actor_optimizer.step()</span><br><span class="line">        </span><br><span class="line">        critic_optimizer.zero_grad()</span><br><span class="line">        critic_loss.backward()</span><br><span class="line">        critic_optimizer.step()</span><br></pre></td></tr></table></figure>
+
+<p><strong>训练循环的本质</strong>（每一步都在做什么）：</p>
+<ol>
+<li><code>zero_grad()</code> —— 清空上一次迭代的梯度（否则会累积）</li>
+<li><code>loss.backward()</code> —— 自动计算所有参数的梯度</li>
+<li><code>optimizer.step()</code> —— 根据梯度更新参数</li>
+</ol>
+<h3 id="3-5-模型保存与加载"><a href="#3-5-模型保存与加载" class="headerlink" title="3.5 模型保存与加载"></a>3.5 模型保存与加载</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---- 保存模型（含训练状态，可断点续训）----</span></span><br><span class="line">checkpoint = {</span><br><span class="line">    <span class="string">'actor_state_dict'</span>: actor.state_dict(),</span><br><span class="line">    <span class="string">'critic_state_dict'</span>: critic.state_dict(),</span><br><span class="line">    <span class="string">'actor_optimizer'</span>: actor_optimizer.state_dict(),</span><br><span class="line">    <span class="string">'epoch'</span>: epoch,</span><br><span class="line">    <span class="string">'reward_mean'</span>: reward_mean,</span><br><span class="line">}</span><br><span class="line">torch.save(checkpoint, <span class="string">f'checkpoints/model_epoch_<span class="subst">{epoch}</span>.pt'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 加载模型 ----</span></span><br><span class="line">checkpoint = torch.load(<span class="string">'checkpoints/model_epoch_1000.pt'</span>)</span><br><span class="line">actor.load_state_dict(checkpoint[<span class="string">'actor_state_dict'</span>])</span><br><span class="line">critic.load_state_dict(checkpoint[<span class="string">'critic_state_dict'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 导出部署模型（JIT，用于实机推理）----</span></span><br><span class="line">traced_actor = torch.jit.script(actor)</span><br><span class="line">traced_actor.save(<span class="string">'deployed_policy.pt'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在实机上加载（不需要 Python 训练环境）</span></span><br><span class="line">deployed_policy = torch.jit.load(<span class="string">'deployed_policy.pt'</span>)</span><br><span class="line">action = deployed_policy(obs)  <span class="comment"># 高效推理</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第四部分：与桥介项目直接相关的-Python-PyTorch-技能"><a href="#第四部分：与桥介项目直接相关的-Python-PyTorch-技能" class="headerlink" title="第四部分：与桥介项目直接相关的 Python/PyTorch 技能"></a>第四部分：与桥介项目直接相关的 Python/PyTorch 技能</h2><h3 id="4-1-Isaac-Gym-训练脚本结构"><a href="#4-1-Isaac-Gym-训练脚本结构" class="headerlink" title="4.1 Isaac Gym 训练脚本结构"></a>4.1 Isaac Gym 训练脚本结构</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Isaac Gym 训练脚本的典型结构（桥介会用到）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> isaacgym <span class="keyword">import</span> gymapi, gymtorch</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 初始化仿真</span></span><br><span class="line">gym = gymapi.acquire_gym()</span><br><span class="line">sim_params = gymapi.SimParams()</span><br><span class="line">sim = gym.create_sim(<span class="number">0</span>, <span class="number">0</span>, gymapi.SIM_PHYSX, sim_params)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 加载机器人</span></span><br><span class="line">asset_options = gymapi.AssetOptions()</span><br><span class="line">robot_asset = gym.load_asset(sim, <span class="string">"./urdf/robot.urdf"</span>, asset_options)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 创建多个并行环境</span></span><br><span class="line">num_envs = <span class="number">4096</span></span><br><span class="line">envs = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num_envs):</span><br><span class="line">    env = gym.create_env(sim, ...)</span><br><span class="line">    envs.append(env)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 获取 GPU 张量（关键！Isaac Gym 的观测在 GPU 上）</span></span><br><span class="line">obs_buf = gymtorch.wrap_tensor(gym.acquire_dof_state_tensor(sim))</span><br><span class="line"><span class="comment"># obs_buf 直接是 GPU tensor，零拷贝传给 PyTorch 网络</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 训练循环</span></span><br><span class="line">actor = ActorNetwork().to(device)</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000</span>):</span><br><span class="line">    <span class="comment"># 并行步进仿真</span></span><br><span class="line">    gym.simulate(sim)</span><br><span class="line">    gym.fetch_results(sim, <span class="literal">True</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取观测 → 网络推理 → 执行动作</span></span><br><span class="line">    obs = obs_buf.view(num_envs, -<span class="number">1</span>)</span><br><span class="line">    actions = actor(obs)                    <span class="comment"># 并行推理 4096 个环境</span></span><br><span class="line">    gym.set_dof_actuation_force_tensor(sim, gymtorch.unwrap_tensor(actions))</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 收集奖励、计算梯度、更新网络...</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>关键理解</strong>：<code>gymtorch.wrap_tensor</code> 返回的张量直接指向 GPU 上的物理仿真 buffer，零拷贝传递给 PyTorch 网络。这是 Isaac Gym 高性能的核心 —— 数据始终在 GPU 上流转，不需要 CPU ↔ GPU 之间的昂贵传输。</p>
+<h3 id="4-2-数据处理与可视化"><a href="#4-2-数据处理与可视化" class="headerlink" title="4.2 数据处理与可视化"></a>4.2 数据处理与可视化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 绘制训练曲线 ----</span></span><br><span class="line">rewards = np.load(<span class="string">'training_rewards.npy'</span>)</span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>, <span class="number">6</span>))</span><br><span class="line">plt.plot(rewards, alpha=<span class="number">0.3</span>, label=<span class="string">'Raw'</span>)     <span class="comment"># 原始曲线</span></span><br><span class="line">plt.plot(np.convolve(rewards, np.ones(<span class="number">100</span>)/<span class="number">100</span>, mode=<span class="string">'valid'</span>), </span><br><span class="line">         label=<span class="string">'Smoothed (window=100)'</span>)        <span class="comment"># 平滑曲线</span></span><br><span class="line">plt.xlabel(<span class="string">'Episode'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Reward'</span>)</span><br><span class="line">plt.title(<span class="string">'RL Training Progress'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.savefig(<span class="string">'training_curve.png'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---- 关节力矩分析 ----</span></span><br><span class="line">torques = np.load(<span class="string">'joint_torques.npy'</span>)        <span class="comment"># [time, 12 joints]</span></span><br><span class="line">plt.figure(figsize=(<span class="number">12</span>, <span class="number">8</span>))</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">12</span>):</span><br><span class="line">    plt.subplot(<span class="number">4</span>, <span class="number">3</span>, j+<span class="number">1</span>)</span><br><span class="line">    plt.plot(torques[:, j])</span><br><span class="line">    plt.title(<span class="string">f'Joint <span class="subst">{j}</span>'</span>)</span><br><span class="line">    plt.axhline(y=max_torque, color=<span class="string">'r'</span>, linestyle=<span class="string">'--'</span>)  <span class="comment"># 力矩上限</span></span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.savefig(<span class="string">'torque_analysis.png'</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第五部分：学习路径建议"><a href="#第五部分：学习路径建议" class="headerlink" title="第五部分：学习路径建议"></a>第五部分：学习路径建议</h2><h3 id="5-1-优先级排序（按桥介面试相关性）"><a href="#5-1-优先级排序（按桥介面试相关性）" class="headerlink" title="5.1 优先级排序（按桥介面试相关性）"></a>5.1 优先级排序（按桥介面试相关性）</h3><table>
+<thead>
+<tr>
+<th align="left">优先级</th>
+<th align="left">内容</th>
+<th align="left">建议耗时</th>
+<th align="left">与岗位关系</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>P0</strong></td>
+<td align="left">Python 基础 + NumPy</td>
+<td align="left">2 天</td>
+<td align="left">所有岗位必备</td>
+</tr>
+<tr>
+<td align="left"><strong>P0</strong></td>
+<td align="left">PyTorch 张量操作 + 自动微分</td>
+<td align="left">2 天</td>
+<td align="left">所有岗位必备</td>
+</tr>
+<tr>
+<td align="left"><strong>P1</strong></td>
+<td align="left">PyTorch 神经网络搭建</td>
+<td align="left">2 天</td>
+<td align="left">RL 岗必需，运控岗加分</td>
+</tr>
+<tr>
+<td align="left"><strong>P1</strong></td>
+<td align="left">训练循环 + 优化器</td>
+<td align="left">1 天</td>
+<td align="left">RL 岗必需</td>
+</tr>
+<tr>
+<td align="left"><strong>P2</strong></td>
+<td align="left">Isaac Gym API</td>
+<td align="left">3 天</td>
+<td align="left">RL 岗必需</td>
+</tr>
+<tr>
+<td align="left"><strong>P2</strong></td>
+<td align="left">数据处理与可视化</td>
+<td align="left">1 天</td>
+<td align="left">所有岗位加分</td>
+</tr>
+</tbody></table>
+<h3 id="5-2-推荐资源"><a href="#5-2-推荐资源" class="headerlink" title="5.2 推荐资源"></a>5.2 推荐资源</h3><table>
+<thead>
+<tr>
+<th align="left">资源</th>
+<th align="left">用途</th>
+<th align="left">链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">PyTorch 官方教程</td>
+<td align="left">从零开始，最权威的入门资料</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/basics/intro.html">https://pytorch.org/tutorials/beginner/basics/intro.html</a></td>
+</tr>
+<tr>
+<td align="left">Dive into Deep Learning</td>
+<td align="left">全面教材，从理论到代码</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://d2l.ai/">https://d2l.ai</a></td>
+</tr>
+<tr>
+<td align="left">Isaac Gym 官方文档</td>
+<td align="left">仿真器使用</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://developer.nvidia.com/isaac-gym">https://developer.nvidia.com/isaac-gym</a></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="第六部分：常见陷阱"><a href="#第六部分：常见陷阱" class="headerlink" title="第六部分：常见陷阱"></a>第六部分：常见陷阱</h2><ol>
+<li><strong>张量形状不匹配</strong>：<code>torch.Size([4096])</code> ≠ <code>torch.Size([4096, 1])</code>，RL 训练中最常见的 bug。检查 <code>dim</code> 参数是否正确。</li>
+<li><strong>设备不一致</strong>：部分张量在 CPU、部分在 GPU → 报错 <code>Expected all tensors to be on same device</code>。确保数据和模型都在同一设备上。</li>
+<li><strong>梯度未清零</strong>：每个训练步需 <code>optimizer.zero_grad()</code>，否则梯度会累积（累加多个 batch 的梯度，导致更新错误）。</li>
+<li><strong><code>no_grad()</code> 使用不当</strong>：推理时记得用 <code>with torch.no_grad()</code>，否则 PyTorch 会构建计算图、消耗大量显存，且推理速度变慢。</li>
+<li><strong>数据归一化</strong>：RL 训练中观测需要归一化（<code>obs = (obs - mean) / std</code>），否则数值范围差异大 → 训练不稳定。</li>
+<li><strong>Isaac Gym 的 GPU buffer 生命周期</strong>：注意 <code>gymtorch.wrap_tensor</code> 返回的张量指向 GPU buffer，不要意外 overwrite。如果后续仿真步进覆写了 buffer，之前的张量内容也会变。</li>
+<li><strong><code>state_dict</code> vs 整个模型</strong>：保存时优先用 <code>state_dict()</code>（只保存参数），而不是 <code>torch.save(model)</code>（保存整个对象，跨版本可能不兼容）。</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Python%E4%B8%8EPyTorch%E5%9F%BA%E7%A1%80/" data-id="cuidKlZeRr0eypGEw0I-j0Et6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "cicade-liu"
+        },
+        "headline": "Python与PyTorch基础",
+        "image": "https://cicade-liu.github.io",
+        "keywords": "",
+        "genre": "桥介数物 所需能力 基础能力",
+        "datePublished": "2026-06-22",
+        "dateCreated": "2026-06-22",
+        "dateModified": "2026-06-22",
+        "url": "https://cicade-liu.github.io/2026/06/22/桥介数物/所需能力/基础能力/Python与PyTorch基础/",
+        "description": "Python 与 PyTorch 基础第一部分：Python 与 PyTorch 的关系与分工1.1 各自定位Python 和 PyTorch 是两个不同层面的东西，用一句话概括：
+
+Python 是你的语言能力，PyTorch 是你用这门语言写出的数学工具。你会说话 ≠ 你会推导数学公式，但你必须会说话才能写公式。
+
+
+
+
+工具
+定位
+桥介项目中的角色
+
+
+
+Python
+通用编程语言
+写训练脚",
+        "wordCount": 3764
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/cicade-liu/cicade-liu.github.io/tree/main/2026/06/21" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0%E4%B8%8ESim2Real/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            模仿学习与Sim2Real
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Linux%E4%B8%8EGit%E5%9F%BA%E7%A1%80/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Linux与Git基础</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/">基础能力</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/">进阶能力</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">11</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2026 cicade-liu</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://cicade-liu.github.io/2026/06/22/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Python%E4%B8%8EPyTorch%E5%9F%BA%E7%A1%80/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>
