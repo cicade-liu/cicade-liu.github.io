@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>cicade-liu 的技术博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="人类科技树 · 交互式可视化    :root {     --bg: #0d1117;     --panel-bg: #161b22;     --border: #30363d;     --text: #c9d1d9;     --dim: #8b949e;     --accent: #58a6ff;     --highlight: #f0c040;     --era-pr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cicade-liu 的技术博客">
+<meta property="og:url" content="https://cicade-liu.github.io/2026/07/10/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E7%A7%91%E6%8A%80/%E4%BA%BA%E7%B1%BB%E7%A7%91%E6%8A%80%E6%A0%91/tech-tree/index.html">
+<meta property="og:site_name" content="cicade-liu 的技术博客">
+<meta property="og:description" content="人类科技树 · 交互式可视化    :root {     --bg: #0d1117;     --panel-bg: #161b22;     --border: #30363d;     --text: #c9d1d9;     --dim: #8b949e;     --accent: #58a6ff;     --highlight: #f0c040;     --era-pr">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-10T10:08:23.917Z">
+<meta property="article:modified_time" content="2026-07-10T10:08:23.917Z">
+<meta property="article:author" content="cicade-liu">
+<meta property="article:tag" content="技术笔记">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="cicade-liu 的技术博客" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%80%BB%E8%BF%B0/">总述</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-理解世界/科技/人类科技树/tech-tree" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2026/07/10/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E7%A7%91%E6%8A%80/%E4%BA%BA%E7%B1%BB%E7%A7%91%E6%8A%80%E6%A0%91/tech-tree/" class="article-date">
+       <time datetime="2026-07-10T10:08:23.917Z" itemprop="datePublished">2026-07-10</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2026/07/10/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E7%A7%91%E6%8A%80/%E4%BA%BA%E7%B1%BB%E7%A7%91%E6%8A%80%E6%A0%91/tech-tree/" class="article-date">
+     <time datetime="2026-07-10T10:08:23.917Z" itemprop="dateModified">2026-07-10</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人类科技树 · 交互式可视化</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel-bg: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --dim: #8b949e;
+    --accent: #58a6ff;
+    --highlight: #f0c040;
+    --era-prehistoric: #8B4513;
+    --era-ancient: #DAA520;
+    --era-medieval: #2E8B57;
+    --era-scientific: #4169E1;
+    --era-industrial: #DC143C;
+    --era-modern: #8B008B;
+    --era-information: #00CED1;
+    --era-future: #FF4500;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'SF Mono', 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #toolbar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px; background: var(--panel-bg);
+    border-bottom: 1px solid var(--border); z-index: 10; flex-shrink: 0;
+  }
+  #toolbar h1 {
+    font-size: 18px;
+    background: linear-gradient(135deg, var(--era-prehistoric), var(--era-future));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; white-space: nowrap;
+  }
+  #search {
+    flex: 1; max-width: 320px; padding: 6px 12px;
+    border: 1px solid var(--border); border-radius: 6px;
+    background: var(--bg); color: var(--text); font-size: 13px; outline: none;
+  }
+  #search:focus { border-color: var(--accent); }
+  #search-results { font-size: 12px; color: var(--dim); white-space: nowrap; }
+  .btn {
+    padding: 5px 12px; border: 1px solid var(--border); border-radius: 5px;
+    background: var(--bg); color: var(--text); cursor: pointer; font-size: 12px; white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  #zoom-info { font-size: 12px; color: var(--dim); min-width: 50px; text-align: center; }
+  #main { display: flex; flex: 1; overflow: hidden; }
+  #canvas-wrap { flex: 1; position: relative; overflow: hidden; cursor: grab; }
+  #canvas-wrap:active { cursor: grabbing; }
+  svg { width: 100%; height: 100%; display: block; }
+  .node circle { stroke-width: 2px; cursor: pointer; transition: r 0.2s; }
+  .node circle:hover { filter: brightness(1.4); }
+  .node.matched circle { stroke: var(--highlight); stroke-width: 3px; animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{r:7} 50%{r:10} }
+  .node text { font-size: 10px; fill: var(--text); pointer-events: none; text-shadow: 0 0 4px var(--bg); }
+  .node .era-label { font-size: 13px; font-weight: bold; }
+  .link { fill: none; stroke: #30363d; stroke-width: 1.2px; }
+  .link.root-link { stroke-width: 1.8px; stroke: #484f58; }
+  #detail-panel {
+    width: 340px; background: var(--panel-bg); border-left: 1px solid var(--border);
+    padding: 20px; overflow-y: auto; flex-shrink: 0;
+  }
+  #detail-panel h2 { font-size: 20px; margin-bottom: 4px; }
+  #detail-era { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; margin-bottom: 12px; }
+  #detail-desc { font-size: 13px; line-height: 1.6; color: var(--dim); margin-bottom: 16px; }
+  #detail-parents, #detail-children { font-size: 12px; color: var(--dim); margin-bottom: 8px; }
+  #detail-children ul, #detail-parents ul { list-style: none; padding-left: 0; margin-top: 4px; }
+  #detail-children li, #detail-parents li { padding: 3px 0; cursor: pointer; color: var(--accent); }
+  #detail-children li:hover, #detail-parents li:hover { text-decoration: underline; }
+  #detail-empty { color: var(--dim); font-size: 14px; text-align: center; margin-top: 80px; }
+  #legend {
+    position: absolute; bottom: 16px; left: 16px; display: flex; flex-wrap: wrap;
+    gap: 6px 14px; background: var(--panel-bg); padding: 10px 14px;
+    border-radius: 8px; border: 1px solid var(--border); font-size: 11px;
+  }
+  #legend span { display: flex; align-items: center; gap: 5px; }
+  #legend .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  @media (max-width: 768px) { #detail-panel { width: 260px; padding: 14px; } #toolbar h1 { font-size: 15px; } }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <h1>🌳 人类科技树</h1>
+  <input id="search" type="text" placeholder="搜索技术节点…" autocomplete="off">
+  <span id="search-results"></span>
+  <button class="btn" id="btn-reset">⟲ 复位</button>
+  <button class="btn" id="btn-expand">⊞ 全部展开</button>
+  <button class="btn" id="btn-collapse">⊟ 全部折叠</button>
+  <button class="btn" id="btn-zoom-in">🔍+</button>
+  <button class="btn" id="btn-zoom-out">🔍-</button>
+  <span id="zoom-info">55%</span>
+</div>
+
+<div id="main">
+  <div id="canvas-wrap">
+    <svg id="tree-svg"></svg>
+    <div id="legend">
+      <span><span class="dot" style="background:var(--era-prehistoric)"></span>史前</span>
+      <span><span class="dot" style="background:var(--era-ancient)"></span>古代</span>
+      <span><span class="dot" style="background:var(--era-medieval)"></span>中古</span>
+      <span><span class="dot" style="background:var(--era-scientific)"></span>科学革命</span>
+      <span><span class="dot" style="background:var(--era-industrial)"></span>工业革命</span>
+      <span><span class="dot" style="background:var(--era-modern)"></span>现代</span>
+      <span><span class="dot" style="background:var(--era-information)"></span>信息时代</span>
+      <span><span class="dot" style="background:var(--era-future)"></span>当代前沿</span>
+    </div>
+  </div>
+  <div id="detail-panel">
+    <div id="detail-empty">👈 点击任意节点查看详情</div>
+    <div id="detail-content" style="display:none">
+      <h2 id="detail-title"></h2>
+      <div id="detail-era"></div>
+      <div id="detail-desc"></div>
+      <div id="detail-parents"></div>
+      <div id="detail-children"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<script>
+const ERA_COLORS = {
+  "史前时代":"#8B4513","古代文明":"#DAA520","中古时代":"#2E8B57",
+  "科学革命":"#4169E1","工业革命":"#DC143C","现代科技":"#8B008B",
+  "信息时代":"#00CED1","当代前沿":"#FF4500"
+};
+
+const techTree = {
+  name: "人类科技树", era: "", desc: "从第一块打制石器到量子计算机——跨越两百万年的知识之树。",
+  children: [
+    { name: "史前时代\n~200万年前-前3500", era: "史前时代", desc: "人类学会了制造工具、使用火、说话。所有后续科技的根。", children: [
+      { name: "石器技术", era: "史前时代", desc: "从打制到磨制，人类用200万年完善了工具制造。", children: [
+        { name: "奥杜威石器\n~260万年前", era: "史前时代", desc: "最早的石器文化，简单打制。" },
+        { name: "阿舍利手斧\n~176万年前", era: "史前时代", desc: "对称双面手斧，最早的工具标准化。" },
+        { name: "细石器\n~3万年前", era: "史前时代", desc: "复合工具——矛头、箭镞、鱼叉。" },
+        { name: "磨制石器\n~1万年前", era: "史前时代", desc: "研磨石器，新石器革命标志。" }
+      ]},
+      { name: "火的使用", era: "史前时代", desc: "人类第一次控制自然力——烹饪促进大脑进化。", children: [
+        { name: "自然火利用\n~150万年前", era: "史前时代", desc: "保存雷电/野火火种。" },
+        { name: "人工取火\n~40万年前", era: "史前时代", desc: "钻木取火·燧石打火。" },
+        { name: "烹饪", era: "史前时代", desc: "食物熟化→营养吸收↑→大脑容量↑" },
+        { name: "陶瓷烧制\n~2万年前", era: "史前时代", desc: "最早的化学工程，容器革命。" }
+      ]},
+      { name: "语言与符号", era: "史前时代", desc: "口语让知识跨代积累，壁画是最早的记录。", children: [
+        { name: "口语", era: "史前时代", desc: "知识传递·协作狩猎·社会凝聚。" },
+        { name: "洞穴壁画\n~4万年前", era: "史前时代", desc: "最早的视觉记录和信息编码。" },
+        { name: "结绳记事", era: "史前时代", desc: "最早的'数据存储'。" }
+      ]},
+      { name: "生存技术", era: "史前时代", desc: "从弓箭到独木舟——人类适应了几乎所有环境。", children: [
+        { name: "弓箭\n~6万年前", era: "史前时代", desc: "最早的弹射武器。" },
+        { name: "缝纫\n~3万年前", era: "史前时代", desc: "骨针+兽皮=衣服，扩展生存范围。" },
+        { name: "航海\n~5万年前", era: "史前时代", desc: "独木舟横渡海洋到达澳大利亚。" }
+      ]}
+    ]},
+    { name: "古代文明\n~前3500-500年", era: "古代文明", desc: "文字诞生，知识跨代积累。青铜与铁、数学与天文——六大独立起源的文明中心。", children: [
+      { name: "文字系统", era: "古代文明", desc: "文字是最伟大的发明之一——让知识跨越时空。", children: [
+        { name: "楔形文字\n~公元前3400", era: "古代文明", desc: "苏美尔人——最早的书写系统。" },
+        { name: "字母文字\n~公元前1000", era: "古代文明", desc: "腓尼基→希腊→拉丁，今天字母的祖先。" },
+        { name: "纸张\n蔡伦·公元105", era: "古代文明", desc: "轻便廉价的书写载体——知识传播革命。" },
+        { name: "甲骨文\n~公元前1600", era: "古代文明", desc: "中国商朝——汉字的源头。" }
+      ]},
+      { name: "数学", era: "古代文明", desc: "从土地丈量到公理体系——数学成为精确科学。", children: [
+        { name: "60进制\n美索不达米亚", era: "古代文明", desc: "今天的分秒角度都源于此。" },
+        { name: "十进制·零\n古印度", era: "古代文明", desc: "数学史上最伟大的发明之一。" },
+        { name: "欧几里得\n《几何原本》", era: "古代文明", desc: "公理化体系奠基之作，影响2000年。" },
+        { name: "阿基米德", era: "古代文明", desc: "浮力定律·杠杆·π——古代最伟大的工程师。" }
+      ]},
+      { name: "冶金术", era: "古代文明", desc: "金属定义了文明的阶段。", children: [
+        { name: "青铜\n~公元前3300", era: "古代文明", desc: "铜+锡=青铜，青铜时代开启。" },
+        { name: "冶铁术\n~公元前1500", era: "古代文明", desc: "赫梯人——铁器时代到来。" },
+        { name: "铸铁\n中国·春秋", era: "古代文明", desc: "高温铸铁，比欧洲早约2000年。" }
+      ]},
+      { name: "天文历法", era: "古代文明", desc: "观测天空，预测季节——农业离不开历法。", children: [
+        { name: "太阳历\n古埃及", era: "古代文明", desc: "365天——最早的太阳历。" },
+        { name: "巨石阵\n~公元前3000", era: "古代文明", desc: "标记夏至和冬至的天文观测奇迹。" },
+        { name: "玛雅历", era: "古代文明", desc: "金星周期误差仅每6000年差1天。" }
+      ]},
+      { name: "农业与水利", era: "古代文明", desc: "从刀耕火种到大型灌溉——农业支撑城市诞生。", children: [
+        { name: "犁·牛耕\n~公元前4000", era: "古代文明", desc: "畜力替代人力。" },
+        { name: "都江堰\n公元前256", era: "古代文明", desc: "李冰——运行2000多年的水利奇迹。" },
+        { name: "轮子\n~公元前3500", era: "古代文明", desc: "苏美尔——机械文明的基础。" }
+      ]},
+      { name: "建筑与工程", era: "古代文明", desc: "从泥土到巨石——超越生命尺度的建筑。", children: [
+        { name: "金字塔\n古埃及", era: "古代文明", desc: "胡夫金字塔146m，230万块石料，精确到毫米。" },
+        { name: "罗马混凝土", era: "古代文明", desc: "万神殿43m穹顶，2000年不裂。" },
+        { name: "罗马大道", era: "古代文明", desc: "8万公里道路网——工程标准化先驱。" }
+      ]},
+      { name: "医学", era: "古代文明", desc: "从巫术到观察——医学成为经验科学。", children: [
+        { name: "希波克拉底", era: "古代文明", desc: "体液说·医学伦理——'医学之父'。" },
+        { name: "盖伦", era: "古代文明", desc: "解剖学集大成者，影响1500年。" },
+        { name: "《黄帝内经》", era: "古代文明", desc: "经络·阴阳五行——中医基石。" }
+      ]}
+    ]},
+    { name: "中古时代\n~500-1500年", era: "中古时代", desc: "伊斯兰和中国成为科技火炬手。造纸术西传，大学兴起，火药改变战争。", children: [
+      { name: "伊斯兰黄金时代\n750-1258", era: "中古时代", desc: "巴格达智慧宫——翻译保存希腊经典，原创性发展代数、光学、医学。", children: [
+        { name: "花拉子米\n代数学", era: "中古时代", desc: "Algorithm一词源自其名——代数独立于几何的开端。" },
+        { name: "伊本·西那\n《医典》", era: "中古时代", desc: "欧洲标准教材600年。" },
+        { name: "伊本·海赛姆\n光学", era: "中古时代", desc: "《光学全书》·暗箱——'现代光学之父'。" },
+        { name: "阿拉伯数字传入", era: "中古时代", desc: "十进制经阿拉伯传入欧洲——改变数学。" }
+      ]},
+      { name: "中国唐宋科技\n600-1300", era: "中古时代", desc: "四大发明中三项成熟于此时期。", children: [
+        { name: "火药", era: "中古时代", desc: "炼丹→宋代武器→蒙古西传→欧洲。" },
+        { name: "印刷术", era: "中古时代", desc: "雕版→毕昇活字（1040），比古腾堡早400年。" },
+        { name: "指南针", era: "中古时代", desc: "12世纪传入欧洲，开启大航海。" },
+        { name: "郑和下西洋\n1405-1433", era: "中古时代", desc: "宝船约125米——世界最大木船队。" }
+      ]},
+      { name: "欧洲中世纪", era: "中古时代", desc: "水车风车重犁马镫——积蓄着爆发的力量。", children: [
+        { name: "重犁·三圃制", era: "中古时代", desc: "粮食↑→人口↑→城市↑" },
+        { name: "水车·风车", era: "中古时代", desc: "最早的'可再生能源'大规模利用。" },
+        { name: "哥特式建筑\n12世纪", era: "中古时代", desc: "尖拱·飞扶壁——石头变成光与空间。" },
+        { name: "机械钟\n14世纪", era: "中古时代", desc: "时间被'机器化'。" },
+        { name: "眼镜\n13世纪", era: "中古时代", desc: "透镜研磨副产品——延长学者工作寿命。" },
+        { name: "大学兴起\n11-13世纪", era: "中古时代", desc: "博洛尼亚·巴黎·牛津——制度化知识生产。" }
+      ]},
+      { name: "蒙古技术传播\n1200-1400", era: "中古时代", desc: "空前统一的欧亚网络——技术以史无前例的速度跨洲流动。", children: [
+        { name: "火药西传", era: "中古时代", desc: "中国→伊斯兰→欧洲。" },
+        { name: "印刷术西传", era: "中古时代", desc: "为古腾堡提供灵感。" },
+        { name: "驿站系统", era: "中古时代", desc: "最早的'全球信息高速'雏形。" }
+      ]}
+    ]},
+    { name: "科学革命\n~1500-1750年", era: "科学革命", desc: "哥白尼把地球移出宇宙中心，牛顿用几条公式描述整个宇宙。现代科学方法论奠基。", children: [
+      { name: "印刷术革命\n古腾堡·1455", era: "科学革命", desc: "活字机械印刷→知识传播速度↑100倍。", children: [
+        { name: "知识传播加速", era: "科学革命", desc: "科学著作快速复制扩散→科学革命的社会基础。" },
+        { name: "识字率上升", era: "科学革命", desc: "书籍不再是奢侈品→知识民主化。" }
+      ]},
+      { name: "大航海时代", era: "科学革命", desc: "全球视野打开——新大陆·新物种·新市场。", children: [
+        { name: "哥伦布·1492", era: "科学革命", desc: "发现美洲——全球物种大交换。" },
+        { name: "麦哲伦环球\n1519-1522", era: "科学革命", desc: "实证地球是圆的。" },
+        { name: "精密时钟\n1735", era: "科学革命", desc: "哈里森——经度测量，航海革命。" }
+      ]},
+      { name: "天文学革命", era: "科学革命", desc: "从地心到日心，从正圆到椭圆——宇宙观的颠覆。", children: [
+        { name: "哥白尼\n日心说·1543", era: "科学革命", desc: "把太阳放在宇宙中心——人类不再是焦点。" },
+        { name: "开普勒\n行星三定律", era: "科学革命", desc: "椭圆轨道——数学精确描述天体。" },
+        { name: "伽利略\n望远镜·1609", era: "科学革命", desc: "首次望远镜天文观测——木星卫星·太阳黑子。" },
+        { name: "牛顿\n《原理》·1687", era: "科学革命", desc: "万有引力+三定律——统一天上地下。" }
+      ]},
+      { name: "科学方法", era: "科学革命", desc: "实验+数学+归纳——现代科学的'操作系统'。", children: [
+        { name: "培根·归纳法", era: "科学革命", desc: "从观察事实到归纳规律——对抗空洞思辨。" },
+        { name: "笛卡尔·演绎法", era: "科学革命", desc: "怀疑一切→公理推导——理性主义旗帜。" },
+        { name: "皇家学会·1660", era: "科学革命", desc: "世界第一个科学院——制度化科学交流。" }
+      ]},
+      { name: "数学革命", era: "科学革命", desc: "微积分——人类拥有了描述'变化'的语言。", children: [
+        { name: "牛顿·莱布尼茨\n微积分", era: "科学革命", desc: "独立发明——数学史上最伟大的工具之一。" },
+        { name: "笛卡尔\n解析几何", era: "科学革命", desc: "代数+几何=坐标系——数与形的统一。" },
+        { name: "帕斯卡·费马\n概率论", era: "科学革命", desc: "描述不确定性的数学语言。" }
+      ]},
+      { name: "化学的诞生", era: "科学革命", desc: "从炼金术到拉瓦锡——化学成为定量科学。", children: [
+        { name: "波义耳\n1661", era: "科学革命", desc: "《怀疑派化学家》——把化学从炼金术分离。" },
+        { name: "拉瓦锡\n化学革命", era: "科学革命", desc: "推翻燃素说·质量守恒·元素命名——现代化学之父。" },
+        { name: "道尔顿\n原子论·1803", era: "科学革命", desc: "每种元素由独特原子组成——化学从定性走向定量。" }
+      ]}
+    ]},
+    { name: "工业革命\n~1750-1900年", era: "工业革命", desc: "蒸汽解放肌肉，电力驯服自然，钢铁重塑地球。150年创造的生产力超过之前200万年。", children: [
+      { name: "蒸汽机", era: "工业革命", desc: "把热能转化为机械功——不受地理限制的动力源。", children: [
+        { name: "瓦特·1769", era: "工业革命", desc: "分离式冷凝器——效率↑5倍，工业革命核心引擎。" },
+        { name: "蒸汽火车\n斯蒂芬森·1829", era: "工业革命", desc: "火箭号——时速48km，陆路革命。" },
+        { name: "蒸汽船\n富尔顿·1807", era: "工业革命", desc: "克莱蒙特号——水路不再依赖风和人力。" }
+      ]},
+      { name: "电力系统", era: "工业革命", desc: "法拉第→麦克斯韦→特斯拉——电气时代基石。", children: [
+        { name: "法拉第\n电磁感应·1831", era: "工业革命", desc: "磁→电——发电机的原理，现代文明基础。" },
+        { name: "麦克斯韦方程\n1865", era: "工业革命", desc: "4个方程统一电·磁·光——预言电磁波。" },
+        { name: "爱迪生·电灯\n1879", era: "工业革命", desc: "实用白炽灯——黑夜被征服。" },
+        { name: "特斯拉·交流电", era: "工业革命", desc: "交流发电机+变压器→现代电网雏形。" }
+      ]},
+      { name: "内燃机", era: "工业革命", desc: "比蒸汽机更轻更快更高效——驱动汽车和飞机。", children: [
+        { name: "奥托四冲程\n1876", era: "工业革命", desc: "几乎所有汽车发动机的基本循环。" },
+        { name: "柴油机\n狄塞尔·1892", era: "工业革命", desc: "压燃式——更高热效率。" },
+        { name: "汽车\n本茨·1885", era: "工业革命", desc: "三轮→福特T型车·流水线（1908）。" }
+      ]},
+      { name: "钢铁时代", era: "工业革命", desc: "廉价钢铁→铁路·摩天楼·桥梁——文明骨架。", children: [
+        { name: "贝塞麦转炉\n1856", era: "工业革命", desc: "大量廉价炼钢——钢从奢侈品变大宗商品。" },
+        { name: "钢筋混凝土\n1867", era: "工业革命", desc: "摩天大楼和现代城市的基础。" }
+      ]},
+      { name: "通信革命", era: "工业革命", desc: "信息第一次跑得比人快。", children: [
+        { name: "电报\n莫尔斯·1837", era: "工业革命", desc: "跨大西洋电缆（1866）→伦敦到纽约几分钟。" },
+        { name: "电话\n贝尔·1876", era: "工业革命", desc: "'华生先生，请过来，我需要你。'" },
+        { name: "无线电\n马可尼·1895", era: "工业革命", desc: "赫兹验证电磁波→广播→电视→WiFi的源头。" }
+      ]},
+      { name: "化学工业", era: "工业革命", desc: "从染料到炸药，从化肥到塑料——分子世界的工程学。", children: [
+        { name: "合成染料\n1856", era: "工业革命", desc: "珀金·苯胺紫——有机化学工业的诞生。" },
+        { name: "炸药\n诺贝尔·1867", era: "工业革命", desc: "安全炸药——开山辟路。" },
+        { name: "合成氨\n哈伯-博斯·1909", era: "工业革命", desc: "空气→肥料——养活了地球一半人口。" },
+        { name: "塑料\n贝克兰·1907", era: "工业革命", desc: "酚醛树脂——塑料时代的开端。" }
+      ]},
+      { name: "热力学", era: "工业革命", desc: "蒸汽机推动了物理学——对'热'和'能量'的精确理解。", children: [
+        { name: "卡诺循环\n1824", era: "工业革命", desc: "热机效率的理论极限。" },
+        { name: "第一定律\n能量守恒", era: "工业革命", desc: "能量既不能创造也不能消灭。" },
+        { name: "第二定律\n熵·克劳修斯", era: "工业革命", desc: "宇宙在走向混乱——时间之箭。" },
+        { name: "玻尔兹曼\nS=k·logW", era: "工业革命", desc: "熵是微观状态数的对数。" }
+      ]}
+    ]},
+    { name: "现代科技\n~1900-1970年", era: "现代科技", desc: "相对论和量子力学颠覆时空观和物质观。两次世界大战催生雷达、喷气机、核能、计算机、火箭。", children: [
+      { name: "相对论\n爱因斯坦", era: "现代科技", desc: "狭义（1905）和广义（1915）——时空·引力·宇宙全新理解。", children: [
+        { name: "E=mc²", era: "现代科技", desc: "质量=能量——核能的理论基础。" },
+        { name: "广义相对论", era: "现代科技", desc: "引力=时空弯曲——黑洞·引力波·宇宙膨胀。" }
+      ]},
+      { name: "量子力学", era: "现代科技", desc: "微观世界的'操作系统'——违反直觉但极其精确。", children: [
+        { name: "普朗克\n量子假说·1900", era: "现代科技", desc: "能量不是连续的——量子时代开端。" },
+        { name: "玻尔\n原子模型·1913", era: "现代科技", desc: "电子在固定轨道跳跃——解释原子光谱。" },
+        { name: "薛定谔方程\n1926", era: "现代科技", desc: "波函数ψ——描述粒子行为的微分方程。" },
+        { name: "海森堡\n不确定性·1927", era: "现代科技", desc: "无法同时精确知道位置和动量。" },
+        { name: "狄拉克\n反物质·1928", era: "现代科技", desc: "方程预言正电子——1932年实验证实。" }
+      ]},
+      { name: "核能", era: "现代科技", desc: "E=mc²的工程实现——解放原子核中束缚的能量。", children: [
+        { name: "核裂变\n哈恩·1938", era: "现代科技", desc: "铀核被中子轰击分裂。" },
+        { name: "第一个核反应堆\n费米·1942", era: "现代科技", desc: "芝加哥1号——核能时代黎明。" },
+        { name: "原子弹\n1945", era: "现代科技", desc: "曼哈顿计划——改变了战争和国际秩序。" },
+        { name: "核电站\n1954", era: "现代科技", desc: "奥布宁斯克——将核裂变热量转为电力。" }
+      ]},
+      { name: "电子学与计算机", era: "现代科技", desc: "从真空管到晶体管到集成电路——信息处理的物质基础。", children: [
+        { name: "真空三极管\n1906", era: "现代科技", desc: "德福雷斯特——放大电信号。" },
+        { name: "晶体管\n巴丁·1947", era: "现代科技", desc: "贝尔实验室——固态电子学起点，信息时代种子。" },
+        { name: "集成电路\n基尔比·1958", era: "现代科技", desc: "多个晶体管集成在一块芯片——摩尔定律载体。" },
+        { name: "图灵机\n1936", era: "现代科技", desc: "理论上定义'可计算'——计算机科学基础。" },
+        { name: "ENIAC\n1945", era: "现代科技", desc: "第一台通用电子计算机——1.8万真空管，30吨。" }
+      ]},
+      { name: "航天", era: "现代科技", desc: "从V-2到阿波罗——人类第一次把脚印留在了另一个天体。", children: [
+        { name: "史普尼克1号\n1957.10.4", era: "现代科技", desc: "苏联——第一颗人造卫星，太空时代开端。" },
+        { name: "加加林\n1961.4.12", era: "现代科技", desc: "第一个进入太空的人类——108分钟绕地球一圈。" },
+        { name: "阿波罗11号\n1969.7.20", era: "现代科技", desc: "阿姆斯特朗——'个人一小步，人类一大步。'" }
+      ]},
+      { name: "DNA双螺旋\n1953", era: "现代科技", desc: "沃森和克里克——生命信息编码方式被发现，分子生物学奠基。", children: [
+        { name: "中心法则", era: "现代科技", desc: "DNA→RNA→蛋白质——遗传信息流动路径。" },
+        { name: "遗传密码\n1961", era: "现代科技", desc: "三联体密码——如何编码20种氨基酸。" },
+        { name: "基因工程诞生\n1972-73", era: "现代科技", desc: "限制酶+连接酶→重组DNA——编辑生命代码。" }
+      ]},
+      { name: "医学革命", era: "现代科技", desc: "抗生素和疫苗让人类大规模战胜传染病。", children: [
+        { name: "青霉素\n弗莱明·1928", era: "现代科技", desc: "二战中拯救无数生命。" },
+        { name: "X射线\n伦琴·1895", era: "现代科技", desc: "无创看穿人体的开端。" },
+        { name: "脊髓灰质炎疫苗\n1950s", era: "现代科技", desc: "索尔克和萨宾——小儿麻痹症被征服。" }
+      ]}
+    ]},
+    { name: "信息时代\n~1970-2020年", era: "信息时代", desc: "摩尔定律驱动半个世纪技术爆炸。互联网连接全人类，智能手机把超级计算机放进口袋。", children: [
+      { name: "半导体革命", era: "信息时代", desc: "摩尔定律：晶体管数量每18-24月翻番——持续半个多世纪。", children: [
+        { name: "Intel 4004\n1971", era: "信息时代", desc: "第一个商用微处理器——2300个晶体管。" },
+        { name: "IBM PC\n1981", era: "信息时代", desc: "个人电脑时代开启。" },
+        { name: "GPU\nNVIDIA·1999", era: "信息时代", desc: "图形→并行计算→深度学习算力基石。" },
+        { name: "智能手机\niPhone·2007", era: "信息时代", desc: "把互联网·相机·GPS·计算机装进口袋。" }
+      ]},
+      { name: "互联网", era: "信息时代", desc: "从ARPANET的4个节点到连接50亿人。", children: [
+        { name: "ARPANET\n1969", era: "信息时代", desc: "分组交换·去中心化——互联网雏形。" },
+        { name: "TCP/IP\n1974", era: "信息时代", desc: "瑟夫·卡恩——互联网'通用语言'。" },
+        { name: "万维网\n伯纳斯-李·1989", era: "信息时代", desc: "HTTP+HTML+URL——在互联网上建'图书馆'。" },
+        { name: "Google\n1998", era: "信息时代", desc: "PageRank——让搜索引擎真正有用。" },
+        { name: "云计算\nAWS·2006", era: "信息时代", desc: "计算能力变成像水电一样的公共事业。" }
+      ]},
+      { name: "人工智能", era: "信息时代", desc: "从图灵测试到大语言模型——让机器学会'思考'的百年探索。", children: [
+        { name: "图灵测试\n1950", era: "信息时代", desc: "机器能思考吗？——判断智能的操作性标准。" },
+        { name: "AlexNet\n2012", era: "信息时代", desc: "深度学习崛起——GPU+大数据+深层网络。" },
+        { name: "Transformer\n2017", era: "信息时代", desc: "注意力机制——大语言模型的架构基础。" },
+        { name: "GPT-3/4\n2020-2023", era: "信息时代", desc: "大语言模型展示'涌现能力'。" },
+        { name: "AlphaFold\n2020", era: "信息时代", desc: "AI解决50年蛋白质折叠难题。" }
+      ]},
+      { name: "基因组革命", era: "信息时代", desc: "人类基因组计划（1990-2003）耗资38亿——如今只需几百美元。", children: [
+        { name: "PCR\n穆利斯·1983", era: "信息时代", desc: "DNA扩增——分子生物学的'复印机'。" },
+        { name: "人类基因组计划\n1990-2003", era: "信息时代", desc: "30亿碱基对——人类首次读取自己'源代码'。" },
+        { name: "CRISPR-Cas9\n2012", era: "信息时代", desc: "杜德纳·沙尔庞捷——'基因剪刀'，精准编辑DNA。" },
+        { name: "mRNA疫苗\n2020", era: "信息时代", desc: "COVID-19——从序列到疫苗只需数周。" }
+      ]},
+      { name: "材料与能源", era: "信息时代", desc: "纳米尺度操控物质——从石墨烯到钙钛矿。", children: [
+        { name: "石墨烯\n2004", era: "信息时代", desc: "单层碳原子——强度是钢的200倍。" },
+        { name: "锂电池\n1991", era: "信息时代", desc: "驱动了整个移动和电动时代。" },
+        { name: "光伏发电", era: "信息时代", desc: "太阳能成本↓99%，进入'太瓦时代'。" }
+      ]}
+    ]},
+    { name: "当代前沿\n2020年—未来", era: "当代前沿", desc: "AGI·量子计算·可控核聚变·基因编辑2.0·星际移民——站在文明跃迁门槛上。", children: [
+      { name: "AGI\n通用人工智能", era: "当代前沿", desc: "创造能完成任何人类智力任务的AI——可能是人类最后的发明。", children: [
+        { name: "大语言模型", era: "当代前沿", desc: "GPT·Claude·DeepSeek——工具使用·多步推理。" },
+        { name: "具身智能", era: "当代前沿", desc: "AI+机器人——在物理世界中行动。" },
+        { name: "AI对齐", era: "当代前沿", desc: "确保超级AI目标与人类价值观一致。" }
+      ]},
+      { name: "量子计算", era: "当代前沿", desc: "利用叠加和纠缠——解决经典计算机需要宇宙年龄的问题。", children: [
+        { name: "超导量子比特", era: "当代前沿", desc: "Google·IBM——最主流路线。" },
+        { name: "量子优越性\n2019", era: "当代前沿", desc: "Google Sycamore——超越所有经典超算。" },
+        { name: "量子通信", era: "当代前沿", desc: "量子密钥分发——理论上不可破解。" }
+      ]},
+      { name: "可控核聚变", era: "当代前沿", desc: "在地球上模拟太阳——无限清洁能源。", children: [
+        { name: "ITER\n国际热核聚变堆", era: "当代前沿", desc: "35国合作·托卡马克——目标Q>10。" },
+        { name: "NIF\n2022突破", era: "当代前沿", desc: "惯性约束——首次聚变净能量增益。" }
+      ]},
+      { name: "基因编辑2.0", era: "当代前沿", desc: "从基因剪刀到基因'文字处理器'——精准改写生命代码。", children: [
+        { name: "碱基编辑", era: "当代前沿", desc: "不切断DNA——更安全转换碱基。" },
+        { name: "先导编辑", era: "当代前沿", desc: "'搜索并替换'——写入任意序列。" },
+        { name: "抗衰老研究", era: "当代前沿", desc: "表观遗传重编程——延长健康寿命。" }
+      ]},
+      { name: "太空新纪元", era: "当代前沿", desc: "可回收火箭——发射成本↓1/10，太空经济时代。", children: [
+        { name: "SpaceX星舰", era: "当代前沿", desc: "完全可重复使用·100吨级——火星移民基础。" },
+        { name: "星链·巨型星座", era: "当代前沿", desc: "数万颗低轨卫星——全球宽带覆盖。" },
+        { name: "月球基地\n阿尔忒弥斯", era: "当代前沿", desc: "重返月球→永久基地→火星中转站。" }
+      ]},
+      { name: "脑机接口", era: "当代前沿", desc: "直接连接大脑和计算机——绕过语言的带宽瓶颈。", children: [
+        { name: "Neuralink", era: "当代前沿", desc: "植入式——让瘫痪者用意念控制设备。" },
+        { name: "非侵入式BCI", era: "当代前沿", desc: "头戴式读取脑电信号——消费级脑机接口。" }
+      ]},
+      { name: "其他前沿", era: "当代前沿", desc: "常温超导·纳米机器人·气候工程——每一项都可能改变规则。", children: [
+        { name: "常温超导探索", era: "当代前沿", desc: "如果实现→无损输电·磁悬浮·量子革命。" },
+        { name: "纳米机器人", era: "当代前沿", desc: "在血管中巡航→靶向投药·清除血栓。" },
+        { name: "碳捕获", era: "当代前沿", desc: "从大气中提取CO₂——给地球'退烧'。" },
+        { name: "自动驾驶L5", era: "当代前沿", desc: "完全无人驾驶——交通死亡↓90%。" }
+      ]}
+    ]}
+  ]
+};
+
+// ══════════ D3 可视化 ══════════
+const svg = d3.select("#tree-svg");
+const g = svg.append("g");
+const wrap = document.getElementById("canvas-wrap");
+let width, height;
+function resize() {
+  const r = wrap.getBoundingClientRect();
+  width = r.width; height = r.height;
+  svg.attr("viewBox", [0, 0, width, height]);
+}
+resize();
+window.addEventListener("resize", resize);
+
+const zoom = d3.zoom().scaleExtent([0.08, 3]).on("zoom", (e) => {
+  g.attr("transform", e.transform);
+  document.getElementById("zoom-info").textContent = Math.round(e.transform.k * 100) + "%";
+});
+svg.call(zoom);
+
+let root = d3.hierarchy(techTree);
+let id = 0;
+root.descendants().forEach(d => { d._id = id++; });
+
+const treeLayout = d3.tree().nodeSize([20, 160]).separation((a, b) => (a.parent === b.parent ? 1.2 : 1.8));
+
+function update(source) {
+  const dur = 600;
+  treeLayout(root);
+  root.descendants().forEach(d => { d.y = d.depth * 180; });
+
+  // Links
+  const link = g.selectAll(".link").data(root.links(), d => d.target._id);
+  link.exit().transition().duration(dur).attr("opacity", 0).remove();
+  const linkE = link.enter().append("path").attr("class", d => "link" + (d.source.depth === 0 ? " root-link" : "")).attr("opacity", 0);
+  link.merge(linkE).transition().duration(dur).attr("opacity", 1).attr("d", d3.linkHorizontal().x(d => d.y).y(d => d.x));
+
+  // Nodes
+  const node = g.selectAll(".node").data(root.descendants(), d => d._id);
+  node.exit().transition().duration(dur).attr("opacity", 0).remove();
+  const nodeE = node.enter().append("g").attr("class", "node").attr("opacity", 0)
+    .on("click", (event, d) => {
+      event.stopPropagation();
+      if (d.children) { d._children = d.children; d.children = null; }
+      else if (d._children) { d.children = d._children; d._children = null; }
+      update(d); showDetail(d);
+    });
+  nodeE.append("circle"); nodeE.append("text");
+  const nodeM = node.merge(nodeE);
+  nodeM.transition().duration(dur).attr("opacity", 1).attr("transform", d => `translate(${d.y},${d.x})`);
+  nodeM.select("circle")
+    .attr("r", d => d.depth === 0 ? 12 : (d.data.children || d.data._children) ? 7 : 5)
+    .attr("fill", d => ERA_COLORS[d.data.era || d.parent?.data?.era || ""] || "#484f58")
+    .attr("stroke", d => d3.color(ERA_COLORS[d.data.era || d.parent?.data?.era || ""] || "#484f58").darker(0.4));
+  nodeM.select("text")
+    .attr("dy", d => d.depth === 0 ? -18 : 3)
+    .attr("x", d => d.depth === 0 ? 0 : (d.data.children || d.data._children) ? 14 : 12)
+    .attr("text-anchor", d => d.depth === 0 ? "middle" : "start")
+    .text(d => d.data.name.split('\n')[0])
+    .each(function(d) {
+      const l2 = d.data.name.includes('\n') ? d.data.name.split('\n')[1] : null;
+      if (l2 && d.depth > 0) {
+        d3.select(this).append("tspan").attr("x", (d.data.children || d.data._children) ? 14 : 12).attr("dy", 12).attr("font-size", "8px").attr("fill", "#8b949e").text(l2);
+      }
+    });
+}
+
+update(root);
+svg.call(zoom.transform, d3.zoomIdentity.translate(60, height/2).scale(0.55));
+
+// ── 详情面板 ──
+function showDetail(d) {
+  const empty = document.getElementById("detail-empty");
+  const content = document.getElementById("detail-content");
+  if (!d || d.depth === 0) { empty.style.display = "block"; content.style.display = "none"; return; }
+  empty.style.display = "none"; content.style.display = "block";
+  document.getElementById("detail-title").textContent = d.data.name.replace(/\n/g, " · ");
+  document.getElementById("detail-desc").textContent = d.data.desc || "";
+  const eraEl = document.getElementById("detail-era");
+  const era = d.data.era || "";
+  if (era) { eraEl.textContent = era; eraEl.style.display = "inline-block"; eraEl.style.background = ERA_COLORS[era] || "#484f58"; eraEl.style.color = "#fff"; }
+  else { eraEl.style.display = "none"; }
+  const pEl = document.getElementById("detail-parents");
+  if (d.parent && d.parent.depth > 0) {
+    pEl.style.display = "block";
+    pEl.innerHTML = "<strong>← 来源：</strong><ul><li class='nav-link' data-id='" + d.parent._id + "'>" + d.parent.data.name.replace(/\n/g, " · ") + "</li></ul>";
+  } else pEl.style.display = "none";
+  const cEl = document.getElementById("detail-children");
+  const cn = d.children || d._children;
+  if (cn && cn.length > 0) {
+    cEl.style.display = "block";
+    cEl.innerHTML = "<strong>" + (d.children ? "子技术（点击折叠）：" : "已折叠（点击展开）：") + "</strong><ul>" +
+      cn.map(c => "<li class='nav-link' data-id='" + c._id + "'>" + c.data.name.replace(/\n/g, " · ") + "</li>").join("") + "</ul>";
+  } else cEl.style.display = "none";
+  document.querySelectorAll(".nav-link").forEach(el => {
+    el.onclick = function(e) {
+      e.stopPropagation();
+      const t = root.descendants().find(n => n._id === +this.dataset.id);
+      if (t) {
+        const tr = d3.zoomTransform(svg.node());
+        svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity.translate(-t.y * tr.k + width * 0.3, -t.x * tr.k + height * 0.4).scale(tr.k));
+        showDetail(t);
+      }
+    };
+  });
+}
+svg.on("click", () => showDetail(null));
+
+// ── 搜索 ──
+let matches = [], mIdx = -1;
+document.getElementById("search").addEventListener("input", function() {
+  const q = this.value.trim().toLowerCase();
+  g.selectAll(".node").classed("matched", false); matches = []; mIdx = -1;
+  if (!q) { document.getElementById("search-results").textContent = ""; return; }
+  root.descendants().forEach(d => { if (d.data.name.toLowerCase().includes(q) || (d.data.desc && d.data.desc.toLowerCase().includes(q))) matches.push(d); });
+  document.getElementById("search-results").textContent = matches.length ? `找到 ${matches.length} 个` : "无匹配";
+  if (matches.length) { mIdx = 0; highlight(); }
+});
+document.getElementById("search").addEventListener("keydown", function(e) {
+  if (e.key === "Enter" && matches.length) { mIdx = (mIdx + 1) % matches.length; highlight(); }
+});
+function highlight() {
+  if (mIdx < 0 || mIdx >= matches.length) return;
+  g.selectAll(".node").classed("matched", false);
+  const t = matches[mIdx];
+  g.selectAll(".node").filter(d => d._id === t._id).classed("matched", true);
+  const tr = d3.zoomTransform(svg.node());
+  svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity.translate(-t.y * tr.k + width * 0.3, -t.x * tr.k + height * 0.4).scale(tr.k));
+  showDetail(t);
+}
+
+// ── 按钮 ──
+document.getElementById("btn-reset").onclick = () => { svg.transition().duration(800).call(zoom.transform, d3.zoomIdentity.translate(60, height/2).scale(0.55)); showDetail(null); };
+document.getElementById("btn-expand").onclick = () => { root.descendants().forEach(d => { if (d._children) { d.children = d._children; d._children = null; } }); update(root); };
+document.getElementById("btn-collapse").onclick = () => { root.descendants().forEach(d => { if (d.depth > 1 && d.children) { d._children = d.children; d.children = null; } }); update(root); };
+document.getElementById("btn-zoom-in").onclick = () => { svg.transition().duration(300).call(zoom.scaleBy, 1.3); };
+document.getElementById("btn-zoom-out").onclick = () => { svg.transition().duration(300).call(zoom.scaleBy, 0.7); };
+
+// ── 键盘 ──
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT") return;
+  if (e.key === "f" || e.key === "/") { e.preventDefault(); document.getElementById("search").focus(); }
+  if (e.key === "Escape") { showDetail(null); document.getElementById("search").value = ""; document.getElementById("search").blur(); g.selectAll(".node").classed("matched", false); document.getElementById("search-results").textContent = ""; }
+});
+
+console.log("🌳 科技树可视化就绪 | 拖拽平移 | 滚轮缩放 | 点击展开/折叠 | / 搜索 | Esc 清除");
+console.log("   共 " + root.descendants().length + " 个技术节点");
+</script>
+</body>
+</html>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://cicade-liu.github.io/2026/07/10/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E7%A7%91%E6%8A%80/%E4%BA%BA%E7%B1%BB%E7%A7%91%E6%8A%80%E6%A0%91/tech-tree/" data-id="cuid1mZIuUDeOHJVKzpIjoRq6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "cicade-liu"
+        },
+        
+        "image": "https://cicade-liu.github.io",
+        "keywords": "",
+        "genre": "",
+        "datePublished": "2026-07-10",
+        "dateCreated": "2026-07-10",
+        "dateModified": "2026-07-10",
+        "url": "https://cicade-liu.github.io/2026/07/10/理解世界/科技/人类科技树/tech-tree/",
+        "description": "
+
+
+
+
+人类科技树 · 交互式可视化
+
+  :root {
+    --bg: #0d1117;
+    --panel-bg: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --dim: #8b949e;
+    --accent: #58a6ff;
+    --highlight: #f0c040;
+    --era-pr",
+        "wordCount": 5282
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/cicade-liu/cicade-liu.github.io/tree/main/2026/06/21" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2026/07/06/%E5%B7%A5%E4%BD%9C/%E7%83%81%E5%85%89/%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title"></p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%80%BB%E8%BF%B0/">总述</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/">基础能力</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/">进阶能力</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">12</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2026 cicade-liu</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://cicade-liu.github.io/2026/07/10/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E7%A7%91%E6%8A%80/%E4%BA%BA%E7%B1%BB%E7%A7%91%E6%8A%80%E6%A0%91/tech-tree/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>强化学习与仿真器 | cicade-liu 的技术博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="强化学习与仿真器 桥介引擎（BridgeDP Engine）的算法核心——PPO + Isaac Gym + 领域随机化   一、强化学习基础1.1 马尔可夫决策过程（MDP）强化学习的数学框架是 MDP，用五元组  描述：    符号 含义 足式机器人中的应用     状态空间 质心位置、速度、关节角度、IMU 读数…（通常 48-200 维）    动作空间 关节位置目标 &#x2F; 关节力矩（12-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习与仿真器">
+<meta property="og:url" content="https://cicade-liu.github.io/2026/06/22/%E5%B7%A5%E4%BD%9C/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BB%BF%E7%9C%9F%E5%99%A8/index.html">
+<meta property="og:site_name" content="cicade-liu 的技术博客">
+<meta property="og:description" content="强化学习与仿真器 桥介引擎（BridgeDP Engine）的算法核心——PPO + Isaac Gym + 领域随机化   一、强化学习基础1.1 马尔可夫决策过程（MDP）强化学习的数学框架是 MDP，用五元组  描述：    符号 含义 足式机器人中的应用     状态空间 质心位置、速度、关节角度、IMU 读数…（通常 48-200 维）    动作空间 关节位置目标 &#x2F; 关节力矩（12-">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-22T07:05:29.236Z">
+<meta property="article:author" content="cicade-liu">
+<meta property="article:tag" content="技术笔记">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="cicade-liu 的技术博客" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 8.1.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%80%BB%E8%BF%B0/">总述</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/">进阶能力</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-工作/桥介数物/所需能力/进阶能力/强化学习与仿真器" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        强化学习与仿真器
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2026/06/22/%E5%B7%A5%E4%BD%9C/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BB%BF%E7%9C%9F%E5%99%A8/" class="article-date">
+       <time datetime="2026-06-21T16:00:00.000Z" itemprop="datePublished">2026-06-22</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2026/06/22/%E5%B7%A5%E4%BD%9C/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BB%BF%E7%9C%9F%E5%99%A8/" class="article-date">
+     <time datetime="2026-06-22T07:05:29.236Z" itemprop="dateModified">2026-06-22</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="强化学习与仿真器"><a href="#强化学习与仿真器" class="headerlink" title="强化学习与仿真器"></a>强化学习与仿真器</h1><blockquote>
+<p>桥介引擎（BridgeDP Engine）的算法核心——PPO + Isaac Gym + 领域随机化</p>
+</blockquote>
+<hr>
+<h2 id="一、强化学习基础"><a href="#一、强化学习基础" class="headerlink" title="一、强化学习基础"></a>一、强化学习基础</h2><h3 id="1-1-马尔可夫决策过程（MDP）"><a href="#1-1-马尔可夫决策过程（MDP）" class="headerlink" title="1.1 马尔可夫决策过程（MDP）"></a>1.1 马尔可夫决策过程（MDP）</h3><p>强化学习的数学框架是 MDP，用五元组 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="13.585ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 6004.7 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(389,0)"><path data-c="1D446" d="M308 24Q367 24 416 76T466 197Q466 260 414 284Q308 311 278 321T236 341Q176 383 176 462Q176 523 208 573T273 648Q302 673 343 688T407 704H418H425Q521 704 564 640Q565 640 577 653T603 682T623 704Q624 704 627 704T632 705Q645 705 645 698T617 577T585 459T569 456Q549 456 549 465Q549 471 550 475Q550 478 551 494T553 520Q553 554 544 579T526 616T501 641Q465 662 419 662Q362 662 313 616T263 510Q263 480 278 458T319 427Q323 425 389 408T456 390Q490 379 522 342T554 242Q554 216 546 186Q541 164 528 137T492 78T426 18T332 -20Q320 -22 298 -22Q199 -22 144 33L134 44L106 13Q83 -14 78 -18T65 -22Q52 -22 52 -14Q52 -11 110 221Q112 227 130 227H143Q149 221 149 216Q149 214 148 207T144 186T142 153Q144 114 160 87T203 47T255 29T308 24Z"></path></g><g data-mml-node="mo" transform="translate(1034,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(1478.7,0)"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g><g data-mml-node="mo" transform="translate(2228.7,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(2673.3,0)"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mo" transform="translate(3424.3,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(3869,0)"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="mo" transform="translate(4628,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(5072.7,0)"><path data-c="1D6FE" d="M31 249Q11 249 11 258Q11 275 26 304T66 365T129 418T206 441Q233 441 239 440Q287 429 318 386T371 255Q385 195 385 170Q385 166 386 166L398 193Q418 244 443 300T486 391T508 430Q510 431 524 431H537Q543 425 543 422Q543 418 522 378T463 251T391 71Q385 55 378 6T357 -100Q341 -165 330 -190T303 -216Q286 -216 286 -188Q286 -138 340 32L346 51L347 69Q348 79 348 100Q348 257 291 317Q251 355 196 355Q148 355 108 329T51 260Q49 251 47 251Q45 249 31 249Z"></path></g><g data-mml-node="mo" transform="translate(5615.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container> 描述：</p>
+<table>
+<thead>
+<tr>
+<th align="left">符号</th>
+<th align="left">含义</th>
+<th align="left">足式机器人中的应用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="1.459ex" height="1.645ex" role="img" focusable="false" viewBox="0 -705 645 727"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D446" d="M308 24Q367 24 416 76T466 197Q466 260 414 284Q308 311 278 321T236 341Q176 383 176 462Q176 523 208 573T273 648Q302 673 343 688T407 704H418H425Q521 704 564 640Q565 640 577 653T603 682T623 704Q624 704 627 704T632 705Q645 705 645 698T617 577T585 459T569 456Q549 456 549 465Q549 471 550 475Q550 478 551 494T553 520Q553 554 544 579T526 616T501 641Q465 662 419 662Q362 662 313 616T263 510Q263 480 278 458T319 427Q323 425 389 408T456 390Q490 379 522 342T554 242Q554 216 546 186Q541 164 528 137T492 78T426 18T332 -20Q320 -22 298 -22Q199 -22 144 33L134 44L106 13Q83 -14 78 -18T65 -22Q52 -22 52 -14Q52 -11 110 221Q112 227 130 227H143Q149 221 149 216Q149 214 148 207T144 186T142 153Q144 114 160 87T203 47T255 29T308 24Z"></path></g></g></g></svg></mjx-container></td>
+<td align="left">状态空间</td>
+<td align="left">质心位置、速度、关节角度、IMU 读数…（通常 48-200 维）</td>
+</tr>
+<tr>
+<td align="left"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.697ex" height="1.62ex" role="img" focusable="false" viewBox="0 -716 750 716"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g></g></g></svg></mjx-container></td>
+<td align="left">动作空间</td>
+<td align="left">关节位置目标 / 关节力矩（12-30 维）</td>
+</tr>
+<tr>
+<td align="left">$P(s’</td>
+<td align="left">s,a)$</td>
+<td align="left">状态转移概率</td>
+</tr>
+<tr>
+<td align="left"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="9.436ex" height="2.283ex" role="img" focusable="false" viewBox="0 -759 4170.8 1009"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="mo" transform="translate(759,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(1148,0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mo" transform="translate(1617,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(2061.7,0)"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mo" transform="translate(2590.7,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msup" transform="translate(3035.3,0)"><g data-mml-node="mi"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mo" transform="translate(502,363) scale(0.707)"><path data-c="2032" d="M79 43Q73 43 52 49T30 61Q30 68 85 293T146 528Q161 560 198 560Q218 560 240 545T262 501Q262 496 260 486Q259 479 173 263T84 45T79 43Z"></path></g></g><g data-mml-node="mo" transform="translate(3781.8,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></td>
+<td align="left">奖励函数</td>
+<td align="left">速度跟踪、能耗、摔倒惩罚…</td>
+</tr>
+<tr>
+<td align="left"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.489ex;" xmlns="http://www.w3.org/2000/svg" width="1.229ex" height="1.486ex" role="img" focusable="false" viewBox="0 -441 543 657"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D6FE" d="M31 249Q11 249 11 258Q11 275 26 304T66 365T129 418T206 441Q233 441 239 440Q287 429 318 386T371 255Q385 195 385 170Q385 166 386 166L398 193Q418 244 443 300T486 391T508 430Q510 431 524 431H537Q543 425 543 422Q543 418 522 378T463 251T391 71Q385 55 378 6T357 -100Q341 -165 330 -190T303 -216Q286 -216 286 -188Q286 -138 340 32L346 51L347 69Q348 79 348 100Q348 257 291 317Q251 355 196 355Q148 355 108 329T51 260Q49 251 47 251Q45 249 31 249Z"></path></g></g></g></svg></mjx-container></td>
+<td align="left">折扣因子</td>
+<td align="left">通常 0.99，平衡短期与长期收益</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-核心概念"><a href="#1-2-核心概念" class="headerlink" title="1.2 核心概念"></a>1.2 核心概念</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">策略 π(a|s)：给定状态 s，输出动作 a 的概率分布</span><br><span class="line">  → 在桥介中：神经网络（Actor）输入观测，输出关节目标</span><br><span class="line"></span><br><span class="line">轨迹 τ = (s₀, a₀, r₀, s₁, a₁, r₁, ...)：一段交互序列</span><br><span class="line">  → 在 Isaac Gym 中：一个 episode = 最多 1000 步仿真</span><br><span class="line"></span><br><span class="line">回报 G_t = Σ_{k=0}^∞ γ^k · r_{t+k}：从 t 时刻起的累计折扣奖励</span><br><span class="line"></span><br><span class="line">价值函数 V^π(s) = E_π[G_t | s_t = s]：状态 s 的"好程度"</span><br><span class="line">  → Critic 网络输出价值估计</span><br><span class="line"></span><br><span class="line">动作价值 Q^π(s,a) = E_π[G_t | s_t = s, a_t = a]：在状态 s 做动作 a 的"好程度"</span><br><span class="line"></span><br><span class="line">优势函数 A^π(s,a) = Q^π(s,a) - V^π(s)：做动作 a 比平均水平好多少</span><br><span class="line">  → PPO 的核心：用优势指导策略更新</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-策略梯度——REINFORCE"><a href="#1-3-策略梯度——REINFORCE" class="headerlink" title="1.3 策略梯度——REINFORCE"></a>1.3 策略梯度——REINFORCE</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">目标：最大化期望回报 J(θ) = E_τ~π_θ[G(τ)]</span><br><span class="line"></span><br><span class="line">策略梯度定理：</span><br><span class="line">∇_θ J(θ) = E_τ [Σ ∇_θ log π_θ(a_t|s_t) · G_t]</span><br><span class="line"></span><br><span class="line">直观理解：</span><br><span class="line">- 如果某次试验获得了高回报 G_t → 增大该动作的概率</span><br><span class="line">- 如果获得低回报 → 减小该动作的概率</span><br><span class="line"></span><br><span class="line">REINFORCE 的缺点：</span><br><span class="line">1. 高方差（每次试验的回报波动大）</span><br><span class="line">2. 样本效率低（每次更新只能用一次试验的数据）</span><br><span class="line">→ 改进：PPO（用 Critic 来降低方差 + 多次重复利用数据）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、PPO（Proximal-Policy-Optimization）"><a href="#二、PPO（Proximal-Policy-Optimization）" class="headerlink" title="二、PPO（Proximal Policy Optimization）"></a>二、PPO（Proximal Policy Optimization）</h2><p>PPO 是桥介 RL 训练的主力算法，也是目前足式机器人 locomotion 的事实标准。</p>
+<h3 id="2-1-Actor-Critic-架构"><a href="#2-1-Actor-Critic-架构" class="headerlink" title="2.1 Actor-Critic 架构"></a>2.1 Actor-Critic 架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">      ┌──────────┐</span><br><span class="line">obs → │  Actor   │ → action（动作）</span><br><span class="line">      │  (策略)   │</span><br><span class="line">      └──────────┘</span><br><span class="line">           ↑</span><br><span class="line">      策略梯度更新</span><br><span class="line"></span><br><span class="line">      ┌──────────┐</span><br><span class="line">obs → │  Critic  │ → value（状态价值估计）</span><br><span class="line">      │  (价值)   │</span><br><span class="line">      └──────────┘</span><br><span class="line">           ↑</span><br><span class="line">      TD 误差更新</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-PPO-的核心思想"><a href="#2-2-PPO-的核心思想" class="headerlink" title="2.2 PPO 的核心思想"></a>2.2 PPO 的核心思想</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">问题：策略更新太大 → 新策略可能与旧策略差别太大 → 训练不稳定</span><br><span class="line"></span><br><span class="line">PPO 的解决方案：限制更新幅度（Clipping）</span><br><span class="line"></span><br><span class="line">原始策略梯度损失：</span><br><span class="line">  L(θ) = E [ r_t(θ) · A_t ]</span><br><span class="line">  其中 r_t(θ) = π_θ(a|s) / π_old(a|s)  （新旧策略的概率比）</span><br><span class="line"></span><br><span class="line">PPO Clipping：</span><br><span class="line">  L^CLIP(θ) = E [ min( r_t(θ)·A_t, clip(r_t(θ), 1-ε, 1+ε)·A_t ) ]</span><br><span class="line">  </span><br><span class="line">  含义：</span><br><span class="line">  - 如果 A_t &gt; 0（好的动作）：r_t 最大只允许到 1+ε（通常 ε=0.2）</span><br><span class="line">  - 如果 A_t &lt; 0（坏的动作）：r_t 最小只允许到 1-ε</span><br><span class="line">  </span><br><span class="line">  → 防止策略一次更新太远</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-GAE（广义优势估计）"><a href="#2-3-GAE（广义优势估计）" class="headerlink" title="2.3 GAE（广义优势估计）"></a>2.3 GAE（广义优势估计）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">优势函数的估计方法之一，通过 λ 参数平衡偏差和方差：</span><br><span class="line"></span><br><span class="line">A_t^GAE = Σ_{k=0}^{∞} (γλ)^k · δ_{t+k}</span><br><span class="line"></span><br><span class="line">其中 δ_t = r_t + γ V(s_{t+1}) - V(s_t)  （TD 误差）</span><br><span class="line"></span><br><span class="line">λ = 0：只用一个 TD 误差（低方差、高偏差）</span><br><span class="line">λ = 1：用蒙特卡洛回报（高方差、低偏差）</span><br><span class="line">典型值：λ = 0.95</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-PPO-的完整训练循环"><a href="#2-4-PPO-的完整训练循环" class="headerlink" title="2.4 PPO 的完整训练循环"></a>2.4 PPO 的完整训练循环</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># PPO 伪代码（桥介 Isaac Gym 训练的核心逻辑）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(num_epochs):</span><br><span class="line">    <span class="comment"># ---- 第 1 步：收集数据（Rollout）----</span></span><br><span class="line">    obs_buffer = []</span><br><span class="line">    action_buffer = []</span><br><span class="line">    reward_buffer = []</span><br><span class="line">    done_buffer = []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> step <span class="keyword">in</span> <span class="built_in">range</span>(num_steps_per_env):</span><br><span class="line">        obs = env.get_observations()          <span class="comment"># [num_envs, obs_dim]</span></span><br><span class="line">        action, log_prob = actor.sample(obs)  <span class="comment"># 策略采样</span></span><br><span class="line">        next_obs, reward, done = env.step(action)</span><br><span class="line">        </span><br><span class="line">        obs_buffer.append(obs)</span><br><span class="line">        action_buffer.append(action)</span><br><span class="line">        reward_buffer.append(reward)</span><br><span class="line">        done_buffer.append(done)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ---- 第 2 步：计算优势（GAE）----</span></span><br><span class="line">    values = critic.evaluate(obs_buffer)      <span class="comment"># Critic 估计价值</span></span><br><span class="line">    advantages = compute_gae(reward_buffer, values, done_buffer)</span><br><span class="line">    returns = advantages + values             <span class="comment"># 回报 = 价值 + 优势</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ---- 第 3 步：PPO 更新（多 epoch，重复利用数据）----</span></span><br><span class="line">    <span class="keyword">for</span> ppo_epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">        <span class="comment"># Actor 损失（Clipping）</span></span><br><span class="line">        new_log_probs = actor.log_prob(obs_buffer, action_buffer)</span><br><span class="line">        ratio = torch.exp(new_log_probs - old_log_probs)</span><br><span class="line">        surr1 = ratio * advantages</span><br><span class="line">        surr2 = torch.clamp(ratio, <span class="number">0.8</span>, <span class="number">1.2</span>) * advantages</span><br><span class="line">        actor_loss = -torch.<span class="built_in">min</span>(surr1, surr2).mean()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Critic 损失（MSE）</span></span><br><span class="line">        critic_loss = F.mse_loss(critic.evaluate(obs_buffer), returns)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 梯度更新</span></span><br><span class="line">        actor_optimizer.zero_grad()</span><br><span class="line">        actor_loss.backward()</span><br><span class="line">        clip_grad_norm_(actor.parameters(), <span class="number">1.0</span>)</span><br><span class="line">        actor_optimizer.step()</span><br><span class="line">        </span><br><span class="line">        critic_optimizer.zero_grad()</span><br><span class="line">        critic_loss.backward()</span><br><span class="line">        critic_optimizer.step()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、SAC（Soft-Actor-Critic）"><a href="#三、SAC（Soft-Actor-Critic）" class="headerlink" title="三、SAC（Soft Actor-Critic）"></a>三、SAC（Soft Actor-Critic）</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SAC 是 PPO 之外的另一个重要选项，特点：</span><br><span class="line"></span><br><span class="line">1. 最大熵 RL：在奖励中加入策略熵</span><br><span class="line">   J(π) = Σ E[ r_t + α·H(π(·|s_t)) ]</span><br><span class="line">   鼓励探索（熵越大 = 策略越随机）</span><br><span class="line"></span><br><span class="line">2. Off-policy：可以用历史数据，样本效率比 PPO 高</span><br><span class="line">   但 PPO 的 on-policy + 并行仿真更适合 Isaac Gym</span><br><span class="line"></span><br><span class="line">3. 在足式机器人中：SAC 适合高自由度动作（如舞蹈、杂技），</span><br><span class="line">   PPO 适合基础 locomotion（行走、奔跑）。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、奖励函数设计——桥介的”分阶段多层次奖励机制”"><a href="#四、奖励函数设计——桥介的”分阶段多层次奖励机制”" class="headerlink" title="四、奖励函数设计——桥介的”分阶段多层次奖励机制”"></a>四、奖励函数设计——桥介的”分阶段多层次奖励机制”</h2><h3 id="4-1-奖励设计的挑战"><a href="#4-1-奖励设计的挑战" class="headerlink" title="4.1 奖励设计的挑战"></a>4.1 奖励设计的挑战</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">机器学习中有一条谚语：</span><br><span class="line">"Reward design is 90% of the work in RL for robotics."</span><br><span class="line"></span><br><span class="line">好的奖励函数 → 策略自然学会走路</span><br><span class="line">坏的奖励函数 → 策略学会作弊（如原地颤抖假装在走）</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-桥介的分阶段奖励"><a href="#4-2-桥介的分阶段奖励" class="headerlink" title="4.2 桥介的分阶段奖励"></a>4.2 桥介的分阶段奖励</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">阶段 1：站立不摔倒</span><br><span class="line">  奖励项：</span><br><span class="line">  ├── 质心高度 &gt; 阈值（避免蹲下）</span><br><span class="line">  ├── 姿态接近水平</span><br><span class="line">  ├── 关节位置居中</span><br><span class="line">  └── 摔倒 = 0 奖励 + episode 结束</span><br><span class="line"></span><br><span class="line">阶段 2：速度跟踪（基础行走）</span><br><span class="line">  奖励项：</span><br><span class="line">  ├── 速度跟踪：r_vel = exp(-||v_actual - v_target||² / σ)</span><br><span class="line">  ├── 能耗惩罚：r_energy = -||τ||²</span><br><span class="line">  ├── 姿态惩罚：r_ori = -||roll, pitch||²</span><br><span class="line">  ├── 足端抬腿：r_foot = 鼓励抬腿高度 &gt; 阈值</span><br><span class="line">  └── 步态对称性：r_sym = 左右腿对称</span><br><span class="line"></span><br><span class="line">阶段 3：多地形自适应</span><br><span class="line">  奖励项（在阶段 2 基础上添加）：</span><br><span class="line">  ├── 地形高度变化</span><br><span class="line">  ├── 摩擦力随机化</span><br><span class="line">  └── 外部推力扰动</span><br><span class="line"></span><br><span class="line">阶段 4：复杂动作（舞蹈、功夫）</span><br><span class="line">  奖励项：</span><br><span class="line">  ├── 关节角度匹配：r_pose = -||q_actual - q_reference||²</span><br><span class="line">  ├── 足端轨迹匹配：r_foot_traj = -||p_foot - p_ref||²</span><br><span class="line">  ├── 节奏同步：r_rhythm = 鼓励动作与音乐节拍对齐</span><br><span class="line">  └── 风格保持：通过 GAIL 判别器提供风格奖励</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-奖励调优的常见陷阱"><a href="#4-3-奖励调优的常见陷阱" class="headerlink" title="4.3 奖励调优的常见陷阱"></a>4.3 奖励调优的常见陷阱</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1. 奖励尺度不平衡：速度奖励 100，能耗惩罚 0.001</span><br><span class="line">   → 策略会忽略能耗，疯狂跑 → 学会奇怪步态</span><br><span class="line">   → 解决：归一化所有奖励项到 [-1, 1]</span><br><span class="line"></span><br><span class="line">2. 稀疏奖励：只在成功时给奖励</span><br><span class="line">   → 策略永远探索不到成功状态</span><br><span class="line">   → 解决：用密集奖励（每步都有反馈）</span><br><span class="line"></span><br><span class="line">3. 过度奖励：太多奖励项互相冲突</span><br><span class="line">   → 策略困惑，学不会</span><br><span class="line">   → 解决：先从 2-3 个核心奖励开始，逐步加</span><br><span class="line"></span><br><span class="line">4. 奖励 hacking：策略找到意料之外的"捷径"</span><br><span class="line">   例：奖励质心高度 → 策略学会用脚尖站立（不稳定但高）</span><br><span class="line">   → 解决：加约束项（姿态、关节限位）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、Isaac-Gym——并行仿真训练"><a href="#五、Isaac-Gym——并行仿真训练" class="headerlink" title="五、Isaac Gym——并行仿真训练"></a>五、Isaac Gym——并行仿真训练</h2><h3 id="5-1-为什么用-Isaac-Gym？"><a href="#5-1-为什么用-Isaac-Gym？" class="headerlink" title="5.1 为什么用 Isaac Gym？"></a>5.1 为什么用 Isaac Gym？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">传统 RL 训练（单环境）：</span><br><span class="line">  for episode in range(N):</span><br><span class="line">      env.reset()</span><br><span class="line">      while not done:</span><br><span class="line">          action = agent.act(obs)</span><br><span class="line">          obs, reward, done = env.step(action)</span><br><span class="line">          agent.learn(obs, action, reward)</span><br><span class="line">  → 1 GPU + 1 环境 = 极慢（需要 N=10^8+ steps）</span><br><span class="line"></span><br><span class="line">Isaac Gym：</span><br><span class="line">  4096 个环境并行运行在 GPU 上</span><br><span class="line">  每个环境独立仿真 → 每一步收集 4096 个样本</span><br><span class="line">  → 1 GPU 训练速度提升 100-1000 倍</span><br><span class="line">  </span><br><span class="line">  为什么能并行？PhysX 物理引擎原生支持 GPU 并行</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-Isaac-Gym-架构"><a href="#5-2-Isaac-Gym-架构" class="headerlink" title="5.2 Isaac Gym 架构"></a>5.2 Isaac Gym 架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────┐</span><br><span class="line">│              Isaac Gym API               │</span><br><span class="line">├─────────────────────────────────────────┤</span><br><span class="line">│  ┌───────┐ ┌───────┐ ... ┌───────┐     │</span><br><span class="line">│  │ Env 0 │ │ Env 1 │     │Env4095│     │  ← 4096 个独立环境</span><br><span class="line">│  └───┬───┘ └───┬───┘     └───┬───┘     │</span><br><span class="line">│      │         │             │          │</span><br><span class="line">│  ┌───┴─────────┴─────────────┴───┐     │</span><br><span class="line">│  │     PhysX GPU 物理引擎         │     │  ← GPU 批量仿真</span><br><span class="line">│  └───────────────────────────────┘     │</span><br><span class="line">├─────────────────────────────────────────┤</span><br><span class="line">│         PyTorch 张量接口                │  ← 零拷贝数据传输</span><br><span class="line">│     obs_buf → GPU Tensor → Actor       │</span><br><span class="line">└─────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-Domain-Randomization（领域随机化）"><a href="#5-3-Domain-Randomization（领域随机化）" class="headerlink" title="5.3 Domain Randomization（领域随机化）"></a>5.3 Domain Randomization（领域随机化）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">这是 Sim2Real 成功的关键技术：</span><br><span class="line"></span><br><span class="line">训练时，每个 episode 随机化以下参数：</span><br><span class="line">  ├── 机器人质量：±20%</span><br><span class="line">  ├── 关节惯量：±30%</span><br><span class="line">  ├── 电机力矩常数：±15%</span><br><span class="line">  ├── 足底摩擦力：0.3 ~ 1.5</span><br><span class="line">  ├── IMU 噪声：±0.01 rad/s（陀螺仪）</span><br><span class="line">  ├── 地面高度：随机起伏 ±5cm</span><br><span class="line">  ├── 外部推力：随机方向 0-50N</span><br><span class="line">  └── 控制延迟：0-20ms</span><br><span class="line"></span><br><span class="line">目的：让策略在仿真中见过各种"糟糕"的情况，</span><br><span class="line">     部署到实机时，实机的实际参数落在训练分布内，</span><br><span class="line">     策略不会因为"没见过"而崩溃。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、其他仿真器对比"><a href="#六、其他仿真器对比" class="headerlink" title="六、其他仿真器对比"></a>六、其他仿真器对比</h2><table>
+<thead>
+<tr>
+<th align="left">仿真器</th>
+<th align="left">并行能力</th>
+<th align="left">物理精度</th>
+<th align="left">GPU 加速</th>
+<th align="left">桥介使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Isaac Gym</strong></td>
+<td align="left">⭐⭐⭐⭐⭐（4096+并行）</td>
+<td align="left">⭐⭐⭐</td>
+<td align="left">✅ GPU PhysX</td>
+<td align="left">RL 策略训练（主力）</td>
+</tr>
+<tr>
+<td align="left"><strong>Isaac Sim</strong></td>
+<td align="left">⭐⭐⭐⭐</td>
+<td align="left">⭐⭐⭐⭐⭐</td>
+<td align="left">✅ GPU PhysX</td>
+<td align="left">高精度视觉+物理仿真</td>
+</tr>
+<tr>
+<td align="left"><strong>MuJoCo</strong></td>
+<td align="left">⭐⭐⭐</td>
+<td align="left">⭐⭐⭐⭐</td>
+<td align="left">⚠️ 部分</td>
+<td align="left">快速原型、学术研究</td>
+</tr>
+<tr>
+<td align="left"><strong>Gazebo</strong></td>
+<td align="left">⭐</td>
+<td align="left">⭐⭐⭐</td>
+<td align="left">❌ CPU</td>
+<td align="left">MPC 验证、ROS 集成</td>
+</tr>
+<tr>
+<td align="left"><strong>PyBullet</strong></td>
+<td align="left">⭐⭐</td>
+<td align="left">⭐⭐</td>
+<td align="left">❌ CPU</td>
+<td align="left">轻量级调试</td>
+</tr>
+</tbody></table>
+<p><strong>桥介的典型用法</strong>：</p>
+<ul>
+<li>Isaac Gym：主力 RL 训练（4096 环境，PPO）</li>
+<li>Gazebo：MPC 控制器开发验证</li>
+<li>Isaac Sim：最终交付前的高保真仿真</li>
+</ul>
+<hr>
+<h2 id="七、学习路径"><a href="#七、学习路径" class="headerlink" title="七、学习路径"></a>七、学习路径</h2><h3 id="自检清单"><a href="#自检清单" class="headerlink" title="自检清单"></a>自检清单</h3><ul>
+<li><input disabled="" type="checkbox"> 能写出 MDP 的五元组，并用足式机器人举例</li>
+<li><input disabled="" type="checkbox"> 能推导 REINFORCE 的策略梯度公式</li>
+<li><input disabled="" type="checkbox"> 理解 PPO 的 Clipping 机制的数学含义</li>
+<li><input disabled="" type="checkbox"> 理解 GAE(λ) 中 λ 参数的作用</li>
+<li><input disabled="" type="checkbox"> 用 Stable-Baselines3 训练一个 Gym 任务</li>
+<li><input disabled="" type="checkbox"> 跑通 Isaac Gym 官方的 ANYmal 行走示例</li>
+<li><input disabled="" type="checkbox"> 修改一个奖励项权重，观察训练结果的变化</li>
+<li><input disabled="" type="checkbox"> 理解 Domain Randomization 为什么是 Sim2Real 关键</li>
+</ul>
+<h3 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h3><table>
+<thead>
+<tr>
+<th align="left">资源</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">OpenAI Spinning Up</td>
+<td align="left">RL 入门（spinningup.openai.com）</td>
+</tr>
+<tr>
+<td align="left">HuggingFace RL Course</td>
+<td align="left">代码实战</td>
+</tr>
+<tr>
+<td align="left">NVIDIA Isaac Gym 文档</td>
+<td align="left">并行仿真</td>
+</tr>
+<tr>
+<td align="left">PPO 原论文</td>
+<td align="left">理论深入</td>
+</tr>
+<tr>
+<td align="left">B站 王树森 RL 课程</td>
+<td align="left">中文讲解</td>
+</tr>
+</tbody></table>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://cicade-liu.github.io/2026/06/22/%E5%B7%A5%E4%BD%9C/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BB%BF%E7%9C%9F%E5%99%A8/" data-id="cuidwM7eRVii5kI99JAHywSOA" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "cicade-liu"
+        },
+        "headline": "强化学习与仿真器",
+        "image": "https://cicade-liu.github.io",
+        "keywords": "",
+        "genre": "桥介数物 所需能力 进阶能力",
+        "datePublished": "2026-06-22",
+        "dateCreated": "2026-06-22",
+        "dateModified": "2026-06-22",
+        "url": "https://cicade-liu.github.io/2026/06/22/工作/桥介数物/所需能力/进阶能力/强化学习与仿真器/",
+        "description": "强化学习与仿真器
+桥介引擎（BridgeDP Engine）的算法核心——PPO + Isaac Gym + 领域随机化
+
+
+一、强化学习基础1.1 马尔可夫决策过程（MDP）强化学习的数学框架是 MDP，用五元组  描述：
+
+
+
+符号
+含义
+足式机器人中的应用
+
+
+
+
+状态空间
+质心位置、速度、关节角度、IMU 读数…（通常 48-200 维）
+
+
+
+动作空间
+关节位置目标 / 关节力矩（12-",
+        "wordCount": 3860
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/cicade-liu/cicade-liu.github.io/tree/main/2026/06/21" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2026/06/22/%E5%B7%A5%E4%BD%9C/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/Python%E4%B8%8EPyTorch%E5%9F%BA%E7%A1%80/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Python与PyTorch基础
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2026/06/22/%E5%B7%A5%E4%BD%9C/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E4%B8%8E%E5%8A%A8%E5%8A%9B%E5%AD%A6/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">机器人运动学与动力学</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%80%BB%E8%BF%B0/">总述</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/">基础能力</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/">进阶能力</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">12</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2026 cicade-liu</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://cicade-liu.github.io/2026/06/22/%E5%B7%A5%E4%BD%9C/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BB%BF%E7%9C%9F%E5%99%A8/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>
