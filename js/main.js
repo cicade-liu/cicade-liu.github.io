@@ -50,6 +50,34 @@
         }
     });
 
+    // Category tree collapse / expand
+    $('.category-list-item').each(function () {
+        var $li = $(this);
+        var $children = $li.children('.category-list-child');
+        if ($children.length > 0) {
+            // Wrap link text with toggle area and add arrow icon
+            var $link = $li.children('.category-list-link');
+            var $count = $li.children('.category-list-count');
+            $link.before('<span class="cat-toggle"><i class="fa fa-chevron-down"></i></span>');
+            // Bind toggle on the arrow icon AND the link
+            var $toggle = $li.children('.cat-toggle');
+            var toggleChildren = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var $icon = $toggle.find('i');
+                $children.slideToggle(150, function () {
+                    if ($children.is(':visible')) {
+                        $icon.removeClass('fa-chevron-right').addClass('fa-chevron-down');
+                    } else {
+                        $icon.removeClass('fa-chevron-down').addClass('fa-chevron-right');
+                    }
+                });
+            };
+            $toggle.on('click', toggleChildren);
+            $link.on('click', toggleChildren);
+        }
+    });
+
 
     // Remove extra main nav wrap
     $('.main-nav-list > li').unwrap();

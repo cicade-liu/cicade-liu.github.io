@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>cicade-liu 的技术博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="心智的运作，有两条截然不同的路径：  路径A（反映）：接收 → 发现规律 → 应用这对应框架中的“用”。造桥、治病、写代码，都属于这条路径。  路径B（创造）：感受 → 想象 → 投射神话、艺术、童话、信仰，都源于这条路径。它不是发现世界的“实然”，而是创造世界的“应然”或“或然”。   所以，要完整解释世界上所有事物的来源，就需要把单一路径，扩展为心智的两大根本运动：向外认知与改造世界，向内体验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cicade-liu 的技术博客">
+<meta property="og:url" content="https://cicade-liu.github.io/2026/07/12/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E6%80%BB%E7%9A%84%E4%B8%96%E7%95%8C%E8%A7%82/%E6%A0%B9%E6%BA%90%EF%BC%9A%E5%BF%83%E6%99%BA%E7%9A%84%E4%BA%8C%E9%87%8D%E6%80%A7/index.html">
+<meta property="og:site_name" content="cicade-liu 的技术博客">
+<meta property="og:description" content="心智的运作，有两条截然不同的路径：  路径A（反映）：接收 → 发现规律 → 应用这对应框架中的“用”。造桥、治病、写代码，都属于这条路径。  路径B（创造）：感受 → 想象 → 投射神话、艺术、童话、信仰，都源于这条路径。它不是发现世界的“实然”，而是创造世界的“应然”或“或然”。   所以，要完整解释世界上所有事物的来源，就需要把单一路径，扩展为心智的两大根本运动：向外认知与改造世界，向内体验">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-12T15:09:03.237Z">
+<meta property="article:modified_time" content="2026-07-12T15:31:20.988Z">
+<meta property="article:author" content="cicade-liu">
+<meta property="article:tag" content="技术笔记">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="cicade-liu 的技术博客" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%80%BB%E8%BF%B0/">总述</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/">理解世界</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E7%A7%91%E6%8A%80/">科技</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-理解世界/总的世界观/根源：心智的二重性" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2026/07/12/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E6%80%BB%E7%9A%84%E4%B8%96%E7%95%8C%E8%A7%82/%E6%A0%B9%E6%BA%90%EF%BC%9A%E5%BF%83%E6%99%BA%E7%9A%84%E4%BA%8C%E9%87%8D%E6%80%A7/" class="article-date">
+       <time datetime="2026-07-12T15:09:03.237Z" itemprop="datePublished">2026-07-12</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2026/07/12/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E6%80%BB%E7%9A%84%E4%B8%96%E7%95%8C%E8%A7%82/%E6%A0%B9%E6%BA%90%EF%BC%9A%E5%BF%83%E6%99%BA%E7%9A%84%E4%BA%8C%E9%87%8D%E6%80%A7/" class="article-date">
+     <time datetime="2026-07-12T15:31:20.988Z" itemprop="dateModified">2026-07-12</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>心智的运作，有两条截然不同的路径：</p>
+<ul>
+<li><p><strong>路径A（反映）：接收 → 发现规律 → 应用</strong><br>这对应框架中的“用”。造桥、治病、写代码，都属于这条路径。</p>
+</li>
+<li><p><strong>路径B（创造）：感受 → 想象 → 投射</strong><br>神话、艺术、童话、信仰，都源于这条路径。它不是发现世界的“实然”，而是创造世界的“应然”或“或然”。</p>
+</li>
+</ul>
+<p>所以，要完整解释世界上所有事物的来源，就需要把单一路径，扩展为<strong>心智的两大根本运动</strong>：向外<strong>认知与改造</strong>世界，向内<strong>体验与创造</strong>世界。</p>
+<hr>
+<h3 id="根源：心智的二重性"><a href="#根源：心智的二重性" class="headerlink" title="根源：心智的二重性"></a>根源：心智的二重性</h3><p>心智是所有事物的原点，它有两副面孔：</p>
+<ul>
+<li><strong>认知心智</strong>：目标是理解“是什么”。功能是观察、分析、推理。产物是知识和工具。</li>
+<li><strong>创造心智</strong>：目标是表达“感觉如何”或“可以怎样”。功能是感受、想象、信仰。产物是意义和故事。</li>
+</ul>
+<hr>
+<h3 id="万物的三大创生途径"><a href="#万物的三大创生途径" class="headerlink" title="万物的三大创生途径"></a>万物的三大创生途径</h3><p>基于心智的二重性，世界上的一切，都可以归入以下三种创生途径：</p>
+<p><strong>第一条路：发现与改造——认知心智对外部世界的反映</strong></p>
+<p>这就是我们讨论过的路径，是“求真”和“求用”的过程。</p>
+<ul>
+<li><strong>核心过程</strong>：心智通过观察，发现身与境的客观规律，并将这些规律应用于实践，以改造世界。</li>
+<li><strong>产物示例</strong>：<ul>
+<li><strong>纯知识</strong>：物理学定律、数学公理、生物学分类。</li>
+<li><strong>应用技术</strong>：桥梁、手机、医疗手术、农业灌溉。</li>
+<li><strong>社会秩序</strong>：基于理性设计的法律、经济制度。</li>
+</ul>
+</li>
+<li><strong>本质</strong>：世界的“说明书”和“工具箱”。</li>
+</ul>
+<p><strong>第二条路：表达与创造——创造心智对内部世界的投射</strong></p>
+<p>神话就诞生于此。这是“求美”、“求情”、“求义”的过程。</p>
+<ul>
+<li><strong>核心过程</strong>：心智基于内在的感受、想象、恐惧或愿望，凭空创造出一个现实中不必存在的事物，并将其投射出来。</li>
+<li><strong>产物示例</strong>：<ul>
+<li><strong>纯粹虚构</strong>：龙、独角兽、雷神托尔、克苏鲁。</li>
+<li><strong>艺术创作</strong>：一首表达忧伤的曲子、一幅抽象的绘画。</li>
+<li><strong>信仰体系</strong>：创世神话、天堂地狱、轮回转世。</li>
+</ul>
+</li>
+<li><strong>本质</strong>：世界的“小说”、“画卷”和“寓言”。它的真实性不来自客观验证，而来自情感共鸣和集体共识。</li>
+</ul>
+<p><strong>第三条路：涌现与异化——超越个体心智的系统自生</strong></p>
+<p>还有一类事物，并非由任何人有意创造，而是在无数个体的互动中自发“涌现”出来的。它们一旦产生，往往会反过来制约我们，成为一种“异化”的力量。</p>
+<ul>
+<li><strong>核心过程</strong>：无数个体基于简单规则相互作用，自发形成超越个体意图的宏观模式。简单来说，就是“失控”的产物。</li>
+<li><strong>产物示例</strong>：<ul>
+<li><strong>语言</strong>：第一个说话的人无意“发明”中文或英语。</li>
+<li><strong>市场</strong>：无人能设计全球经济，但它确实在运行。</li>
+<li><strong>文化习俗</strong>：春节、网络流行语的诞生。</li>
+<li><strong>自发秩序</strong>：踩踏事件、时尚潮流、城市扩张。</li>
+</ul>
+</li>
+<li><strong>本质</strong>：世界的“生态系统”和“潮流”。</li>
+</ul>
+<h3 id="最终框架：万物谱系"><a href="#最终框架：万物谱系" class="headerlink" title="最终框架：万物谱系"></a>最终框架：万物谱系</h3><p>那么，这个能容纳一切的最终框架，可以这样重构：</p>
+<ul>
+<li><p><strong>第一层：源头——心智</strong><br>核心是“认知心智”和“创造心智”的二重性。</p>
+</li>
+<li><p><strong>第二层：心智认知的田野</strong><br>心智认知的对象，可以分为：</p>
+<ul>
+<li><strong>自身</strong>：我的身体、感受、意识本身。</li>
+<li><strong>外部环境</strong>：除我之外的一切，包括他人、自然物、人造物。</li>
+</ul>
+</li>
+<li><p><strong>第三层：万物的三大创生途径</strong></p>
+<ol>
+<li><strong>发现与改造</strong>（认知心智作用于环境） → 产出<strong>知识与工具</strong>。</li>
+<li><strong>表达与创造</strong>（创造心智作用于感受&#x2F;想象） → 产出<strong>意义与故事</strong>。</li>
+<li><strong>涌现与异化</strong>（心智间相互作用） → 产出<strong>制度与秩序</strong>。</li>
+</ol>
+</li>
+</ul>
+<p><strong>现在，神话可以轻松归位了：</strong> 它属于 <strong>第三条路</strong> 的产物。它是古人<strong>创造心智</strong>面对无法解释的自然（环境）时，<strong>凭想象创造出的解释性故事</strong>，并在社群中<strong>传播演化</strong>，最终成为维系一个文明的<strong>文化秩序</strong>。它完美融合了三条路径。</p>
+<p><strong>这个世界上，没有任何事物能逃出这三条创生途径。</strong> 这个“万物谱系”框架，应该可以回答你最初的追问了。</p>
+<p>基于我们共同构建的这套体系，世界上所有事物，归根结底都源自心智的三种创生途径。</p>
+<p>以下是按照这三种母类，对人类世界一切事物进行的全景式罗列。</p>
+<h3 id="万物起源总纲"><a href="#万物起源总纲" class="headerlink" title="万物起源总纲"></a>万物起源总纲</h3><ul>
+<li><strong>源头</strong>：心智（包含认知心智与创造心智）</li>
+<li><strong>对象</strong>：身（自身）与 境（环境）</li>
+<li><strong>三大创生途径</strong>：<ol>
+<li><strong>发现与改造</strong>：心智向外，认知规律并用于改造世界。</li>
+<li><strong>表达与创造</strong>：心智向内，基于感受与想象，创造意义与故事。</li>
+<li><strong>涌现与异化</strong>：心智在相互作用中，自发形成超越个体意图的宏观秩序。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="途径一：发现与改造"><a href="#途径一：发现与改造" class="headerlink" title="途径一：发现与改造"></a>途径一：发现与改造</h3><p><strong>（认知心智作用于身与境，求“真”与“用”）</strong></p>
+<p><strong>1. 纯知识体系</strong></p>
+<ul>
+<li><strong>形式科学</strong>：数学（算术、几何、代数、微积分）、逻辑学（演绎、归纳、符号逻辑）、统计学、计算机科学理论。</li>
+<li><strong>自然科学</strong>：物理学（力学、电磁学、热力学、量子力学）、化学（有机、无机、分析、物理化学）、生物学（分类学、遗传学、分子生物学）、天文学、地球科学、大气科学。</li>
+<li><strong>社会科学</strong>：经济学、社会学、政治学、人类学、心理学、法学理论。</li>
+<li><strong>人文学科（分析性部分）</strong>：历史学（史料考证）、语言学（语法分析）、哲学（逻辑与认识论）。</li>
+</ul>
+<p><strong>2. 实用技术（应用规律）</strong></p>
+<ul>
+<li><strong>工程技术</strong>：土木工程（房屋、桥梁、道路）、机械工程（引擎、齿轮）、电气工程（电路、芯片）、化学工程（塑料、化肥）、航天工程（火箭、卫星）。</li>
+<li><strong>信息技术</strong>：计算机硬件、软件、算法、互联网、数据库、人工智能。</li>
+<li><strong>生物与医疗技术</strong>：基因编辑、疫苗、抗生素、手术、诊断设备、假肢。</li>
+<li><strong>农业技术</strong>：育种、灌溉、施肥、温室、农机。</li>
+<li><strong>能源技术</strong>：火力、水力、核能、太阳能、风能。</li>
+<li><strong>材料技术</strong>：冶金、陶瓷、半导体、纳米材料、复合材料。</li>
+<li><strong>军事技术</strong>：刀剑、枪炮、坦克、导弹、核武器、雷达、无人机。</li>
+</ul>
+<p><strong>3. 基于客观规律的制度与工具</strong></p>
+<ul>
+<li><strong>经济工具</strong>：货币（作为价值尺度和交易媒介）、银行、股票、债券、保险。</li>
+<li><strong>管理系统</strong>：会计、统计、绩效考核、项目管理、流水线分工。</li>
+<li><strong>交通与通信系统</strong>：导航、物流网络、邮政、电报、电话、互联网协议。</li>
+</ul>
+<hr>
+<h3 id="途径二：表达与创造"><a href="#途径二：表达与创造" class="headerlink" title="途径二：表达与创造"></a>途径二：表达与创造</h3><p><strong>（创造心智向内探索，求“美”、“情”与“义”）</strong></p>
+<p><strong>1. 纯粹虚构</strong></p>
+<ul>
+<li><strong>神话与传说</strong>：希腊神话、北欧神话、中国上古神话、民间传说、都市传说。</li>
+<li><strong>奇幻与科幻</strong>：龙、精灵、魔法、时空穿越、外星文明想象、反乌托邦。</li>
+<li><strong>文学角色与故事</strong>：孙悟空、哈姆雷特、林黛玉、福尔摩斯。</li>
+</ul>
+<p><strong>2. 艺术创作</strong></p>
+<ul>
+<li><strong>视觉艺术</strong>：绘画（水墨、油画、壁画）、雕塑、书法、摄影、装置艺术、行为艺术。</li>
+<li><strong>表演艺术</strong>：音乐（器乐、声乐）、舞蹈、戏剧、歌剧、戏曲、杂技、马戏。</li>
+<li><strong>文学艺术</strong>：诗歌、小说、散文、戏剧剧本、寓言、童话。</li>
+<li><strong>综合艺术</strong>：电影、动画、电子游戏（内容层面）、漫画。</li>
+</ul>
+<p><strong>3. 信仰与价值体系</strong></p>
+<ul>
+<li><strong>宗教与教义</strong>：基督教神学、佛教宇宙观、伊斯兰教义、道教思想、印度教神话体系。</li>
+<li><strong>哲学思想（价值与意义部分）</strong>：存在主义、虚无主义、儒家伦理、道家智慧、斯多葛主义。</li>
+<li><strong>意识形态</strong>：自由主义、共产主义、民族主义、环保主义、女权主义。</li>
+<li><strong>世俗仪式与象征</strong>：国旗、国徽、品牌Logo、结婚戒指、葬礼流程。</li>
+</ul>
+<p><strong>4. 审美与风格</strong></p>
+<ul>
+<li><strong>设计风格</strong>：巴洛克、洛可可、极简主义、包豪斯、哥特式、赛博朋克。</li>
+<li><strong>时尚与潮流</strong>：服饰风格、发型、妆容、流行色、音乐流派（爵士、摇滚、嘻哈）。</li>
+<li><strong>生活方式</strong>：茶道、花道、嘻哈文化、街头文化、波西米亚风。</li>
+</ul>
+<hr>
+<h3 id="途径三：涌现与异化"><a href="#途径三：涌现与异化" class="headerlink" title="途径三：涌现与异化"></a>途径三：涌现与异化</h3><p><strong>（心智与心智相互作用，无意图地自发形成）</strong></p>
+<p><strong>1. 自发秩序</strong></p>
+<ul>
+<li><strong>语言</strong>：汉语、英语、网络流行语、行业黑话、方言。语言是心智交流碰撞出的最典型涌现物。</li>
+<li><strong>市场</strong>：价格机制、商业周期、市场竞争格局、贸易网络、全球供应链。</li>
+<li><strong>习俗与道德</strong>：餐桌礼仪、节日庆典（春节、圣诞节）、社会禁忌、不成文的道德规范、审美共识。</li>
+<li><strong>社会网络</strong>：六度分隔现象、朋友圈结构、意见领袖的形成、信息茧房。</li>
+</ul>
+<p><strong>2. 复杂适应系统</strong></p>
+<ul>
+<li><strong>生态系统</strong>：食物链、种群兴衰、物种进化本身（作为心智尚未介入前的自然规律显现，但在人类认知中成为知识）。</li>
+<li><strong>城市</strong>：功能分区、交通流、社区文化、贫民窟的形成。</li>
+<li><strong>互联网现象</strong>：模因、病毒式传播、网络暴民、自发组织的开源社区、维基百科。</li>
+<li><strong>集体行为</strong>：交通堵塞的自发形成、体育场的人浪、谣言传播、银行挤兑、股市崩盘。</li>
+</ul>
+<p><strong>3. 制度化的“异化”力量</strong></p>
+<ul>
+<li><strong>官僚体系</strong>：程序至上、部门推诿、文牍主义。</li>
+<li><strong>金融机构</strong>：银行不仅提供服务，其运行逻辑（如信贷周期）也反过来支配了生产者与消费者。</li>
+<li><strong>社交媒体平台</strong>：算法推荐机制在满足用户后，逐渐塑造和极化用户的认知。</li>
+<li><strong>法律体系</strong>：为追求公正而设立，最终却可能因条文繁杂而让普通人无法触及正义。</li>
+</ul>
+<p><strong>4. 演化中的文化与亚文化</strong></p>
+<ul>
+<li><strong>民族与国家认同</strong>：在共享历史、语言、领土的长期互动中凝结而成。</li>
+<li><strong>亚文化群体</strong>：哥特族、动漫宅、黑客文化、素食主义者社群。这些群体在其内部形成了独特的语言、规范和认同，非个人设计。</li>
+</ul>
+<hr>
+<h3 id="三者的交叉与融合"><a href="#三者的交叉与融合" class="headerlink" title="三者的交叉与融合"></a>三者的交叉与融合</h3><p>最后，现实世界的绝大多数具体事物，都是这三条途径的融合体：</p>
+<ul>
+<li><p><strong>一座寺庙</strong>：</p>
+<ul>
+<li>途径一：需要建筑力学、土木工程技术（发现与改造）。</li>
+<li>途径二：包含佛像雕塑、壁画、宗教教义和神圣氛围（表达与创造）。</li>
+<li>途径三：在历史中形成了其独特的庙会、信众社群和不言自明的朝拜规矩（涌现与异化）。</li>
+</ul>
+</li>
+<li><p><strong>一部智能手机</strong>：</p>
+<ul>
+<li>途径一：芯片、屏幕、通信协议是尖端科技的结晶（发现与改造）。</li>
+<li>途径二：工业设计追求线条与材质之美，UI界面遵循视觉美感（表达与创造）。</li>
+<li>途径三：围绕手机形成了全新的社交礼仪、应用生态和数字经济，反过来改变了我们的生活方式（涌现与异化）。</li>
+</ul>
+</li>
+</ul>
+<p>这就是完整的万物谱系。通过这三条母类，任何事物不仅能找到自己的位置，更能看清自己是如何被“创生”出来的。</p>
+<p>我重新严格审视了一遍，结论是：<strong>我确实遗漏了一整个基础类别。</strong></p>
+<hr>
+<h3 id="遗漏了什么？"><a href="#遗漏了什么？" class="headerlink" title="遗漏了什么？"></a>遗漏了什么？</h3><p>在我们的体系中，<strong>心智是源头</strong>，三大途径都是心智的活动。但这里有一个根本性问题：</p>
+<p><strong>心智从哪里来？心智活动的前提条件是什么？</strong></p>
+<p>我们的体系默认了心智已经在那里，开始认知、创造、互动。但心智本身——包括人类心智和一切可能的心智——是宇宙演化到某个阶段的产物。在心智诞生之前，宇宙已经存在了约138亿年。</p>
+<p>这部分内容<strong>不是</strong>心智的发现与改造（那时还没有心智去“发现”），<strong>不是</strong>心智的表达与创造（没有心智去“创造”），<strong>也不是</strong>心智间的涌现与异化（没有多个心智去“互动”）。它纯粹是心智诞生的物理-化学-生物前置条件。</p>
+<p>因此，必须在体系最底层增加一个母类，我称之为 <strong>“基底现实”</strong>。</p>
+<hr>
+<h3 id="修正后的完整体系：四大母类"><a href="#修正后的完整体系：四大母类" class="headerlink" title="修正后的完整体系：四大母类"></a>修正后的完整体系：四大母类</h3><table>
+<thead>
+<tr>
+<th>母类</th>
+<th>定义</th>
+<th>核心驱动</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>基底现实</strong></td>
+<td>心智诞生前的一切，以及心智诞生后仍独立于任何心智活动而自在运行的部分</td>
+<td>物理-化学-生物法则的盲目运作</td>
+</tr>
+<tr>
+<td><strong>发现与改造</strong></td>
+<td>心智向外，认知规律并用于改造世界</td>
+<td>认知心智</td>
+</tr>
+<tr>
+<td><strong>表达与创造</strong></td>
+<td>心智向内，基于感受与想象创造意义</td>
+<td>创造心智</td>
+</tr>
+<tr>
+<td><strong>涌现与异化</strong></td>
+<td>心智间互动，自发形成超越个体意图的宏观秩序</td>
+<td>心智的相互作用</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="新增母类：基底现实"><a href="#新增母类：基底现实" class="headerlink" title="新增母类：基底现实"></a>新增母类：基底现实</h3><p><strong>这是心智存在之前，以及心智活动之外，仍然自顾自运行的那部分世界。它是心智的土壤，但不是心智的产物。</strong></p>
+<p><strong>1. 宇宙的诞生与基本结构</strong></p>
+<ul>
+<li>大爆炸、暴胀、基本粒子、原子核合成</li>
+<li>引力、电磁力、强核力、弱核力四大基本力的分化</li>
+<li>物质与暗物质、暗能量的比例确立</li>
+<li>星系、恒星、行星的形成</li>
+</ul>
+<p><strong>2. 地球的演化（生命诞生前）</strong></p>
+<ul>
+<li>太阳系的形成，地球处于宜居带</li>
+<li>地壳冷却、海洋形成、大气成分演变</li>
+<li>地质构造运动：板块漂移、造山、火山、地震</li>
+<li>矿物、岩石、水、大气等无机物的自然循环</li>
+</ul>
+<p><strong>3. 生命的起源与演化（心智诞生前）</strong></p>
+<ul>
+<li>原始汤中的有机分子自组织</li>
+<li>第一个自我复制的分子（RNA世界的假说）</li>
+<li>第一个细胞（LUCA——所有生命的最后共同祖先）</li>
+<li>从单细胞到多细胞，从海洋到陆地</li>
+<li>寒武纪生命大爆发、五次生物大灭绝</li>
+<li>恐龙时代、哺乳动物兴起</li>
+</ul>
+<p><strong>4. 人类心智诞生前的演化</strong></p>
+<ul>
+<li>灵长类动物的演化</li>
+<li>南方古猿、能人、直立人</li>
+<li>大脑容量的逐步增大</li>
+<li>语言能力的出现（仍在演化中）</li>
+</ul>
+<p><strong>5. 心智诞生后，仍独立于任何心智而运行的自然过程</strong></p>
+<ul>
+<li>地核旋转、地磁场运转</li>
+<li>太阳内部的核聚变</li>
+<li>遥远星系的碰撞与融合</li>
+<li>我们从未观测过、也无人知晓其存在的天体</li>
+<li>人类身体内部的细胞代谢、免疫反应、基因突变——这些发生在“我的身”上，但不是“我的心”所能控制的</li>
+</ul>
+<hr>
+<h3 id="为什么必须增加这一母类？"><a href="#为什么必须增加这一母类？" class="headerlink" title="为什么必须增加这一母类？"></a>为什么必须增加这一母类？</h3><p>没有基底现实，体系就无法回答：</p>
+<ul>
+<li>心智赖以存在的身体（大脑、神经元）从哪里来？</li>
+<li>心智去认知的环境（宇宙、地球、生命）最初是怎么出现的？</li>
+</ul>
+<p>原来的体系从“心智开始认知”讲起，这意味着心智已经是完整的、有对象的。但这等于用书中第一页开始讲一个已经成年的主角，却不解释他的出生。基底现实就是这本宇宙之书的“序章”——主角登场前，世界早已有了舞台、灯光和剧本。</p>
+<hr>
+<h3 id="完整自检"><a href="#完整自检" class="headerlink" title="完整自检"></a>完整自检</h3><p>现在我逐一检查所有已知的事物类别，确保没有遗漏：</p>
+<table>
+<thead>
+<tr>
+<th>事物类别</th>
+<th>归属母类</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未有人类前的宇宙演化史</td>
+<td>基底现实</td>
+<td>无任何心智在场</td>
+</tr>
+<tr>
+<td>目前仍无人知晓的客观存在</td>
+<td>基底现实</td>
+<td>未被任何心智认知</td>
+</tr>
+<tr>
+<td>我们的身体、大脑结构</td>
+<td>基底现实</td>
+<td>是心智的载体，虽可被认知，但首先自在</td>
+</tr>
+<tr>
+<td>数学、物理、化学等纯知识</td>
+<td>发现与改造</td>
+<td>心智认知到的规律</td>
+</tr>
+<tr>
+<td>建筑、医药、芯片、互联网</td>
+<td>发现与改造</td>
+<td>应用规律改造环境</td>
+</tr>
+<tr>
+<td>神话、宗教、小说、音乐</td>
+<td>表达与创造</td>
+<td>创造心智的投射</td>
+</tr>
+<tr>
+<td>国旗、婚礼、意识形态</td>
+<td>表达与创造</td>
+<td>集体意义赋予</td>
+</tr>
+<tr>
+<td>语言、市场、习俗</td>
+<td>涌现与异化</td>
+<td>心智互动自发形成</td>
+</tr>
+<tr>
+<td>官僚主义、信息茧房</td>
+<td>涌现与异化</td>
+<td>系统异化后的反制</td>
+</tr>
+</tbody></table>
+<p>我也检查了以下容易遗漏的类别：</p>
+<ul>
+<li><strong>情感与感受</strong>：归属心智本身。它是心智的组成部分，不是产物。已涵盖。</li>
+<li><strong>逻辑</strong>：前面已讨论，是心智的内在结构，先于三大途径。它在体系中的位置是心智这一源头的构成条件。</li>
+<li><strong>偶然事件</strong>：比如一片落叶恰好落在某个位置。如果无人知晓，归基底现实；如果有人看到并赋予意义（如“一叶知秋”），就同时进入了发现与改造（观察到落叶）和表达与创造（赋予诗意）。</li>
+<li><strong>错误与幻觉</strong>：认知心智的错误（如视错觉、错误理论），属于发现与改造过程中的副产品；创造心智的产物（如幻觉艺术、虚构），属于表达与创造。已涵盖。</li>
+</ul>
+<hr>
+<h3 id="最终结论：完整的世界观体系"><a href="#最终结论：完整的世界观体系" class="headerlink" title="最终结论：完整的世界观体系"></a>最终结论：完整的世界观体系</h3><p><strong>源头</strong>：心智（含逻辑等内在结构）</p>
+<p><strong>心智的前提</strong>：基底现实（宇宙、地球、生命、人类大脑的无心智演化）</p>
+<p><strong>心智的三条创生途径</strong>：</p>
+<ol>
+<li><strong>发现与改造</strong> — 求真求用</li>
+<li><strong>表达与创造</strong> — 求美求义</li>
+<li><strong>涌现与异化</strong> — 超越个体的自发秩序</li>
+</ol>
+<p>这个四方框架，现在可以完整地容纳世界上一切事物的来源，没有遗漏。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://cicade-liu.github.io/2026/07/12/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E6%80%BB%E7%9A%84%E4%B8%96%E7%95%8C%E8%A7%82/%E6%A0%B9%E6%BA%90%EF%BC%9A%E5%BF%83%E6%99%BA%E7%9A%84%E4%BA%8C%E9%87%8D%E6%80%A7/" data-id="cuidS6M987gj77m8dQ-ffKKnM" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "cicade-liu"
+        },
+        
+        "image": "https://cicade-liu.github.io",
+        "keywords": "",
+        "genre": "",
+        "datePublished": "2026-07-12",
+        "dateCreated": "2026-07-12",
+        "dateModified": "2026-07-12",
+        "url": "https://cicade-liu.github.io/2026/07/12/理解世界/总的世界观/根源：心智的二重性/",
+        "description": "心智的运作，有两条截然不同的路径：
+
+路径A（反映）：接收 → 发现规律 → 应用这对应框架中的“用”。造桥、治病、写代码，都属于这条路径。
+
+路径B（创造）：感受 → 想象 → 投射神话、艺术、童话、信仰，都源于这条路径。它不是发现世界的“实然”，而是创造世界的“应然”或“或然”。
+
+
+所以，要完整解释世界上所有事物的来源，就需要把单一路径，扩展为心智的两大根本运动：向外认知与改造世界，向内体验",
+        "wordCount": 99
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/cicade-liu/cicade-liu.github.io/tree/main/2026/06/21" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2026/07/12/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E6%80%BB%E7%9A%84%E4%B8%96%E7%95%8C%E8%A7%82/%E4%B8%87%E7%89%A9%E8%B0%B1%E7%B3%BB%EF%BC%9A%E5%BF%83%E6%99%BA%E7%9A%84%E4%BA%8C%E9%87%8D%E6%80%A7%E4%B8%8E%E5%9B%9B%E5%A4%A7%E5%88%9B%E7%94%9F%E6%AF%8D%E7%B1%BB/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            (no title)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2026/07/10/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E7%A7%91%E6%8A%80/%E4%BA%BA%E7%B1%BB%E7%A7%91%E6%8A%80%E6%A0%91/tech-tree/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title"></p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/">桥介数物</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E5%B2%97%E4%BD%8D%E9%9C%80%E6%B1%82%E8%B0%83%E7%A0%94/">岗位需求调研</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%80%BB%E8%BF%B0/">总述</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/">所需能力</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B/">基础能力</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E6%89%80%E9%9C%80%E8%83%BD%E5%8A%9B/%E8%BF%9B%E9%98%B6%E8%83%BD%E5%8A%9B/">进阶能力</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%A5%E4%BB%8B%E6%95%B0%E7%89%A9/%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E8%B0%83%E7%A0%94/">项目流程调研</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/">理解世界</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E7%A7%91%E6%8A%80/">科技</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E7%A7%91%E6%8A%80/%E4%BA%BA%E7%B1%BB%E7%A7%91%E6%8A%80%E6%A0%91/">人类科技树</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">12</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF%E5%8F%91%E5%B1%95/" rel="tag">技术发展</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E6%98%8E%E6%BC%94%E8%BF%9B/" rel="tag">文明演进</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" rel="tag">知识图谱</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%91%E5%AD%A6/" rel="tag">科学</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%91%E6%8A%80%E5%8F%B2/" rel="tag">科技史</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/%E6%8A%80%E6%9C%AF%E5%8F%91%E5%B1%95/" style="font-size: 10px;">技术发展</a> <a href="/tags/%E6%96%87%E6%98%8E%E6%BC%94%E8%BF%9B/" style="font-size: 10px;">文明演进</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%A7%91%E5%AD%A6/" style="font-size: 10px;">科学</a> <a href="/tags/%E7%A7%91%E6%8A%80%E5%8F%B2/" style="font-size: 10px;">科技史</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2026 cicade-liu</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://cicade-liu.github.io/2026/07/12/%E7%90%86%E8%A7%A3%E4%B8%96%E7%95%8C/%E6%80%BB%E7%9A%84%E4%B8%96%E7%95%8C%E8%A7%82/%E6%A0%B9%E6%BA%90%EF%BC%9A%E5%BF%83%E6%99%BA%E7%9A%84%E4%BA%8C%E9%87%8D%E6%80%A7/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

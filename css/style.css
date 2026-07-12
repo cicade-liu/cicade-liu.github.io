@@ -705,6 +705,21 @@ code {
   text-transform: uppercase;
   margin-bottom: 6px;
 }
+/* Category tree toggle */
+.cat-toggle {
+  cursor: pointer;
+  color: #ccc;
+  margin-right: 6px;
+  font-size: 12px;
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+  -webkit-transition: color 0.2s ease;
+  transition: color 0.2s ease;
+}
+.cat-toggle:hover {
+  color: #006bde;
+}
 .widget {
   line-height: 1.6em;
   word-wrap: break-word;
