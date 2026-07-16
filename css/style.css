@@ -705,7 +705,6 @@ code {
   text-transform: uppercase;
   margin-bottom: 6px;
 }
-/* Category tree toggle */
 .cat-toggle {
   cursor: pointer;
   color: #ccc;
@@ -715,6 +714,8 @@ code {
   width: 14px;
   text-align: center;
   -webkit-transition: color 0.2s ease;
+  -moz-transition: color 0.2s ease;
+  -ms-transition: color 0.2s ease;
   transition: color 0.2s ease;
 }
 .cat-toggle:hover {
